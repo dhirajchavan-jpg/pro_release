@@ -32,6 +32,8 @@ WORKBENCH_PUBLIC_PATHS = {
     "/workbench/account/login",
     "/workbench/account/logout",
     "/workbench/account/register",
+    "/workbench/account/invites/verify",
+    "/workbench/account/invites/accept",
     "/workbench/login",
     "/workbench/register",
 }
@@ -40,6 +42,11 @@ WORKBENCH_MODULE_PATH = re.compile(r"^/assets/(?:current/)?modules/[a-z][a-z0-9-
 
 
 async def guard_api(request: Request, call_next: Any) -> Any:
+    # CORS preflight does not include credentials. It must pass through to
+    # CORSMiddleware; the subsequent request is still authenticated normally.
+    if request.method == "OPTIONS":
+        return await call_next(request)
+
     public_paths = {"/", "/health", "/ready"} | WORKBENCH_PUBLIC_PATHS
     if WORKBENCH_UI_PATH.match(request.url.path) or WORKBENCH_MODULE_PATH.match(request.url.path):
         public_paths = public_paths | {request.url.path}
@@ -47,7 +54,11 @@ async def guard_api(request: Request, call_next: Any) -> Any:
         request,
         call_next,
         public_paths=public_paths,
-        rate_limited_public_paths={"/workbench/account/login"},
+        rate_limited_public_paths={
+            "/workbench/account/login",
+            "/workbench/account/invites/verify",
+            "/workbench/account/invites/accept",
+        },
         check_rate_limit=check_rate_limit,
         check_auth=check_api_auth,
         make_error_response=error_response,
@@ -124,10 +135,7 @@ async def unhandled_error_handler(request: Request, exc: Exception) -> JSONRespo
 
 def check_api_auth(request: Request) -> None:
     try:
-        authenticate(
-            request,
-            os.getenv("PROCUREMENT_API_TOKEN") or os.getenv("API_AUTH_TOKEN"),
-        )
+        authenticate(request)
     except HTTPException as exc:
         path = str(getattr(getattr(request, "url", None), "path", ""))
         if path.startswith("/v1/pipeline/fixed-schema") and exc.status_code == 401:

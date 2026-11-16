@@ -12,11 +12,11 @@ from pathlib import Path
 from procurement.platform.auth import hash_local_password
 
 
-_GENERATED = {"PROCUREMENT_API_TOKEN", "PROCUREMENT_LOCAL_TENANT_ID"}
+_GENERATED = {"SESSION_SECRET_KEY"}
 
 
 def _value(key: str) -> str:
-    return str(uuid.uuid4()) if key == "PROCUREMENT_LOCAL_TENANT_ID" else secrets.token_urlsafe(32)
+    return secrets.token_hex(32) if key == "SESSION_SECRET_KEY" else secrets.token_urlsafe(32)
 
 
 def _first_free_port(preferred: int) -> int:
@@ -112,15 +112,6 @@ def main() -> None:
             else:
                 output.append(line)
             continue
-        if separator and key == "PROCUREMENT_LOCAL_PASSWORD_HASH":
-            seen.add(key)
-            if not value.strip() or "replace_" in value.lower():
-                initial_password = secrets.token_urlsafe(18)
-                output.append(f"{key}={hash_local_password(initial_password)}")
-                generated.append(key)
-            else:
-                output.append(line)
-            continue
         if not separator or key not in _GENERATED:
             output.append(line)
             continue
@@ -136,14 +127,8 @@ def main() -> None:
     for key in sorted(local_values.keys() - seen):
         output.append(f"{key}={local_values[key]}")
         generated.append(key)
-    if "PROCUREMENT_LOCAL_PASSWORD_HASH" not in seen:
-        initial_password = secrets.token_urlsafe(18)
-        output.append(f"PROCUREMENT_LOCAL_PASSWORD_HASH={hash_local_password(initial_password)}")
-        generated.append("PROCUREMENT_LOCAL_PASSWORD_HASH")
     target.write_text("\n".join(output) + "\n", encoding="utf-8")
     print("Generated: " + (", ".join(generated) if generated else "nothing; existing local secrets retained"))
-    if initial_password:
-        print(f"Initial local login: admin / {initial_password}")
     print("Still set manually: AI_PROVIDER/AI_API_KEY/AI_BASE_URL/models and AUTH_JWKS_URL/AUTH_ISSUER/AUTH_AUDIENCE.")
 
 

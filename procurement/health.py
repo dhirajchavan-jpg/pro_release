@@ -68,10 +68,10 @@ def ready() -> JSONResponse:
         validate_ai_settings(ai_settings())
     except AIConfigurationError as exc:
         provider_error = str(exc)
-    configured_auth_mode = os.getenv("AUTH_MODE", "api_token").strip().lower()
-    api_auth_token = os.getenv("PROCUREMENT_API_TOKEN") or os.getenv("API_AUTH_TOKEN")
+    configured_auth_mode = os.getenv("AUTH_MODE", "session").strip().lower()
+    auth_secret = os.getenv("SESSION_SECRET_KEY")
     auth_configured = (
-        configured_auth_mode == "api_token" and bool(api_auth_token)
+        configured_auth_mode in {"session", "api_token"} and bool(auth_secret)
     ) or (
         configured_auth_mode == "jwt"
         and bool(os.getenv("AUTH_JWKS_URL", "").strip())

@@ -27,16 +27,21 @@ def main() -> None:
     args = parser.parse_args()
     load_local_env()
     tenant_id = os.getenv("PROCUREMENT_LOCAL_TENANT_ID", "").strip()
-    if not tenant_id:
-        raise SystemExit("PROCUREMENT_LOCAL_TENANT_ID is not configured")
-
-    tenant_filters = [ProviderCall.tenant_id == tenant_id]
-    filters = list(tenant_filters)
-    if args.project_id:
-        filters.append(ProviderCall.project_id == args.project_id)
-    if args.operation_id:
-        filters.append(ProviderCall.operation_id == args.operation_id)
     with make_session_factory()() as session:
+        if not tenant_id:
+            from sqlalchemy import select
+            from procurement.domain.models import Tenant
+            tenant = session.scalar(select(Tenant.id).order_by(Tenant.created_at).limit(1))
+            tenant_id = tenant or ""
+        if not tenant_id:
+            raise SystemExit("No tenant workspace is configured")
+
+        tenant_filters = [ProviderCall.tenant_id == tenant_id]
+        filters = list(tenant_filters)
+        if args.project_id:
+            filters.append(ProviderCall.project_id == args.project_id)
+        if args.operation_id:
+            filters.append(ProviderCall.operation_id == args.operation_id)
         tenant_summary = _usage_projection(session.execute(_aggregate(*tenant_filters)).one())
         summary = _usage_projection(session.execute(_aggregate(*filters)).one())
         stages = [

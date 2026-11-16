@@ -3,19 +3,23 @@
 import os
 import re
 import secrets
+import hashlib
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from fastapi import APIRouter, HTTPException, Request, Response
+from fastapi import APIRouter, HTTPException, Query, Request, Response
 from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from pydantic import BaseModel, Field
 
 from procurement.platform.auth import (
     Principal,
-    activate_local_session,
     auth_mode,
-    mint_local_session,
+    create_api_key,
+    create_user_session,
+    hash_local_password,
+    require_permission,
     require_role,
-    revoke_local_session,
+    revoke_user_session,
     verify_local_password,
 )
 
@@ -40,6 +44,47 @@ class LocalProfile(BaseModel):
     phone: str = ""
 
 
+class RegistrationRequest(BaseModel):
+    name: str = Field(min_length=1, max_length=255)
+    email: str = Field(min_length=3, max_length=320)
+    password: str = Field(min_length=8)
+    phone: str = ""
+
+
+class CreateUserRequest(BaseModel):
+    email: str = Field(min_length=3, max_length=320)
+    name: str = Field(default="Team member", min_length=1, max_length=255)
+    role: str = Field(default="reviewer", pattern="^(admin|procurement_officer|reviewer|commercial_officer|approver|auditor)$")
+    password: str = Field(min_length=8)
+    phone: str = ""
+
+
+class UpdateUserRequest(BaseModel):
+    role: str | None = Field(default=None, pattern="^(admin|procurement_officer|reviewer|commercial_officer|approver|auditor)$")
+    is_active: bool | None = None
+    display_name: str | None = None
+    phone: str | None = None
+
+
+class CreateInviteRequest(BaseModel):
+    email: str = Field(min_length=3, max_length=320)
+    role: str = Field(default="reviewer", pattern="^(admin|procurement_officer|reviewer|commercial_officer|approver|auditor)$")
+    ttl_days: int = Field(default=7, ge=1, le=30)
+
+
+class AcceptInviteRequest(BaseModel):
+    token: str = Field(min_length=16, max_length=128)
+    name: str = Field(min_length=1, max_length=255)
+    password: str = Field(min_length=8)
+    phone: str = ""
+
+
+class CreateApiKeyRequest(BaseModel):
+    name: str = Field(min_length=1, max_length=255)
+    scopes: list[str] = Field(default_factory=list)
+    ttl_days: int | None = Field(default=None, ge=1, le=365)
+
+
 class WorkbenchUsage(BaseModel):
     project_id: str = Field(min_length=1, max_length=64)
     step: str = Field(pattern="^(tender|ledger|compliance|contract|bids|evaluate|results|report)$")
@@ -47,6 +92,39 @@ class WorkbenchUsage(BaseModel):
         default=None,
         pattern="^(tender|ledger|compliance|contract|bids|evaluate|results|report)$",
     )
+
+
+_BEARER_SESSION_SECURITY = {"security": [{"BearerSession": []}]}
+
+
+def _session_auth_response(
+    *,
+    tenant_id: str,
+    user_id: str,
+    email: str,
+    session_token: str,
+    ttl_seconds: int,
+    request: Request,
+    status_code: int = 200,
+) -> JSONResponse:
+    """Return the browser cookie and the same database-backed bearer token."""
+    payload = _account_payload(tenant_id, user_id=user_id, email=email)
+    payload.update({
+        "access_token": session_token,
+        "token_type": "bearer",
+        "expires_in": ttl_seconds,
+    })
+    response = JSONResponse(payload, status_code=status_code)
+    response.set_cookie(
+        "procurement_session",
+        session_token,
+        httponly=True,
+        secure=request.url.scheme == "https" or os.getenv("AUTH_COOKIE_SECURE", "0") == "1",
+        samesite="strict",
+        max_age=ttl_seconds,
+        path="/",
+    )
+    return response
 
 
 def _portfolio_decision_summary(evaluation: dict, reviews: dict[str, dict]) -> dict:
@@ -79,6 +157,7 @@ def _portfolio_decision_summary(evaluation: dict, reviews: dict[str, dict]) -> d
 def _account_payload(
     tenant_id: str,
     *,
+    user_id: str | None = None,
     email: str | None = None,
     include_projects: bool = True,
 ) -> dict:
@@ -89,10 +168,15 @@ def _account_payload(
     from procurement.workbench_api import _sessions
 
     with session_scope(_sessions()) as session:
-        account = session.scalar(select(User).where(User.tenant_id == tenant_id).order_by(User.created_at).limit(1))
+        account = None
+        if user_id:
+            account = session.get(User, user_id)
+        if not account:
+            account = session.scalar(select(User).where(User.tenant_id == tenant_id).order_by(User.created_at).limit(1))
         user = {
-            "name": (account.display_name if account else None) or "Local procurement operator",
-            "email": email or (account.email if account else None) or "local@installation",
+            "id": account.id if account else None,
+            "name": (account.display_name if account else None) or "Procurement operator",
+            "email": email or (account.email if account else None) or "operator@workspace",
             "phone": (account.phone if account else None) or "",
             "role": (account.role if account else None) or "admin",
         }
@@ -306,13 +390,9 @@ def react_frontend(route: str = "") -> FileResponse:
 
 
 @router.get("/workbench/admin", include_in_schema=False)
-def admin_dashboard(request: Request) -> FileResponse:
+def admin_dashboard(request: Request) -> RedirectResponse:
     require_role(request, "admin")
-    return FileResponse(
-        FRONTEND_DIR / "admin_dashboard.html",
-        media_type="text/html",
-        headers={"Cache-Control": "no-store, max-age=0"},
-    )
+    return RedirectResponse("/app/admin", status_code=307)
 
 
 @router.get("/assets/admin-dashboard.css", include_in_schema=False)
@@ -336,25 +416,26 @@ def admin_dashboard_js(request: Request) -> FileResponse:
 
 
 @router.get("/workbench", include_in_schema=False)
-def workbench_home() -> FileResponse:
-    return workbench_page()
+def workbench_home() -> RedirectResponse:
+    return RedirectResponse("/app", status_code=307)
 
 
 @router.get("/workbench/login", include_in_schema=False)
-def workbench_auth() -> FileResponse:
-    return workbench_page()
+def workbench_auth() -> RedirectResponse:
+    return RedirectResponse("/app/login", status_code=307)
 
 
 @router.get("/workbench/register", include_in_schema=False)
 def workbench_register_page() -> RedirectResponse:
-    return RedirectResponse("/workbench/login", status_code=307)
+    return RedirectResponse("/app/register", status_code=307)
 
 
 @router.get("/workbench/ui/{project_id}/{step}", include_in_schema=False)
-def workbench_step(project_id: str, step: str) -> FileResponse:
+def workbench_step(project_id: str, step: str) -> RedirectResponse:
     if step not in ALLOWED_STEPS:
         raise HTTPException(status_code=404, detail="unknown workbench step")
-    return workbench_page()
+    react_step = {"ledger": "review", "contract": "checklist"}.get(step, step)
+    return RedirectResponse(f"/app/projects/{project_id}/{react_step}", status_code=307)
 
 
 @router.get("/assets/bid-workbench.js", include_in_schema=False)
@@ -390,59 +471,68 @@ def workbench_css() -> FileResponse:
     )
 
 
-@router.post("/workbench/account/login", include_in_schema=False)
+@router.post(
+    "/workbench/account/login",
+    tags=["Authentication"],
+    summary="Sign in and obtain a bearer token",
+)
 def workbench_login(body: LocalLogin, request: Request) -> Response:
-    if auth_mode() != "api_token":
+    if auth_mode() == "jwt":
         raise HTTPException(status_code=409, detail="use the configured identity provider")
-    api_token = os.getenv("PROCUREMENT_API_TOKEN") or os.getenv("API_AUTH_TOKEN") or ""
-    configured_username = os.getenv("PROCUREMENT_LOCAL_USERNAME", "").strip()
-    password_hash = os.getenv("PROCUREMENT_LOCAL_PASSWORD_HASH", "").strip()
-    tenant_id = os.getenv("PROCUREMENT_LOCAL_TENANT_ID", "").strip()
     username = (body.username or body.email).strip()
-    if (
-        not api_token
-        or not configured_username
-        or not password_hash
-        or not _LOCAL_TENANT_ID.fullmatch(tenant_id)
-        or not secrets.compare_digest(username, configured_username)
-        or not verify_local_password(body.password, password_hash)
-    ):
+    if not username or not body.password:
         raise HTTPException(status_code=401, detail="invalid username or password")
-    _ensure_local_tenant(tenant_id, username)
+
+    from sqlalchemy import func, or_, select
+
+    from procurement.domain.models import User
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    clean_user = username.lower()
+    with session_scope(_sessions()) as session:
+        user = session.scalar(
+            select(User).where(
+                User.is_active == True,
+                User.password_hash.isnot(None),
+                or_(
+                    func.lower(User.email) == clean_user,
+                    func.lower(User.subject) == clean_user,
+                    func.lower(User.subject) == f"local:{clean_user}",
+                ),
+            )
+        )
+        if not user or not user.password_hash or not verify_local_password(body.password, user.password_hash):
+            raise HTTPException(status_code=401, detail="invalid username or password")
+        user_id = user.id
+        tenant_id = user.tenant_id
+        user_email = user.email or username
+
     ttl_seconds = max(300, int(os.getenv("AUTH_SESSION_TTL_SECONDS", "28800")))
-    principal = Principal(
-        subject=f"local:{username}",
+    ip_address = request.client.host if request.client else None
+    user_agent = request.headers.get("user-agent")
+
+    session_cookie = create_user_session(
+        user_id=user_id,
         tenant_id=tenant_id,
-        roles=frozenset({"admin"}),
-    )
-    session_cookie = mint_local_session(
-        api_token,
-        subject=principal.subject,
-        tenant_id=tenant_id,
-        roles=principal.roles,
+        ip_address=ip_address,
+        user_agent=user_agent,
         ttl_seconds=ttl_seconds,
     )
-    try:
-        activate_local_session(session_cookie, principal, ttl_seconds=ttl_seconds)
-    except Exception as exc:
-        raise HTTPException(status_code=503, detail="session store is unavailable") from exc
-    response = JSONResponse(_account_payload(tenant_id, email=username))
-    response.set_cookie(
-        "procurement_session",
-        session_cookie,
-        httponly=True,
-        secure=request.url.scheme == "https" or os.getenv("AUTH_COOKIE_SECURE", "0") == "1",
-        samesite="strict",
-        max_age=ttl_seconds,
-        path="/",
+    return _session_auth_response(
+        tenant_id=tenant_id,
+        user_id=user_id,
+        email=user_email,
+        session_token=session_cookie,
+        ttl_seconds=ttl_seconds,
+        request=request,
     )
-    return response
 
 
-@router.get("/workbench/account", include_in_schema=False)
+@router.get("/workbench/account", tags=["Workspace account"], openapi_extra=_BEARER_SESSION_SECURITY)
 def workbench_account(request: Request, include_projects: bool = True) -> dict:
     principal = request.state.principal
-    return _account_payload(principal.tenant_id, include_projects=include_projects)
+    return _account_payload(principal.tenant_id, user_id=principal.user_id, include_projects=include_projects)
 
 
 @router.post("/v1/workbench/usage", include_in_schema=False, status_code=204)
@@ -480,7 +570,7 @@ def record_workbench_usage(body: WorkbenchUsage, request: Request) -> Response:
     return Response(status_code=204)
 
 
-@router.patch("/workbench/account", include_in_schema=False)
+@router.patch("/workbench/account", tags=["Workspace account"], openapi_extra=_BEARER_SESSION_SECURITY)
 def workbench_account_update(body: LocalProfile, request: Request) -> dict:
     principal = request.state.principal
     from sqlalchemy import select
@@ -498,25 +588,471 @@ def workbench_account_update(body: LocalProfile, request: Request) -> dict:
         )
         if not account:
             raise HTTPException(status_code=404, detail="account not found")
-        account.display_name = body.name.strip() or "Local procurement operator"
+        account.display_name = body.name.strip() or "Procurement operator"
         account.phone = body.phone.strip()
-    return _account_payload(principal.tenant_id)
+    return _account_payload(principal.tenant_id, user_id=principal.user_id)
 
 
-@router.post("/workbench/account/logout", include_in_schema=False)
+@router.post("/workbench/account/logout", tags=["Authentication"], openapi_extra=_BEARER_SESSION_SECURITY)
 def workbench_logout(request: Request) -> Response:
-    api_token = os.getenv("PROCUREMENT_API_TOKEN") or os.getenv("API_AUTH_TOKEN") or ""
     cookie = request.cookies.get("procurement_session", "")
-    if cookie and api_token:
-        try:
-            revoke_local_session(cookie, api_token)
-        except Exception as exc:
-            raise HTTPException(status_code=503, detail="session store is unavailable") from exc
+    if cookie:
+        revoke_user_session(cookie)
     response = JSONResponse({"status": "logged_out"})
     response.delete_cookie("procurement_session", path="/", samesite="strict")
     return response
 
 
-@router.post("/workbench/account/register", include_in_schema=False)
-def workbench_register() -> None:
-    raise HTTPException(status_code=405, detail="local account registration is disabled")
+@router.post(
+    "/workbench/account/register",
+    tags=["Authentication"],
+    summary="Create the first workspace administrator",
+)
+def workbench_register(body: RegistrationRequest, request: Request) -> Response:
+    """Create the initial workspace administrator when no accounts exist."""
+    if auth_mode() == "jwt":
+        raise HTTPException(status_code=409, detail="use the configured identity provider")
+
+    from sqlalchemy import func, select
+
+    from procurement.domain.models import Role, Tenant, User
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    email = body.email.strip().lower()
+    with session_scope(_sessions()) as session:
+        # This application uses PostgreSQL; serialize bootstrap registrations so
+        # concurrent first requests cannot create multiple administrators.
+        session.execute(select(func.pg_advisory_xact_lock(729_184_301)))
+        if session.scalar(select(User.id).limit(1)):
+            raise HTTPException(status_code=403, detail="registration is available only for the first workspace administrator")
+
+        tenant = session.scalar(select(Tenant).order_by(Tenant.created_at).limit(1))
+        if tenant is None:
+            tenant = Tenant(name="Procurement Workspace")
+            session.add(tenant)
+            session.flush()
+
+        role = session.scalar(select(Role).where(Role.name == "admin").limit(1))
+        if role is None:
+            role = Role(name="admin", description="Workspace administrator", is_system=True)
+            session.add(role)
+            session.flush()
+
+        user = User(
+            tenant_id=tenant.id,
+            subject=f"user:{email}",
+            email=email,
+            password_hash=hash_local_password(body.password),
+            display_name=body.name.strip(),
+            phone=body.phone.strip(),
+            role="admin",
+            role_id=role.id,
+            is_active=True,
+        )
+        session.add(user)
+        session.flush()
+        user_id = user.id
+        tenant_id = user.tenant_id
+
+    ttl_seconds = max(300, int(os.getenv("AUTH_SESSION_TTL_SECONDS", "28800")))
+    session_cookie = create_user_session(
+        user_id=user_id,
+        tenant_id=tenant_id,
+        ip_address=request.client.host if request.client else None,
+        user_agent=request.headers.get("user-agent"),
+        ttl_seconds=ttl_seconds,
+    )
+    return _session_auth_response(
+        tenant_id=tenant_id,
+        user_id=user_id,
+        email=email,
+        session_token=session_cookie,
+        ttl_seconds=ttl_seconds,
+        request=request,
+        status_code=201,
+    )
+
+
+@router.get("/workbench/account/users", tags=["Workspace users"], openapi_extra=_BEARER_SESSION_SECURITY)
+def list_workspace_users(request: Request) -> dict:
+    require_role(request, "admin")
+    principal = request.state.principal
+
+    from sqlalchemy import select
+
+    from procurement.domain.models import User
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    with session_scope(_sessions()) as session:
+        users = session.scalars(
+            select(User).where(User.tenant_id == principal.tenant_id).order_by(User.created_at)
+        ).all()
+        return {
+            "users": [
+                {
+                    "id": u.id,
+                    "email": u.email,
+                    "name": u.display_name,
+                    "phone": u.phone,
+                    "role": u.role,
+                    "is_active": u.is_active,
+                    "created_at": u.created_at.isoformat() if u.created_at else None,
+                }
+                for u in users
+            ]
+        }
+
+
+@router.post("/workbench/account/users", tags=["Workspace users"], openapi_extra=_BEARER_SESSION_SECURITY)
+def create_workspace_user(body: CreateUserRequest, request: Request) -> dict:
+    require_role(request, "admin")
+    principal = request.state.principal
+
+    from sqlalchemy import select
+
+    from procurement.domain.models import Role, User
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    email = body.email.strip().lower()
+    with session_scope(_sessions()) as session:
+        existing = session.scalar(
+            select(User.id).where(User.tenant_id == principal.tenant_id, User.email == email)
+        )
+        if existing:
+            raise HTTPException(status_code=409, detail="user with this email already exists")
+
+        role = session.scalar(select(Role).where(Role.name == body.role))
+        new_user = User(
+            tenant_id=principal.tenant_id,
+            subject=f"user:{email}",
+            email=email,
+            password_hash=hash_local_password(body.password),
+            display_name=body.name.strip(),
+            phone=body.phone.strip(),
+            role=body.role,
+            role_id=role.id if role else None,
+            is_active=True,
+        )
+        session.add(new_user)
+        session.flush()
+        return {
+            "status": "created",
+            "user": {
+                "id": new_user.id,
+                "email": new_user.email,
+                "name": new_user.display_name,
+                "role": new_user.role,
+            },
+        }
+
+
+@router.patch("/workbench/account/users/{user_id}", tags=["Workspace users"], openapi_extra=_BEARER_SESSION_SECURITY)
+def update_workspace_user(user_id: str, body: UpdateUserRequest, request: Request) -> dict:
+    require_role(request, "admin")
+    principal = request.state.principal
+
+    from sqlalchemy import select
+
+    from procurement.domain.models import Role, User
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    with session_scope(_sessions()) as session:
+        target = session.get(User, user_id)
+        if not target or target.tenant_id != principal.tenant_id:
+            raise HTTPException(status_code=404, detail="user not found")
+
+        if body.role:
+            role = session.scalar(select(Role).where(Role.name == body.role))
+            target.role = body.role
+            target.role_id = role.id if role else None
+        if body.is_active is not None:
+            target.is_active = body.is_active
+        if body.display_name is not None:
+            target.display_name = body.display_name.strip()
+        if body.phone is not None:
+            target.phone = body.phone.strip()
+
+        return {
+            "status": "updated",
+            "user": {
+                "id": target.id,
+                "email": target.email,
+                "name": target.display_name,
+                "role": target.role,
+                "is_active": target.is_active,
+            },
+        }
+
+
+@router.get("/workbench/account/keys", tags=["Workspace API keys"], openapi_extra=_BEARER_SESSION_SECURITY)
+def list_workspace_api_keys(request: Request) -> dict:
+    require_role(request, "admin")
+    principal = request.state.principal
+
+    from sqlalchemy import select
+
+    from procurement.domain.models import ApiKey
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    with session_scope(_sessions()) as session:
+        keys = session.scalars(
+            select(ApiKey).where(ApiKey.tenant_id == principal.tenant_id).order_by(ApiKey.created_at.desc())
+        ).all()
+        return {
+            "keys": [
+                {
+                    "id": k.id,
+                    "name": k.name,
+                    "prefix": k.prefix,
+                    "scopes": k.scopes,
+                    "expires_at": k.expires_at.isoformat() if k.expires_at else None,
+                    "created_at": k.created_at.isoformat() if k.created_at else None,
+                }
+                for k in keys
+            ]
+        }
+
+
+@router.post("/workbench/account/keys", tags=["Workspace API keys"], openapi_extra=_BEARER_SESSION_SECURITY)
+def create_workspace_api_key(body: CreateApiKeyRequest, request: Request) -> dict:
+    require_role(request, "admin")
+    principal = request.state.principal
+
+    key_id, raw_key = create_api_key(
+        tenant_id=principal.tenant_id,
+        name=body.name,
+        scopes=body.scopes,
+        ttl_days=body.ttl_days,
+    )
+    return {
+        "id": key_id,
+        "name": body.name,
+        "api_key": raw_key,
+        "note": "Store this key safely; it will not be shown again.",
+    }
+
+
+@router.delete("/workbench/account/keys/{key_id}", tags=["Workspace API keys"], openapi_extra=_BEARER_SESSION_SECURITY)
+def delete_workspace_api_key(key_id: str, request: Request) -> dict:
+    require_role(request, "admin")
+    principal = request.state.principal
+
+    from procurement.domain.models import ApiKey
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    with session_scope(_sessions()) as session:
+        key = session.get(ApiKey, key_id)
+        if not key or key.tenant_id != principal.tenant_id:
+            raise HTTPException(status_code=404, detail="API key not found")
+        session.delete(key)
+    return {"status": "deleted"}
+
+
+def _frontend_base_url(request: Request) -> str:
+    from procurement.api_app import frontend_cors_origins
+    origins = frontend_cors_origins()
+    if origins:
+        return origins[0]
+    return f"{request.url.scheme}://{request.url.netloc}"
+
+
+@router.get("/workbench/account/invites", tags=["Workspace invitations"], openapi_extra=_BEARER_SESSION_SECURITY)
+def list_workspace_invites(request: Request) -> dict:
+    require_role(request, "admin")
+    principal = request.state.principal
+
+    from sqlalchemy import select
+    from procurement.domain.models import WorkspaceInvite
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    with session_scope(_sessions()) as session:
+        invites = session.scalars(
+            select(WorkspaceInvite)
+            .where(WorkspaceInvite.tenant_id == principal.tenant_id)
+            .order_by(WorkspaceInvite.created_at.desc())
+        ).all()
+        return {
+            "invites": [
+                {
+                    "id": inv.id,
+                    "email": inv.email,
+                    "role": inv.role,
+                    "expires_at": inv.expires_at.isoformat() if inv.expires_at else None,
+                    "accepted_at": inv.accepted_at.isoformat() if inv.accepted_at else None,
+                    "created_at": inv.created_at.isoformat() if inv.created_at else None,
+                }
+                for inv in invites
+            ]
+        }
+
+
+@router.post("/workbench/account/invites", tags=["Workspace invitations"], openapi_extra=_BEARER_SESSION_SECURITY)
+def create_workspace_invite(body: CreateInviteRequest, request: Request) -> dict:
+    require_role(request, "admin")
+    principal = request.state.principal
+
+    from sqlalchemy import select
+    from procurement.domain.models import User, WorkspaceInvite
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    email = body.email.strip().lower()
+    with session_scope(_sessions()) as session:
+        existing_user = session.scalar(
+            select(User.id).where(User.tenant_id == principal.tenant_id, User.email == email)
+        )
+        if existing_user:
+            raise HTTPException(status_code=409, detail="user with this email already belongs to this workspace")
+
+        raw_token = secrets.token_urlsafe(32)
+        token_hash = hashlib.sha256(raw_token.encode()).hexdigest()
+        expires_at = datetime.now(timezone.utc) + timedelta(days=body.ttl_days)
+
+        invite = WorkspaceInvite(
+            tenant_id=principal.tenant_id,
+            email=email,
+            role=body.role,
+            token_hash=token_hash,
+            invited_by_id=principal.user_id,
+            expires_at=expires_at,
+        )
+        session.add(invite)
+        session.flush()
+
+        base_url = _frontend_base_url(request)
+        invite_url = f"{base_url}/invite?token={raw_token}"
+
+        return {
+            "id": invite.id,
+            "email": invite.email,
+            "role": invite.role,
+            "invite_url": invite_url,
+            "token": raw_token,
+            "expires_at": invite.expires_at.isoformat(),
+        }
+
+
+@router.delete("/workbench/account/invites/{invite_id}", tags=["Workspace invitations"], openapi_extra=_BEARER_SESSION_SECURITY)
+def delete_workspace_invite(invite_id: str, request: Request) -> dict:
+    require_role(request, "admin")
+    principal = request.state.principal
+
+    from procurement.domain.models import WorkspaceInvite
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    with session_scope(_sessions()) as session:
+        invite = session.get(WorkspaceInvite, invite_id)
+        if not invite or invite.tenant_id != principal.tenant_id:
+            raise HTTPException(status_code=404, detail="invite not found")
+        session.delete(invite)
+    return {"status": "deleted"}
+
+
+@router.get("/workbench/account/invites/verify", tags=["Workspace invitations"], summary="Verify an invitation")
+def verify_workspace_invite(token: str = Query(...)) -> dict:
+    clean_token = token.strip()
+    if not clean_token:
+        raise HTTPException(status_code=400, detail="token is required")
+
+    from sqlalchemy import select
+    from procurement.domain.models import Tenant, WorkspaceInvite
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    token_hash = hashlib.sha256(clean_token.encode()).hexdigest()
+    with session_scope(_sessions()) as session:
+        invite = session.scalar(select(WorkspaceInvite).where(WorkspaceInvite.token_hash == token_hash))
+        if not invite or invite.accepted_at is not None:
+            raise HTTPException(status_code=404, detail="invitation is invalid or has already been accepted")
+
+        expires_at = invite.expires_at
+        if expires_at.tzinfo is None:
+            expires_at = expires_at.replace(tzinfo=timezone.utc)
+        if expires_at <= datetime.now(timezone.utc):
+            raise HTTPException(status_code=410, detail="invitation link has expired")
+
+        tenant = session.get(Tenant, invite.tenant_id)
+        tenant_name = tenant.name if tenant else "Procurement Workspace"
+
+        return {
+            "valid": True,
+            "email": invite.email,
+            "role": invite.role,
+            "tenant_name": tenant_name,
+            "expires_at": expires_at.isoformat(),
+        }
+
+
+@router.post("/workbench/account/invites/accept", tags=["Workspace invitations"], summary="Accept an invitation and obtain a bearer token")
+def accept_workspace_invite(body: AcceptInviteRequest, request: Request) -> Response:
+    from sqlalchemy import select
+    from procurement.domain.models import Role, User, WorkspaceInvite
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    token_hash = hashlib.sha256(body.token.strip().encode()).hexdigest()
+    with session_scope(_sessions()) as session:
+        invite = session.scalar(select(WorkspaceInvite).where(WorkspaceInvite.token_hash == token_hash))
+        if not invite or invite.accepted_at is not None:
+            raise HTTPException(status_code=404, detail="invitation is invalid or has already been accepted")
+
+        expires_at = invite.expires_at
+        if expires_at.tzinfo is None:
+            expires_at = expires_at.replace(tzinfo=timezone.utc)
+        if expires_at <= datetime.now(timezone.utc):
+            raise HTTPException(status_code=410, detail="invitation link has expired")
+
+        clean_email = invite.email.lower()
+        existing = session.scalar(
+            select(User.id).where(User.tenant_id == invite.tenant_id, User.email == clean_email)
+        )
+        if existing:
+            raise HTTPException(status_code=409, detail="an account with this email already exists")
+
+        role = session.scalar(select(Role).where(Role.name == invite.role))
+        new_user = User(
+            tenant_id=invite.tenant_id,
+            subject=f"user:{clean_email}",
+            email=clean_email,
+            password_hash=hash_local_password(body.password),
+            display_name=body.name.strip(),
+            phone=body.phone.strip(),
+            role=invite.role,
+            role_id=role.id if role else None,
+            is_active=True,
+        )
+        session.add(new_user)
+        invite.accepted_at = datetime.now(timezone.utc)
+        session.flush()
+
+        user_id = new_user.id
+        tenant_id = new_user.tenant_id
+        user_email = new_user.email
+
+    ttl_seconds = max(300, int(os.getenv("AUTH_SESSION_TTL_SECONDS", "28800")))
+    ip_address = request.client.host if request.client else None
+    user_agent = request.headers.get("user-agent")
+
+    session_cookie = create_user_session(
+        user_id=user_id,
+        tenant_id=tenant_id,
+        ip_address=ip_address,
+        user_agent=user_agent,
+        ttl_seconds=ttl_seconds,
+    )
+    return _session_auth_response(
+        tenant_id=tenant_id,
+        user_id=user_id,
+        email=user_email,
+        session_token=session_cookie,
+        ttl_seconds=ttl_seconds,
+        request=request,
+    )

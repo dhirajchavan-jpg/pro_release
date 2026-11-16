@@ -3,6 +3,7 @@ import { ApiError } from "./api/client.js";
 import { getAccount } from "./api/account.js";
 import AdminDashboard from "./admin/AdminDashboard.jsx";
 import AuthPage from "./auth/AuthPage.jsx";
+import InvitePage from "./auth/InvitePage.jsx";
 import AppFooter from "./components/AppFooter.jsx";
 import AppHeader from "./components/AppHeader.jsx";
 import LoadingScreen from "./components/LoadingScreen.jsx";
@@ -14,6 +15,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 function routeFromLocation() {
   const pathname = basePath && window.location.pathname.startsWith(basePath) ? window.location.pathname.slice(basePath.length) : window.location.pathname;
   const path = pathname.replace(/\/+$/, "") || "/";
+  if (path.endsWith("/invite")) {
+    const token = new URLSearchParams(window.location.search).get("token") || "";
+    return `invite|${token}`;
+  }
   if (path.endsWith("/register")) return "register";
   if (path.endsWith("/login")) return "login";
   const workflow = path.match(/^\/projects\/([^/]+)\/(tender|review|compliance|checklist|bids|evaluate|results|report)$/);
@@ -23,6 +28,10 @@ function routeFromLocation() {
 }
 
 function routePath(route) {
+  if (route.startsWith("invite|")) {
+    const [, token] = route.split("|");
+    return `${basePath}/invite${token ? `?token=${encodeURIComponent(token)}` : ""}`;
+  }
   if (route.startsWith("workflow|")) {
     const [, projectId, page] = route.split("|");
     return `${basePath}/projects/${encodeURIComponent(projectId)}/${page}`;
@@ -64,7 +73,32 @@ export default function App() {
   }, []);
 
   if (loading) return <LoadingScreen label="Loading workspace" />;
-  if (!account) return <AuthPage mode={route === "register" ? "register" : "login"} serviceError={serviceError} onAuthenticated={(data) => { setAccount(data); navigate("workspace", true); }} onNavigate={navigate} />;
+  if (!account) {
+    if (route.startsWith("invite|")) {
+      const [, token] = route.split("|");
+      return (
+        <InvitePage
+          token={token}
+          onAuthenticated={(data) => {
+            setAccount(data);
+            navigate("workspace", true);
+          }}
+          onNavigate={navigate}
+        />
+      );
+    }
+    return (
+      <AuthPage
+        mode={route === "register" ? "register" : "login"}
+        serviceError={serviceError}
+        onAuthenticated={(data) => {
+          setAccount(data);
+          navigate("workspace", true);
+        }}
+        onNavigate={navigate}
+      />
+    );
+  }
 
   const workflowRoute = route.startsWith("workflow|") ? route.split("|") : null;
   const replaceProject = (updated) => setAccount((current) => ({
@@ -75,7 +109,7 @@ export default function App() {
   return (
     <div className="flex min-h-screen flex-col bg-[var(--color-canvas)]">
       <a className="skip-link" href="#app-content">Skip to main content</a>
-      <AppHeader user={account.user} />
+      <AppHeader user={account.user} onAdmin={() => navigate("admin")} />
       <div className="flex-1" id="app-content" tabIndex="-1">
         {route === "admin" ? (
           <AdminDashboard account={account} onBack={() => navigate("workspace")} />

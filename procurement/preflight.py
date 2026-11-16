@@ -58,10 +58,8 @@ def _trial_control_errors() -> list[str]:
         errors.append("MAX_BIDDERS_PER_TENDER must be 10")
     if retention_days != 0:
         errors.append("RETENTION_DAYS must be 0 so trial data is retained indefinitely")
-    if os.getenv("AUTH_MODE", "").strip().lower() != "api_token":
-        errors.append("AUTH_MODE must be api_token for the single shared local account")
-    if os.getenv("ALLOW_DIRECT_API_TOKEN_AUTH", "0").strip() != "0":
-        errors.append("ALLOW_DIRECT_API_TOKEN_AUTH must be 0 so the browser session is authoritative")
+    if os.getenv("AUTH_MODE", "").strip().lower() not in {"session", "api_token"}:
+        errors.append("AUTH_MODE must be session or api_token for local workspace authentication")
     if os.getenv("PROVIDER_USAGE_REQUIRED", "0").strip() != "1":
         errors.append("PROVIDER_USAGE_REQUIRED must be 1 so paid calls cannot bypass metering")
     decimal_values: dict[str, Decimal] = {}
@@ -218,14 +216,11 @@ def main() -> None:
         for name in ("AUTH_JWKS_URL", "AUTH_ISSUER", "AUTH_AUDIENCE"):
             if _missing(name):
                 errors.append(f"{name} is required for AUTH_MODE=jwt")
-    elif auth_mode == "api_token":
-        if _missing("PROCUREMENT_API_TOKEN") and _missing("API_AUTH_TOKEN"):
-            errors.append("PROCUREMENT_API_TOKEN is required for AUTH_MODE=api_token")
-        for name in ("PROCUREMENT_LOCAL_USERNAME", "PROCUREMENT_LOCAL_PASSWORD_HASH", "PROCUREMENT_LOCAL_TENANT_ID"):
-            if _missing(name):
-                errors.append(f"{name} is required for local username/password login")
+    elif auth_mode in {"session", "api_token"}:
+        if _missing("SESSION_SECRET_KEY"):
+            errors.append("SESSION_SECRET_KEY is required for AUTH_MODE=session")
     else:
-        errors.append("AUTH_MODE must be api_token or jwt")
+        errors.append("AUTH_MODE must be session, api_token or jwt")
     provider = os.getenv("AI_PROVIDER", "gemini").strip().lower()
     if provider != "gemini" and (
         os.getenv("AI_REQUIRE_INDIA_REGION", "") != "1"

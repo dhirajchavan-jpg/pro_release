@@ -6,7 +6,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
 
   return {
-    base: env.VITE_PUBLIC_BASE || "/",
+    base: env.VITE_PUBLIC_BASE || (mode === "production" ? "/app/" : "/"),
     plugins: [react(), tailwindcss()],
     server: {
       host: env.VITE_DEV_HOST || "127.0.0.1",

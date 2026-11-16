@@ -3,6 +3,7 @@
 import os
 
 from fastapi import FastAPI
+from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.gzip import GZipMiddleware
 
@@ -55,4 +56,27 @@ def create_app() -> FastAPI:
         workbench_pages_router,
     ):
         app.include_router(router)
+
+    def custom_openapi() -> dict:
+        if app.openapi_schema:
+            return app.openapi_schema
+        schema = get_openapi(
+            title=app.title,
+            version="1.0.0",
+            description=(
+                "Use **Authentication → Sign in and obtain a bearer token**, then click "
+                "**Authorize** and paste the returned `access_token`."
+            ),
+            routes=app.routes,
+        )
+        schema.setdefault("components", {}).setdefault("securitySchemes", {})["BearerSession"] = {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "Database session token",
+            "description": "A bearer token returned by workspace sign-in, registration, or invitation acceptance.",
+        }
+        app.openapi_schema = schema
+        return app.openapi_schema
+
+    app.openapi = custom_openapi
     return app
