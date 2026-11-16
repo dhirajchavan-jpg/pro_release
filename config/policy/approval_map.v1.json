@@ -1,0 +1,509 @@
+{
+ "schema_version": "approval-map.v1",
+ "entries": [
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "2.5",
+   "action": "Placing purchase orders against anticipated customer orders under special circumstances",
+   "authority_title": "CMD",
+   "quote": "No purchase orders shall be placed against anticipated customer orders except under special circumstances for which prior specific approvals of CMD shall be taken"
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "5A.3",
+   "action": "Waiver of EMD or reduction of amount in specified cases (PSUs, JVs, Trial tenders, etc.)",
+   "authority_title": "Head of the Contracting deptt., not below the rank of AGM",
+   "quote": "a) The EMD may be waived or amount reduced in following cases with the prior approval of the Head of the Contracting deptt., not below the rank of AGM:\n(i) Central/ State PSUs/ Government deptts/ Autonomous/ Educational/ Research institutions.\n(ii) Joint Venture or Subsidiary companies of BHEL.\n(iii) Trial / Development tenders.\n(iv) Limited Tenders/ Single Tenders.\n(v) Procurements directly from "
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "5A.3",
+   "action": "Waiver or reduction/increase of EMD in other cases",
+   "authority_title": "Unit Head",
+   "quote": "b) The EMD may be waived or amount reduced/ increased in other cases for reasons to be recorded with the prior approval of the Unit Head."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "5A.5",
+   "action": "Release of EMD in case of expiry of offer validity period or any other circumstances",
+   "authority_title": "Head of Contracting deptt., not below the rank of AGM",
+   "quote": "(iii) In case of expiry of offer validity period or any other circumstances, EMD can be released with the approval of Head of Contracting deptt."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "5B.3",
+   "action": "Waiver or amount reduction of Performance Security in specified cases (before tendering)",
+   "authority_title": "Head of the Contracting deptt., not below the rank of AGM",
+   "quote": "c) The Performance Security may be waived or amount reduced in following cases with the approval (before tendering) of the Head of the Contracting deptt., not below the rank of AGM:\n(i) Central/ State PSUs/ Government deptts / Autonomous/ Educational/ Research institutions.\n(ii) Joint Venture or Subsidiary companies of BHEL.\n(iii) Trial/ Development tenders.\n(iv) Raw material like Steel, insulatin"
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "5B.3",
+   "action": "Waiver or amount reduction/increase of Performance Security in other cases",
+   "authority_title": "Unit Head",
+   "quote": "d) The Performance Security may be waived or amount reduced/ increased in other cases for reasons to be recorded with the prior approval of the Unit Head."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "5.2.1",
+   "action": "Not addressing Limited tender enquiry to registered supplier(s), or addressing to low rated / EOI shortlisted suppliers",
+   "authority_title": "Product Manager/ Head of MM (not below the rank of AGM)",
+   "quote": "However, approval of Product Manager/ Head of MM (not below the rank of AGM) is required (reasons shall be recorded with rationale) in the following cases: (i) For not addressing Limited tender enquiry to any of the registered supplier/s."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "5.2.1",
+   "action": "Addressing Limited tender enquiry to unregistered supplier(s) referred by Customer",
+   "authority_title": "Product Manager/ Head of MM (not below the rank of AGM)",
+   "quote": "For addressing Limited tender enquiry to unregistered supplier(s) referred by the Customer, approval of Product Manager/ Head of MM (not below the rank of AGM) shall be taken with recorded reasons."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "8.2",
+   "action": "Reducing or extending tender submission time limit",
+   "authority_title": "next higher authority competent for inviting tenders (limited to Product/ Function/ MM Head)",
+   "quote": "This time limit may be reduced or extended for recorded reasons, with the approval of next higher authority competent for inviting tenders (limited to Product/ Function/ MM Head)."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "8.7",
+   "action": "Accepting additional technical deviations and framing additional loading criteria after opening of techno-commercial bid",
+   "authority_title": "Engineering/ Indenting head",
+   "quote": "In respect of any additional technical deviations for which loading criterion is required to be framed after opening of techno-commercial bid, the Engineering/ Indenting head shall be authorized to accept any technical deviations and frame the additional loading criteria thereof."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "8.7",
+   "action": "Accepting additional commercial deviations and framing loading criteria after opening of techno-commercial bid",
+   "authority_title": "authority competent to approve the placement of order (limited to Product/ Functional/ MM Head)",
+   "quote": "As regards any additional commercial deviations for which loading criteria is required to be framed after opening of techno-commercial bid, approval of the authority competent to approve the placement of order (limited to Product/ Functional/ MM Head) shall be obtained for accepting the deviations and framing the loading criteria thereof."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "9.0",
+   "action": "Considering late offers in case of Single tender enquiry",
+   "authority_title": "next higher authority competent to invite tenders (limited to Unit Head)",
+   "quote": "In case of Single tender enquiry, late offers may be considered with the prior approval of next higher authority competent to invite tenders (limited to Unit Head)."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "11.3",
+   "action": "Conducting price negotiations as an exception with L-1 bidder",
+   "authority_title": "next higher authority competent for purchase ordering approval (limited to the Unit Head)",
+   "quote": "Price negotiations may be conducted as an exception, with L-1 bidder, by the Purchase / Negotiation Committee with prior approval of the next higher authority competent for purchase ordering approval (limited to the Unit Head)."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "11.4",
+   "action": "Acceptance/rejection of abnormally low bid",
+   "authority_title": "Competent Authority for ordering, not below Product/ Functional Managers/ Head MM (not below the rank of AGM) with full powers to the Unit Head",
+   "quote": "The speaking recommendations of the Purchase Committee shall be duly recorded and put up to the Competent Authority for ordering, not below Product/ Functional Managers/ Head MM (not below the rank of AGM) with full powers to the Unit Head, who will decide regarding acceptance/ rejection of such bid."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "12.2",
+   "action": "Distribution of quantity in case of two qualified bidders when splitting was not envisaged in NIT",
+   "authority_title": "Unit Head (not below the rank of GM)",
+   "quote": "Distribution in case of two qualified bidders shall require approval of Unit Head (not below the rank of GM)."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "13.0",
+   "action": "Resorting to re-tendering under specified circumstances",
+   "authority_title": "one step higher than the Competent Authority (limited to Unit Head)",
+   "quote": "Re-tendering may be resorted to only after the administrative approval of one step higher than the Competent Authority (limited to Unit Head) for ordering under the circumstances such as:\n(a) Inadequate response / Lack of Competition (refer note below);\n(b) Unreasonably high/ low price;\n(c) Suspected cartel formation;\n(d) Sudden slump in market prices;\n(e) Major changes in scope and/ or pre-qualif"
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "14.1",
+   "action": "Placing repeat orders without calling for fresh tenders",
+   "authority_title": "Competent Authority as per DoP",
+   "quote": "Repeat Orders for the same item(s), without calling for fresh tenders, may be resorted to with recorded reasons and approval of Competent Authority as per DoP, provided (a) there is no downward price trend (with supporting data/ rationale), and (b) it should give benefit in delivery."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "15.2",
+   "action": "Constituting a two-member committee at project sites when requisite members are not available",
+   "authority_title": "Site-in-Charge, not below the rank of AGM",
+   "quote": "In case of project sites, if requisite no. of members (including finance member) are not available, prior approval of Site-in-Charge, not below the rank of AGM, shall be required for constituting the two member Committee."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "16.3",
+   "action": "Procuring from outside sources items within manufacturing range of sister Units/Subsidiary/JV",
+   "authority_title": "Unit Head",
+   "quote": "Procurement from outside sources, of items falling within the manufacturing range of the sister Units/ Subsidiary/ JV Companies of BHEL may be carried out only with prior approval of the Unit Head for recorded reasons."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "16.3",
+   "action": "Continuing purchase from sister unit despite incremental cash cost being higher than outside purchase",
+   "authority_title": "Head/ COC, Corporate Office",
+   "quote": "In case it is decided to continue with purchase of certain items from the sister unit irrespective of its incremental cash cost being higher than the cost of purchase from outside source, the same may be recommended by Unit Head for approval of Head/ COC, Corporate Office."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "18.1.1",
+   "action": "Relaxing the requirement of 1% bid bond for registered suppliers under MOU",
+   "authority_title": "Unit Head",
+   "quote": "However, the Unit Head may relax this condition for registered suppliers of BHEL."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "18.1.2",
+   "action": "Inviting budgetary quotation by a non-purchase department in emergent cases",
+   "authority_title": "Unit Head",
+   "quote": "In emergent cases, where there is no previous experience of purchase relating to an item, budgetary quotation may be invited by department, other than purchase, with the prior approval of the Unit Head."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "18.2.1",
+   "action": "Continuing the tie-up/MOU process at the post-bid stage",
+   "authority_title": "Heads of Unit and the concerned Business Sector/ Marketing Group",
+   "quote": "In the eventuality of Pre-bid tie-up/ MOU process not being completed by the time BHEL submits its bids to prospective customers, the necessity of continuing with the process at the post-bid stage requires approval of Heads of Unit and the concerned Business Sector/ Marketing Group."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "19.5",
+   "action": "Extension of Framework Agreement beyond the two years limit upto three months",
+   "authority_title": "Unit Head",
+   "quote": "Any further extension of the existing FA beyond the two years limit, upto a period of three months will require approval of Unit Head, provided action has been initiated for the fresh FA."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "22.1",
+   "action": "Waiver of penalty/LD",
+   "authority_title": "Competent Authority as per DoP",
+   "quote": "Any proposal to waive penalty/ LD requires the concurrence of Finance and approval shall be as per DoP."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "22.2",
+   "action": "Delivery extension for reasons not attributable to the supplier",
+   "authority_title": "Competent Authority as per DoP",
+   "quote": "In case delivery extension becomes necessary for reasons not attributable to the supplier, due analysis shall be done and financial concurrence obtained before approval by Competent Authority as per SI 9 of DoP."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "23.0",
+   "action": "Commercial settlement of extra-contractual claims within specified financial limits",
+   "authority_title": "Unit Head (not below the rank of ED)",
+   "quote": "Any extra contractual claims/ counter claims which are not possible to be settled under the extant Delegation of Powers would be referred by the Unit Head to a committee of two General Managers and Head of Finance/ Unit, who shall recommend the commercial settlement, on case to case basis, for approval of the Unit Head (not below the rank of ED), for limits as under."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "23.0",
+   "action": "Commercial settlement of extra-contractual claims exceeding specified limits",
+   "authority_title": "CMD",
+   "quote": "All commercial settlements exceeding above limits shall require recommendation of the Unit Head and concerned Functional Director (Director/ E,R&D, in case of units directly reporting to CMD), for concurrence of Director (Finance) and approval of CMD."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "26.0",
+   "action": "Deviation from minimum E1A level executive signing tender notices, POs, LOIs, FAs",
+   "authority_title": "Unit Head",
+   "quote": "Notice Inviting Tenders, Letters of Intent/ Purchase Orders, Amendments, FAs etc., after due approvals, shall be signed by an executive of minimum E1A level. Any deviation shall be with the specific approval of the Unit Head."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "29.2",
+   "action": "Procurement in anticipation of customer orders",
+   "authority_title": "CMD",
+   "quote": "Procurement in anticipation of customer orders shall require prior approval of CMD before commitment and the extant guidelines issued by Corp.MM for Stocking/ Advance Manufacturing Action shall be followed."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "34.2",
+   "action": "Any deviation not in conformity with the Purchase Policy",
+   "authority_title": "CMD",
+   "quote": "Any deviation, which is not in conformity with the Purchase Policy shall require recommendation of the concerned Functional Director & Director/ E,R&D, financial Concurrence of Director/ Finance and approval of CMD."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "35.12",
+   "action": "Relaxation to Purchase/Negotiation Committee composition when executive one level below is also not available",
+   "authority_title": "Unit Head",
+   "quote": "For any further relaxation, due to the non-availability of the appropriate level, the committee can be constituted with the approval of the Unit Head."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "35.12",
+   "action": "Sub-delegation of delegated powers in exceptional cases",
+   "authority_title": "CMD",
+   "quote": "In exceptional cases where such sub-delegation is considered necessary, prior approval of the CMD shall be obtained."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "0.02",
+   "action": "Granting unsecured advance to foreign suppliers up to US$ 20,000 in exceptional circumstances",
+   "authority_title": "Unit Head",
+   "quote": "Unsecured advance to foreign suppliers upto a maximum of US$ 20,000 (or equivalent) may be granted with financial concurrence of HOF and approval of Unit Head in exceptional circumstances which must be placed on record."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "0.02",
+   "action": "Waiver of Bank Guarantee towards advances to PSUs/Govt depts or towards safe custody/return of equipment/material",
+   "authority_title": "Unit Head",
+   "quote": "Approval of the Unit Head is required for waiver of Bank Guarantee towards advance to PSUs/ Govt. departments or towards safe custody and return of equipment after repairs etc./ material after processing/ conversion/ machining etc."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "0.02",
+   "action": "Waiver of liquidated damages due from suppliers exceeding Rs 5 lakh",
+   "authority_title": "CMD",
+   "quote": "All cases of waiver of liquidated damages due from suppliers of more than Rs 5 lakh will require concurrence of Director (Finance) and approval of CMD."
+  },
+  {
+   "policy_id": "bhel_purchase_policy",
+   "clause_id": "0.02",
+   "action": "Ex-gratia payments to suppliers on back-to-back basis",
+   "authority_title": "CMD",
+   "quote": "All ex-gratia payments to suppliers with recorded reasons and rationale will require concurrence of Director (Finance) and approval of CMD."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "5.1.3",
+   "action": "Waiver of EMD or reduction of EMD amount for specified categories",
+   "authority_title": "Head of the Contracting deptt., not below the rank of AGM",
+   "quote": "The EMD may be waived or amount reduced in following cases with the prior approval of the Head of the Contracting deptt., not below the rank of AGM:"
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "5.1.3",
+   "action": "Waiver or reduction/increase of EMD amount in other cases for recorded reasons",
+   "authority_title": "authority having the Powers of ED/ Unit Head (Site-in-charge, in case of small value works covered under clause 16.0)",
+   "quote": ", not below the rank of AGM: a) Joint Venture or Subsidiary companies of BHEL b) Central/ State PSUs/ Government deptts/ Autonomous/ Educational/ Research institutions c) Consultancy services; Banking, Insurance and other Professional services d) Repair/ Maintenance of equipment by OEMs/ OESs e) Leasing of assets f) Hiring of vehicles g) Catering, Horticulture, Sanitation and Courier services The "
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "5.1.5",
+   "action": "Release of EMD in case of expiry of offer validity period or any other circumstances",
+   "authority_title": "Head of Contracting deptt., not below the rank of AGM",
+   "quote": "In case of expiry of offer validity period or any other circumstances, EMD can be released with the approval of Head of Contracting deptt., not below the rank of AGM."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "5.2.3",
+   "action": "Waiver of Security Deposit or reduction of amount before tendering for specified cases",
+   "authority_title": "Head of the Contracting deptt., not below the rank of AGM",
+   "quote": "The Security Deposit may be waived or amount reduced in following cases with the approval (before tendering) of the Head of the Contracting deptt., not below the rank of AGM:"
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "5.2.3",
+   "action": "Waiver of Security Deposit or reduction of amount before tendering in other cases",
+   "authority_title": "Unit Head (Site-in-charge, in case of small value works covered under clause 16.0)",
+   "quote": "where owner's/contractor's assets are being let out to/ used by BHEL g) Catering, Horticulture, Sanitation and Courier services for contract value upto Rs 5 lakhs; The Security Deposit may be waived or amount reduced in other cases for reasons to be recorded with the approval (before tendering) of the Unit Head (Site-in-charge, in case of small value works covered under clause 16."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "5.2.4",
+   "action": "Release of recoveries made from running bills against equivalent BG before completion of work",
+   "authority_title": "authority competent to award the work",
+   "quote": "The recoveries made from running bills (cash deduction towards balance SD amount) can be released against submission of equivalent Bank Guarantee in acceptable form, but only once, before completion of work, with the approval of the authority competent to award the work."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "6.0",
+   "action": "Providing interest-free secured mobilization advance up to 5% of contract value",
+   "authority_title": "Head of the Unit",
+   "quote": "Out of the 10% advance mentioned at (i) above, interest free secured mobilization advance (limited to a maximum of 5% of the contract value) can be provided with the approval of Head of the Unit."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "6.0",
+   "action": "Payment of additional interim interest bearing advance to contractors against BG for resource augmentation",
+   "authority_title": "Head of the Unit/ Region",
+   "quote": "In exceptional circumstances, with due justification, Head of the Unit/ Region is empowered to approve proposals for payment of additional interim interest bearing advance to contractors, against Bank Guarantee/s, for resource augmentation towards expediting work for project implementation."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "6.0",
+   "action": "Advance payments (interest free and waiver of BG) for specified cases",
+   "authority_title": "Unit Head (not below the rank of GM)",
+   "quote": "Advance payment/s (interest free and waiver of BG) can be agreed with the approval of Unit Head (not below the rank of GM) in the following cases:"
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "6.2.1",
+   "action": "Excluding/including certain categories of contractors in Limited tender",
+   "authority_title": "competent authority not below the level of Head of Contracting department (AGM or above rank)",
+   "quote": "However, approval of competent authority not below the level of Head of Contracting department (AGM or above rank) is required (reasons shall be recorded with rationale) in the following cases: (i) For excluding any of the registered contractors (ii) For including registered contractors with low performance rating under SEARP (iii) For addressing Limited tender enquiry to contractors short listed "
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "6.2.1",
+   "action": "Addressing Limited tender enquiry to contractors qualified earlier for a similar job in response to open tender(s)",
+   "authority_title": "competent authority not lower than Head of Unit",
+   "quote": "In exceptional circumstances, contractors who have been qualified earlier for a similar job (in response to open tender/s) may also be addressed with the approval of competent authority not lower than Head of Unit, subject to following conditions:"
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "6.2.2",
+   "action": "Addressing Limited tender enquiry to unregistered contractors referred by the Customer",
+   "authority_title": "Product/ Construction Manager/ Head of Contracting Deptt (AGM or above rank)",
+   "quote": "For addressing Limited tender enquiry to unregistered contractors referred by the Customer, approval of Product/ Construction Manager/ Head of Contracting Deptt (AGM or above rank) shall be taken with recorded reasons."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "9.2",
+   "action": "Reduction or extension of tender submission time limit",
+   "authority_title": "authority competent to invite tenders (limited to Unit Head)",
+   "quote": "This time limit may be reduced (before floating of tenders) or extended (after floating of tenders) for recorded reasons, with the approval of authority competent to invite tenders (limited to Unit Head)."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "9.7",
+   "action": "Accepting additional technical deviations and framing additional loading criteria after opening techno-commercial bid",
+   "authority_title": "Engineering/ Indenting head",
+   "quote": "In respect of any additional technical deviations for which loading criterion is required to be framed after opening of techno-commercial bid, the Engineering/ Indenting head shall be authorized to accept any technical deviations and frame the additional loading criteria thereof."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "9.7",
+   "action": "Accepting additional commercial deviations and framing loading criteria after opening techno-commercial bid",
+   "authority_title": "authority competent to approve the placement of order (limited to Product Head/ Head of Contracting deptt)",
+   "quote": "As regards any additional commercial deviations for which loading criteria is required to be framed after opening of techno-commercial bid, approval of the authority competent to approve the placement of order (limited to Product Head/ Head of Contracting deptt) shall be obtained for accepting the deviations and framing the loading criteria thereof."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "10.0",
+   "action": "Considering late offers in case of Single tender enquiry",
+   "authority_title": "next higher authority competent to invite tenders (limited to Unit Head)",
+   "quote": "In case of Single tender enquiry, late offers may be considered with the prior approval of next higher authority competent to invite tenders (limited to Unit Head)."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "12.4",
+   "action": "Relaxing rate variations over estimates up to +20% for turnkey or prestigious jobs",
+   "authority_title": "Unit Head not below the rank of a General Manager",
+   "quote": "However, in exceptional cases in respect of turnkey jobs or any prestigious job with a definite date line to be met, the Unit Head not below the rank of a General Manager, may relax the above limits up to +20% of the estimates after recording the justification for the same."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "12.4",
+   "action": "Acceptance of price beyond +20% of estimates where fresh competitive bidding is not feasible/desirable",
+   "authority_title": "respective Functional Director (or CMD, in case of Units directly reporting to CMD)",
+   "quote": "In case fresh competitive bidding is considered not feasible or desirable and in situation where revised final price obtained are still beyond +20%, acceptance of such price shall require approval of respective Functional Director (or CMD, in case of Units directly reporting to CMD) with concurrence of Director (Finance)."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "12.6",
+   "action": "Conducting price negotiations as an exception with L-1 bidder",
+   "authority_title": "next higher authority competent to award the work (limited to the Unit Head)",
+   "quote": "Price negotiations may be conducted as an exception, with L-1 bidder, by the Tender/Negotiation Committee with the prior approval of the next higher authority competent to award the work (limited to the Unit Head)."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "13.2",
+   "action": "Distribution/splitting of work in case of two qualified bidders",
+   "authority_title": "Unit Head (not below the rank of GM)",
+   "quote": "Distribution in case of two qualified bidders shall require approval of Unit Head (not below the rank of GM)."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "14.0",
+   "action": "Resorting to re-tendering under specified exceptional circumstances",
+   "authority_title": "one step higher than the Competent Authority (limited to Unit Head)",
+   "quote": "Re-tendering may be resorted to only after the administrative approval of one step higher than the Competent Authority (limited to Unit Head) for ordering under the circumstances such as:"
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "20.0",
+   "action": "Procurement from outside sources of works/services falling within range of sister Units",
+   "authority_title": "Unit Head",
+   "quote": "Procurement from outside sources, of works/ services falling within the range of the sister Units of BHEL may be carried out only with the prior approval of the Unit Head for recorded reasons."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "21.1",
+   "action": "Relaxing condition of taking 1% bid bond from registered contractors for MOUs",
+   "authority_title": "Unit Head",
+   "quote": "However, the Unit Head may relax this condition for registered contractors of BHEL."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "22.4",
+   "action": "Extension of existing FA beyond the 2-year/5-year limit up to a period of 3 months",
+   "authority_title": "Unit Head",
+   "quote": "Any further extension of the existing FA beyond the two years (or five years, as above) limit, upto a period of three months will require approval of Unit Head, provided action has been initiated for the fresh FA."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "24.1",
+   "action": "Exclusion of Penalty/LD clause from an NIT",
+   "authority_title": "Unit Head",
+   "quote": "In case Penalty/ LD clause is not proposed in any particular NIT, the same may be excluded with the approval of Unit Head with recorded reasons."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "24.2",
+   "action": "Proposal to waive penalty/LD due from contractors",
+   "authority_title": "Competent Authority as per DoP",
+   "quote": "Any proposal to waive penalty/ LD due from contractors shall require the concurrence of Finance and approval as per DoP."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "24.3",
+   "action": "Extension of completion period",
+   "authority_title": "Competent Authority as per DoP",
+   "quote": "In case extension of completion period becomes necessary, delay analysis shall be done and financial concurrence obtained before approval by Competent Authority as per DoP."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "29.0",
+   "action": "Rejection of a bid on technical/commercial grounds where tender committee was not constituted",
+   "authority_title": "Section Head of Indenting/ Contracting group, not below the rank of DGM",
+   "quote": "Wherever tender committee was not required to be constituted, rejection of a bid on technical/ commercial grounds shall be with the approval of concerned Section Head of Indenting/ Contracting group, not below the rank of DGM."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "29.0",
+   "action": "Deviation from minimum E1A level for signing NITs, LOIs, Work Orders, Contracts, Amendments, FAs",
+   "authority_title": "Unit Head",
+   "quote": "Any deviation shall be with the specific approval of the Unit Head."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "35.2",
+   "action": "Any deviation not in conformity with the Works Policy",
+   "authority_title": "CMD",
+   "quote": "Any deviation, which is not in conformity with the Works Policy shall have the concurrence of Director (Finance) and approval of CMD."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "36.12",
+   "action": "Sub-delegation of delegation of powers in exceptional cases",
+   "authority_title": "concerned Functional Director and CMD",
+   "quote": "While exercising these powers the executives of the Finance & Accounts Department will, inter alia, ensure that the proposals conform to the provisions of the extant Companies Act, as amended from time to time, Memorandum and Articles of Association of the Company, the directives issued by the President of India, the Policies laid down by the Board of Directors and also subject to such directives "
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "36.12",
+   "action": "Waiver of Bank Guarantee requirement during provisional extension of time",
+   "authority_title": "Competent Authority as per DoP",
+   "quote": "However, depending upon the circumstances and merits of each case, the Competent Authority may waive the requirement of Bank Guarantee subject to:\n(a) Withholding of amount @ 10 % of subsequent RA/ interim bills till final ‘delay analysis’ and decision on levy of LD/ Penalty or otherwise, and\n(b) Ensuring sufficient financial safeguards (e.g. Security Deposit, Retention amount), as appropriate."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "36.12",
+   "action": "Sanction of extra quantity/supplementary/substitution/extra items beyond (+) 30% of contracted value",
+   "authority_title": "next higher authority (not below Head of Unit)",
+   "quote": "Deviation beyond (+) 30% of the contracted value will require approval of next higher authority (not below Head of Unit)."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "36.12",
+   "action": "Waiver or reduction of LD/Penalty due from contractor beyond Rs 5 lakh",
+   "authority_title": "respective Functional Director (or CMD, in case of Units directly reporting to CMD)",
+   "quote": "All cases of waiver/ reduction of LD/ Penalty (due from Contractor) beyond Rs 5 lakh shall require approval of respective Functional Director (or CMD, in case of Units directly reporting to CMD) with concurrence of Director (Finance)."
+  },
+  {
+   "policy_id": "bhel_works_policy",
+   "clause_id": "36.12",
+   "action": "Ex-gratia payments to contractors",
+   "authority_title": "CMD",
+   "quote": "All ex-gratia payments to contractors with recorded reasons and rationale will require concurrence of Director (Finance) and approval of CMD."
+  }
+ ]
+}

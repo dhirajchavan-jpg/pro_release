@@ -1,0 +1,1749 @@
+{
+ "schema_version": "applicability.v1",
+ "policies": {
+  "bhel_purchase_policy": {
+   "1.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "2.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "2.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "2.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "2.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "2.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "2.5": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "2.6": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.5": {
+    "mode": "conditional",
+    "trigger": "Expression of Interest (EOI) is published for unclear specifications or infrequent procurement",
+    "required_statement": "The EOI notice must specify the broad scope of work, eligibility and pre-qualification criteria, past experience requirements, and timeline for prospective supplier responses and comments."
+   },
+   "3.6": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.7": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.8": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.9": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.10": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "4.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5A": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5A.1": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5A.2": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5A.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5A.4": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5A.5": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5A.6": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5B": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5B.1": {
+    "mode": "conditional",
+    "trigger": "Performance Security is required in the tender",
+    "required_statement": "Performance Security amount shall not be less than 5% of the contract value."
+   },
+   "5B.2": {
+    "mode": "conditional",
+    "trigger": "Performance Security is required in the tender",
+    "required_statement": "Acceptable modes of deposit for Performance Security and compliance with URDG 758 for GTE tenders."
+   },
+   "5B.3": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5B.4": {
+    "mode": "conditional",
+    "trigger": "Performance Security is required in the tender",
+    "required_statement": "Performance Security will be forfeited and credited to BHEL in the event of breach of contract."
+   },
+   "5B.5": {
+    "mode": "conditional",
+    "trigger": "Performance Security is required in the tender",
+    "required_statement": "Performance Security will be refunded without interest within 60 days of completion of all contractual obligations."
+   },
+   "5B.6": {
+    "mode": "conditional",
+    "trigger": "Performance Security is required in the tender",
+    "required_statement": "Performance Security shall not carry any interest."
+   },
+   "5.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.1.1": {
+    "mode": "conditional",
+    "trigger": "Open tender system is adopted",
+    "required_statement": "Pre-Qualification criteria and two/three part bid system requirements forming part of the NIT."
+   },
+   "5.1.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.1.3": {
+    "mode": "conditional",
+    "trigger": "certain drawings or tender document parts cannot be hosted on the website",
+    "required_statement": "Modalities for sending/collection of non-hosted tender documents or drawings."
+   },
+   "5.1.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.2.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.2.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.2.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.3.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.3.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.3.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.3.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "6.0": {
+    "mode": "conditional",
+    "trigger": "Reverse auction is conducted for procurement",
+    "required_statement": "State that procurement will be conducted through reverse auction as per extant Corp MM guidelines."
+   },
+   "7.0": {
+    "mode": "conditional",
+    "trigger": "Electronic procurement mode is adopted",
+    "required_statement": "Specify that bidding, contracting, and payments will be accomplished through electronic mode."
+   },
+   "8.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "8.1": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "8.2": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "8.3": {
+    "mode": "conditional",
+    "trigger": "Offers via email are permitted",
+    "required_statement": "Specify the pre-designated email ID with joint Purchase-Finance access for submission of complete offers."
+   },
+   "8.4": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "8.5": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "8.6": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "8.7": {
+    "mode": "conditional",
+    "trigger": "Deviations are permissible and subjected to loading",
+    "required_statement": "Specify the list of permissible technical and commercial deviations along with their loading criteria."
+   },
+   "8.8": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "8.8.1": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "8.8.2": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "8.8.3": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "8.8.4": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "8.9": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "8.10": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "9.0": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "10.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "10.1": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "10.2": {
+    "mode": "conditional",
+    "trigger": "foreign currency bids are allowed or forex conversion is involved",
+    "required_statement": "Evaluation exchange rate (SBI TT selling rate) shall be based on the opening date (tender opening for single part, Part-I for two/three part and RA) or previous working day if a holiday."
+   },
+   "10.3": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "11.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "11.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "11.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "11.2.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "11.2.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "11.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "11.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "11.5": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "11.6": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "12.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "12.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "12.2": {
+    "mode": "conditional",
+    "trigger": "order is decided in advance to be split among multiple suppliers",
+    "required_statement": "The intention and the manner of splitting the order quantity among suppliers shall be clearly stated in the tender enquiry."
+   },
+   "12.3": {
+    "mode": "conditional",
+    "trigger": "order is split among multiple suppliers",
+    "required_statement": "L-1 finalized rates shall be counter-offered to other bidders, and to subsequent bidders if not accepted."
+   },
+   "13.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "14.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "14.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "14.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "14.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "14.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "14.5": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "14.6": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "14.7": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "15.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "15.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "15.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "15.2.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "15.2.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "16.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "16.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "16.1.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "16.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "16.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "16.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "17.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "17.1": {
+    "mode": "conditional",
+    "trigger": "capital equipment is being procured",
+    "required_statement": "Specify requirement of Bank Guarantees of appropriate value for performance against contract and equipment."
+   },
+   "17.2": {
+    "mode": "conditional",
+    "trigger": "procurement of Balance of Plants (BOPs)",
+    "required_statement": "Specify requirement of Bank Guarantees of appropriate value for performance against contract and equipment."
+   },
+   "17.3": {
+    "mode": "conditional",
+    "trigger": "material is issued by BHEL for sub-contracting work",
+    "required_statement": "Specify the required percentage of Bank Guarantee for performance of the order against material issued."
+   },
+   "17.4": {
+    "mode": "conditional",
+    "trigger": "procurement of Capital items or Balance of Plants (BOPs)",
+    "required_statement": "Stipulate Bank Guarantee percentage of not less than 3% for Capital items and not less than 5% for BOPs."
+   },
+   "18.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "18.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "18.1.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "18.1.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "18.1.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "18.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "18.2.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "18.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "18.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "19.0": {
+    "mode": "conditional",
+    "trigger": "procurement is conducted through a Framework Agreement with quantity splitting",
+    "required_statement": "State the intention and manner to split quantities among multiple suppliers in the tender enquiry."
+   },
+   "19.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "19.2": {
+    "mode": "conditional",
+    "trigger": "delivery locations are not known at the time of issue of tender",
+    "required_statement": "Distribution pattern cannot be committed upfront; evaluation for each destination will be done on 'total cost to BHEL' basis when delivery location becomes known, and firm PO placed accordingly."
+   },
+   "19.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "19.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "19.5": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "19.6": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "19.7": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "20.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "20.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "20.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "21.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "21.1": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "21.2": {
+    "mode": "conditional",
+    "trigger": "material cost depends on statutory regulations/administered prices or is liable to wide fluctuations",
+    "required_statement": "Price variation clause with a mathematical based formula shall be applicable."
+   },
+   "22.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "22.1": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "22.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "23.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "24.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "24.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "24.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "24.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "24.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "24.5": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "25.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "26.0": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "27.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "27.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "27.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "28.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "29.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "29.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "29.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "29.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "30.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "31.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "32.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "32.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "32.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "33.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "34.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "34.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "34.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "34.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "35.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "35.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "35.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "35.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "35.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "35.5": {
+    "mode": "conditional",
+    "trigger": "customer contract mandates specific approved suppliers, makes, or sources",
+    "required_statement": "Procurement shall be restricted to customer-approved makes, types, or specified sources as per customer contract requirements."
+   },
+   "35.6": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "35.7": {
+    "mode": "conditional",
+    "trigger": "developmental order based on BHEL's own design is placed",
+    "required_statement": "The supplier shall maintain exclusivity of BHEL's design and comply with developmental/trial order provisions."
+   },
+   "35.8": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "35.9": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "35.10": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "35.11": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "35.12": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "1.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "2.3.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "2.3.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "0.5": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.3.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.3.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "0.30": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "0.20": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "0.50": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "0.10": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "0.05": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "0.03": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "0.02": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   }
+  },
+  "bhel_works_policy": {
+   "0.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "1.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "2.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "2.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "2.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "2.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "2.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.4": {
+    "mode": "conditional",
+    "trigger": "Expression of Interest (EOI) is published for works/services with unclear specs or infrequent procurement",
+    "required_statement": "State the broad scope of requirement, eligibility, pre-qualification criteria, past experience requirements, and invite comments on the projected scope of work with a defined response timeline."
+   },
+   "3.5": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.6": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.7": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.8": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "3.9": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "4.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "4.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "4.1.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "4.1.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "4.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "4.2.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "4.2.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "4.2.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "4.2.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "4.2.5": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "4.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.0": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.1": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.1.1": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.1.2": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.1.3": {
+    "mode": "conditional",
+    "trigger": "EMD is waived or reduced for specific bidder categories or approved cases",
+    "required_statement": "Specify the categories/cases exempted from EMD or eligible for reduced EMD amount."
+   },
+   "5.1.4": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.1.5": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.1.6": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.1.7": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.2": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.2.1": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.2.2": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.2.3": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.2.4": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.2.5": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "5.2.6": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "6.0": {
+    "mode": "conditional",
+    "trigger": "mobilisation advance is to be provided to the contractor",
+    "required_statement": "Specify terms of mobilisation advance, BG requirement of 110%, interest rate or interest-free terms, and recovery schedule."
+   },
+   "6.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "6.1.1": {
+    "mode": "conditional",
+    "trigger": "open tender is adopted",
+    "required_statement": "Incorporate Pre-Qualification Criteria (PQR) covering technical, financial, and organizational requirements and stipulate a two/three-part bidding system."
+   },
+   "6.1.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "6.1.3": {
+    "mode": "conditional",
+    "trigger": "certain drawings or tender documents cannot be hosted on the website",
+    "required_statement": "State clearly the modalities for sending or physical collection of the restricted drawings/documents."
+   },
+   "6.1.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "6.1.5": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "6.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "6.2.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "6.2.2": {
+    "mode": "conditional",
+    "trigger": "limited tender enquiry is addressed to unregistered contractors referred by the customer",
+    "required_statement": "State that bids are invited in two/three parts and offers will be considered only if registered with permanent code under SEARP before price bid opening."
+   },
+   "6.2.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "6.2.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "6.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "6.3.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "6.3.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "6.3.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "6.3.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "7.0": {
+    "mode": "conditional",
+    "trigger": "Reverse auction is conducted",
+    "required_statement": "Reverse auction norms and procedures shall be conducted as per extant guidelines."
+   },
+   "8.0": {
+    "mode": "conditional",
+    "trigger": "Electronic procurement mode is adopted",
+    "required_statement": "Procurement, bidding, contracting, and payments shall be accomplished through electronic mode."
+   },
+   "9.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "9.1": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "9.2": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "9.3": {
+    "mode": "conditional",
+    "trigger": "Bids are permitted to be submitted via Fax/E-mail/Internet/EDI",
+    "required_statement": "Offers submitted by Fax/E-mail/Internet/EDI shall be considered only if complete in all respects and received within the due date."
+   },
+   "9.4": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "9.5": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "9.6": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "9.7": {
+    "mode": "conditional",
+    "trigger": "Technical or commercial deviations are permissible with loading criteria",
+    "required_statement": "The list of permissible technical/commercial deviations and their applicable loading criteria shall be specified in the tender."
+   },
+   "9.8": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "9.8.1": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "9.8.2": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "9.8.3": {
+    "mode": "conditional",
+    "trigger": "Changes in technical scope, specifications, or commercial terms occur after bid submission",
+    "required_statement": "Techno-commercially acceptable bidders shall submit the price impact of finalized changes by the stipulated cut-off date."
+   },
+   "9.8.4": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "9.9": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "9.10": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "10.0": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "11.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "11.1": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "11.2": {
+    "mode": "conditional",
+    "trigger": "foreign currency bids or multi-part/RA tenders requiring SBI TT selling rate conversion are involved",
+    "required_statement": "Exchange rate (SBI TT selling rate) shall be taken as on date of tender opening for single part, or date of Part-I opening for two/three part bids and Reverse Auction (or previous bank working day if a holiday)."
+   },
+   "11.3": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "12.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "12.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "12.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "12.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "12.4": {
+    "mode": "conditional",
+    "trigger": "labour supply contracts are tendered",
+    "required_statement": "Bids lower than the minimum statutory amount (minimum wage, PF, ESI, etc. declared by unit HR) shall be rejected."
+   },
+   "12.5": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "12.6": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "12.7": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "12.8": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "13.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "13.1": {
+    "mode": "conditional",
+    "trigger": "work is decided to be awarded to more than one contractor",
+    "required_statement": "Work distribution among contractors shall be done in a fair and transparent manner guided by the order of tender rankings."
+   },
+   "13.2": {
+    "mode": "conditional",
+    "trigger": "work is decided in advance to be split among multiple contractors",
+    "required_statement": "The intention and specific manner/ratio of splitting the work among multiple contractors shall be stated in the tender enquiry."
+   },
+   "13.3": {
+    "mode": "conditional",
+    "trigger": "work/order is to be split among multiple bidders",
+    "required_statement": "Finalized L-1 rates shall be counter-offered to other bidders in order of ranking for splitting of order."
+   },
+   "14.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "15.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "15.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "15.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "15.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "15.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "15.5": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "15.6": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "15.7": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "16.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "17.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "18.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "19.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "20.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "21.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "21.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "21.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "21.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "21.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "22.0": {
+    "mode": "conditional",
+    "trigger": "Framework Agreement tender involves splitting work/services among multiple contractors",
+    "required_statement": "The intention and manner of splitting the work/services among more than one Contractor shall be explicitly stated in the tender enquiry."
+   },
+   "22.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "22.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "22.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "22.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "22.5": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "23.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "23.1": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "23.2": {
+    "mode": "conditional",
+    "trigger": "Completion period is longer (more than 12 months) or input costs depend on statutory/administered prices or are liable to wide fluctuations",
+    "required_statement": "Incorporate a price variation clause with a mathematical-based formula."
+   },
+   "24.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "24.1": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "24.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "24.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "25.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "26.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "27.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "27.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "27.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "27.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "28.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "29.0": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "30.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "31.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "32.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "33.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "33.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "33.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "34.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "35.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "35.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "35.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "35.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "36.0": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "36.1": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "36.2": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "36.3": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "36.4": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "36.5": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "36.6": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "36.7": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "36.8": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "36.9": {
+    "mode": "conditional",
+    "trigger": "Tender or contract contains customer approval or specified source requirements",
+    "required_statement": "Contractors or sources for specified works/services must be approved by the customer as per customer contract requirements."
+   },
+   "36.10": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "36.11": {
+    "mode": "internal_process",
+    "trigger": "",
+    "required_statement": ""
+   },
+   "36.12": {
+    "mode": "unconditional",
+    "trigger": "",
+    "required_statement": ""
+   }
+  }
+ }
+}

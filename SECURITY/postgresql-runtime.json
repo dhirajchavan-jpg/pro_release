@@ -1,0 +1,11 @@
+﻿{
+    "name":  "PostgreSQL",
+    "version":  "16.13",
+    "license":  "PostgreSQL",
+    "executable_sha256":  "e0e989b2914066451214c8db145413b8db5f7761db2fe312b3d86cf84f20e94b",
+    "bundled_directories":  [
+                                "bin",
+                                "lib",
+                                "share"
+                            ]
+}

@@ -1,0 +1,892 @@
+{
+  "info": {
+    "_postman_id": "procurement-fixed-schema-live-v1",
+    "name": "Procurement Fixed Schema API - Live",
+    "description": "Live fixed-schema consumer workflow. Set api_token and local upload paths, then run each folder in order. Polling requests are intentionally manual: repeat until status is complete or failed.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{api_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "api_token",
+      "value": ""
+    },
+    {
+      "key": "tender_file_path",
+      "value": ""
+    },
+    {
+      "key": "bidder_file_path",
+      "value": ""
+    },
+    {
+      "key": "project_key",
+      "value": "postman-fixed-tender-001"
+    },
+    {
+      "key": "tender_title",
+      "value": "Postman Fixed API Tender"
+    },
+    {
+      "key": "vendor_name",
+      "value": "Postman Test Bidder"
+    },
+    {
+      "key": "reviewer_name",
+      "value": "Postman Reviewer"
+    },
+    {
+      "key": "continue_with_limitations",
+      "value": "false"
+    },
+    {
+      "key": "job_id",
+      "value": ""
+    },
+    {
+      "key": "job_status",
+      "value": ""
+    },
+    {
+      "key": "project_id",
+      "value": ""
+    },
+    {
+      "key": "tender_id",
+      "value": ""
+    },
+    {
+      "key": "tender_version_id",
+      "value": ""
+    },
+    {
+      "key": "bid_id",
+      "value": ""
+    },
+    {
+      "key": "vendor_id",
+      "value": ""
+    },
+    {
+      "key": "evaluation_id",
+      "value": ""
+    },
+    {
+      "key": "tender_revision",
+      "value": ""
+    },
+    {
+      "key": "classification_revision",
+      "value": ""
+    },
+    {
+      "key": "tender_snapshot",
+      "value": ""
+    },
+    {
+      "key": "classification_snapshot",
+      "value": ""
+    },
+    {
+      "key": "document_content_url",
+      "value": ""
+    },
+    {
+      "key": "tender_upload_key",
+      "value": ""
+    },
+    {
+      "key": "tender_review_key",
+      "value": ""
+    },
+    {
+      "key": "tender_approval_key",
+      "value": ""
+    },
+    {
+      "key": "bid_upload_key",
+      "value": ""
+    },
+    {
+      "key": "classification_review_key",
+      "value": ""
+    },
+    {
+      "key": "classification_approval_key",
+      "value": ""
+    },
+    {
+      "key": "evaluation_key",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "1 - Tender understanding",
+      "item": [
+        {
+          "name": "Upload tender",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "{{tender_upload_key}}"
+              }
+            ],
+            "url": "{{base_url}}/v1/pipeline/fixed-schema/tenders",
+            "description": "Starts the fixed 31-field tender understanding job.",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "{{tender_file_path}}"
+                },
+                {
+                  "key": "project_key",
+                  "type": "text",
+                  "value": "{{project_key}}"
+                },
+                {
+                  "key": "title",
+                  "type": "text",
+                  "value": "{{tender_title}}"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.collectionVariables.get('tender_upload_key')) {",
+                  "  pm.collectionVariables.set('tender_upload_key', pm.variables.replaceIn('{{$guid}}'));",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 202 accepted', () => pm.response.to.have.status(202));",
+                  "const body = pm.response.json();",
+                  "['job_id','project_id','status','job_url'].forEach(k => pm.expect(body).to.have.property(k));",
+                  "pm.collectionVariables.set('job_id', body.job_id);",
+                  "pm.collectionVariables.set('project_id', body.project_id);",
+                  "if (body.tender_id) pm.collectionVariables.set('tender_id', body.tender_id);",
+                  "if (body.tender_version_id) pm.collectionVariables.set('tender_version_id', body.tender_version_id);",
+                  "if (body.bid_id) pm.collectionVariables.set('bid_id', body.bid_id);",
+                  "if (body.vendor_id) pm.collectionVariables.set('vendor_id', body.vendor_id);",
+                  "if (body.evaluation_id) pm.collectionVariables.set('evaluation_id', body.evaluation_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Poll tender job",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/v1/pipeline/fixed-schema/jobs/{{job_id}}",
+            "description": "Repeat manually until status is complete or failed."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Job response is valid', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.expect(['queued','running','complete','failed']).to.include(body.status);",
+                  "pm.collectionVariables.set('job_status', body.status);",
+                  "if (body.status === 'failed') console.error(body.error_code, body.error);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get canonical tender",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/v1/pipeline/fixed-schema/tenders/{{project_id}}",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Tender GET is canonical', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.schema_version).to.eql('procurement-fixed-tender.v1');",
+                  "  pm.expect(Object.keys(body.fields)).to.have.length(31);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('tender_revision', String(body.revision));",
+                  "pm.collectionVariables.set('tender_snapshot', JSON.stringify(body));",
+                  "if (body.documents.length) pm.collectionVariables.set('document_content_url', body.documents[0].content_url || '');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Submit complete 31-field review",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{tender_review_key}}"
+              },
+              {
+                "key": "If-Match",
+                "value": "\"{{tender_revision}}\""
+              }
+            ],
+            "url": "{{base_url}}/v1/pipeline/fixed-schema/tenders/{{project_id}}",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{{tender_review_body}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const raw = pm.collectionVariables.get('tender_snapshot');",
+                  "if (!raw) throw new Error('Run Get canonical tender first.');",
+                  "const source = JSON.parse(raw);",
+                  "const fields = {};",
+                  "Object.entries(source.fields).forEach(([key, value]) => {",
+                  "  fields[key] = {",
+                  "    status: value.status, value: value.value, conditions: value.conditions,",
+                  "    exceptions: value.exceptions, required_documents: value.required_documents, notes: value.notes",
+                  "  };",
+                  "});",
+                  "pm.variables.set('tender_review_body', JSON.stringify({",
+                  "  schema_version: 'procurement-fixed-tender-review.v1',",
+                  "  schema_id: 'tender-agent-reviewed-condensed-v2',",
+                  "  expected_revision: Number(source.revision),",
+                  "  reviewed_by: pm.collectionVariables.get('reviewer_name'),",
+                  "  reason: 'Complete tender review submitted from Postman.', fields",
+                  "}, null, 2));",
+                  "if (!pm.collectionVariables.get('tender_review_key')) pm.collectionVariables.set('tender_review_key', pm.variables.replaceIn('{{$guid}}'));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Full tender review saved', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.expect(Object.keys(body.fields)).to.have.length(31);",
+                  "pm.collectionVariables.set('tender_revision', String(body.revision));",
+                  "pm.collectionVariables.set('tender_snapshot', JSON.stringify(body));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Approve tender",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{tender_approval_key}}"
+              }
+            ],
+            "url": "{{base_url}}/v1/pipeline/fixed-schema/tenders/{{project_id}}/approve",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"expected_revision\": {{tender_revision}},\n  \"reviewed_by\": \"{{reviewer_name}}\",\n  \"reason\": \"Tender approved from Postman.\",\n  \"continue_with_limitations\": {{continue_with_limitations}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.collectionVariables.get('tender_approval_key')) {",
+                  "  pm.collectionVariables.set('tender_approval_key', pm.variables.replaceIn('{{$guid}}'));",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Tender approved', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.expect(body.review_status).to.eql('approved');",
+                  "pm.expect(body.editable).to.eql(false);",
+                  "pm.collectionVariables.set('tender_revision', String(body.revision));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Open first uploaded document",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{document_content_url}}",
+            "description": "Run Get canonical tender first so document_content_url is captured."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Document is readable', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2 - Bid classification",
+      "item": [
+        {
+          "name": "Upload bidder package",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "{{bid_upload_key}}"
+              }
+            ],
+            "url": "{{base_url}}/v1/pipeline/fixed-schema/bids",
+            "description": "",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "{{bidder_file_path}}"
+                },
+                {
+                  "key": "project_id",
+                  "type": "text",
+                  "value": "{{project_id}}"
+                },
+                {
+                  "key": "vendor_name",
+                  "type": "text",
+                  "value": "{{vendor_name}}"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.collectionVariables.get('bid_upload_key')) {",
+                  "  pm.collectionVariables.set('bid_upload_key', pm.variables.replaceIn('{{$guid}}'));",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 202 accepted', () => pm.response.to.have.status(202));",
+                  "const body = pm.response.json();",
+                  "['job_id','project_id','status','job_url'].forEach(k => pm.expect(body).to.have.property(k));",
+                  "pm.collectionVariables.set('job_id', body.job_id);",
+                  "pm.collectionVariables.set('project_id', body.project_id);",
+                  "if (body.tender_id) pm.collectionVariables.set('tender_id', body.tender_id);",
+                  "if (body.tender_version_id) pm.collectionVariables.set('tender_version_id', body.tender_version_id);",
+                  "if (body.bid_id) pm.collectionVariables.set('bid_id', body.bid_id);",
+                  "if (body.vendor_id) pm.collectionVariables.set('vendor_id', body.vendor_id);",
+                  "if (body.evaluation_id) pm.collectionVariables.set('evaluation_id', body.evaluation_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Poll classification job",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/v1/pipeline/fixed-schema/jobs/{{job_id}}",
+            "description": "Repeat manually until status is complete or failed."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Job response is valid', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.expect(['queued','running','complete','failed']).to.include(body.status);",
+                  "pm.collectionVariables.set('job_status', body.status);",
+                  "if (body.status === 'failed') console.error(body.error_code, body.error);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get complete classification",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/v1/pipeline/fixed-schema/projects/{{project_id}}/bids/{{vendor_id}}/classification",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Classification GET is canonical', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.schema_version).to.eql('procurement-fixed-classification.v1');",
+                  "  pm.expect(body.physical_routes.length).to.eql(body.documents.length);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('classification_revision', String(body.revision));",
+                  "pm.collectionVariables.set('classification_snapshot', JSON.stringify(body));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Submit complete classification review",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{classification_review_key}}"
+              },
+              {
+                "key": "If-Match",
+                "value": "\"{{classification_revision}}\""
+              }
+            ],
+            "url": "{{base_url}}/v1/pipeline/fixed-schema/projects/{{project_id}}/bids/{{vendor_id}}/classification",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{{classification_review_body}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const raw = pm.collectionVariables.get('classification_snapshot');",
+                  "if (!raw) throw new Error('Run Get complete classification first.');",
+                  "const source = JSON.parse(raw);",
+                  "pm.variables.set('classification_review_body', JSON.stringify({",
+                  "  schema_version: 'procurement-fixed-classification-review.v1',",
+                  "  expected_revision: Number(source.revision),",
+                  "  reviewed_by: pm.collectionVariables.get('reviewer_name'),",
+                  "  reason: 'Complete classification review submitted from Postman.',",
+                  "  logical_documents: source.logical_documents, physical_routes: source.physical_routes",
+                  "}, null, 2));",
+                  "if (!pm.collectionVariables.get('classification_review_key')) pm.collectionVariables.set('classification_review_key', pm.variables.replaceIn('{{$guid}}'));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Full classification saved', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('classification_revision', String(body.revision));",
+                  "pm.collectionVariables.set('classification_snapshot', JSON.stringify(body));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Approve classification",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{classification_approval_key}}"
+              }
+            ],
+            "url": "{{base_url}}/v1/pipeline/fixed-schema/projects/{{project_id}}/bids/{{vendor_id}}/classification/approve",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"expected_revision\": {{classification_revision}},\n  \"reviewed_by\": \"{{reviewer_name}}\",\n  \"reason\": \"Classification approved from Postman.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.collectionVariables.get('classification_approval_key')) {",
+                  "  pm.collectionVariables.set('classification_approval_key', pm.variables.replaceIn('{{$guid}}'));",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Classification approved', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.expect(body.review_status).to.eql('approved');",
+                  "pm.expect(body.editable).to.eql(false);",
+                  "pm.collectionVariables.set('classification_revision', String(body.revision));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "3 - Bid evaluation",
+      "item": [
+        {
+          "name": "Start evaluation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{evaluation_key}}"
+              }
+            ],
+            "url": "{{base_url}}/v1/pipeline/fixed-schema/bids/evaluate",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"project_id\": \"{{project_id}}\",\n  \"vendor_id\": \"{{vendor_id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.collectionVariables.get('evaluation_key')) {",
+                  "  pm.collectionVariables.set('evaluation_key', pm.variables.replaceIn('{{$guid}}'));",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 202 accepted', () => pm.response.to.have.status(202));",
+                  "const body = pm.response.json();",
+                  "['job_id','project_id','status','job_url'].forEach(k => pm.expect(body).to.have.property(k));",
+                  "pm.collectionVariables.set('job_id', body.job_id);",
+                  "pm.collectionVariables.set('project_id', body.project_id);",
+                  "if (body.tender_id) pm.collectionVariables.set('tender_id', body.tender_id);",
+                  "if (body.tender_version_id) pm.collectionVariables.set('tender_version_id', body.tender_version_id);",
+                  "if (body.bid_id) pm.collectionVariables.set('bid_id', body.bid_id);",
+                  "if (body.vendor_id) pm.collectionVariables.set('vendor_id', body.vendor_id);",
+                  "if (body.evaluation_id) pm.collectionVariables.set('evaluation_id', body.evaluation_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Poll evaluation job",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/v1/pipeline/fixed-schema/jobs/{{job_id}}",
+            "description": "Repeat manually until status is complete or failed."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Job response is valid', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.expect(['queued','running','complete','failed']).to.include(body.status);",
+                  "pm.collectionVariables.set('job_status', body.status);",
+                  "if (body.status === 'failed') console.error(body.error_code, body.error);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get final evaluation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/v1/pipeline/fixed-schema/projects/{{project_id}}/bids/{{vendor_id}}/evaluation",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Evaluation response is internally consistent', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "  const body = pm.response.json();",
+                  "  const s = body.summary;",
+                  "  pm.expect(s.passed + s.failed + s.missing + s.needs_manual_review).to.eql(s.total);",
+                  "  pm.expect(body.criteria_results).to.have.length(s.total);",
+                  "  if (s.needs_manual_review > 0) pm.expect(body.manual_review.required).to.eql(true);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('evaluation_id', body.evaluation_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get BHEL evaluation view",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/v1/pipeline/fixed-schema/projects/{{project_id}}/bids/{{vendor_id}}/evaluation/bhel",
+            "description": "Optional BHEL Noting-derived view. The fixed v1 evaluation response remains unchanged."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('BHEL evaluation view is valid', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.schema_version).to.eql('bhel-bid-evaluation.v1');",
+                  "  pm.expect(body.profile_id).to.eql('bhel_purchase_materials');",
+                  "  pm.expect(body).to.have.property('checks');",
+                  "  pm.expect(body).to.have.property('internal_controls');",
+                  "  pm.expect(body).to.have.property('bidder_summary');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "4 - Contract error checks",
+      "item": [
+        {
+          "name": "Missing authentication",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/v1/pipeline/fixed-schema/tenders/{{project_id}}",
+            "description": "",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Authentication is required', () => pm.response.to.have.status(401));",
+                  "pm.expect(pm.response.json().error.code).to.eql('AUTHENTICATION_REQUIRED');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Missing Idempotency-Key",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/v1/pipeline/fixed-schema/bids/evaluate",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"project_id\": \"{{project_id}}\",\n  \"vendor_id\": \"{{vendor_id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Idempotency key is required', () => pm.response.to.have.status(400));",
+                  "pm.expect(pm.response.json().error.code).to.eql('INVALID_REQUEST');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Malformed JSON",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "postman-invalid-json"
+              }
+            ],
+            "url": "{{base_url}}/v1/pipeline/fixed-schema/bids/evaluate",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{bad",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Malformed JSON is stable', () => pm.response.to.have.status(400));",
+                  "pm.expect(pm.response.json().error.code).to.eql('INVALID_JSON');"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

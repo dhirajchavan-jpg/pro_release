@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tenderabl - Bid Evaluation</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #07111f;
+      --panel: #0e1b2d;
+      --panel-2: #13243a;
+      --line: #273b55;
+      --text: #eef5ff;
+      --muted: #9eb0c8;
+      --cyan: #56d7e8;
+      --green: #7fe3a5;
+      --amber: #ffca70;
+      --red: #ff8b8b;
+      --grey: #8b98ab;
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at 10% -10%, #173353 0, transparent 34rem), var(--bg);
+      color: var(--text);
+      font: 15px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    header, main, .account-shell { width: min(1880px, calc(100% - 40px)); margin-inline: auto; }
+    header { padding: 40px 0 18px; }
+    .eyebrow { color: var(--cyan); font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { max-width: 760px; margin: 8px 0; font-size: clamp(26px, 4.5vw, 44px); line-height: 1.08; letter-spacing: -.04em; }
+    h2 { margin: 0 0 4px; font-size: 18px; }
+    h3 { margin: 0 0 8px; font-size: 14px; }
+    p { margin: 0; color: var(--muted); }
+    .sub { max-width: 820px; }
+    .reviewer-bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; margin-top: 18px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); }
+    .reviewer-bar .field { min-width: 220px; }
+    .stepper { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .step-pill { border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; background: #0b1828; color: var(--muted); font-size: 12px; font-weight: 700; }
+    a.step-pill { text-decoration: none; }
+    .step-pill.active { border-color: var(--cyan); color: var(--cyan); }
+    .step-pill.done { border-color: var(--green); color: var(--green); }
+    main { padding-bottom: 64px; }
+    section.panel { margin-top: 24px; padding: 28px; border: 1px solid var(--line); border-radius: 18px; background: color-mix(in srgb, var(--panel) 94%, transparent); box-shadow: 0 20px 50px #0004; }
+    section.panel.locked { opacity: .45; }
+    section.panel.locked .lock-note { display: block; }
+    .lock-note { display: none; margin-top: 6px; color: var(--amber); font-size: 12px; font-weight: 700; }
+    .step-head { display: flex; flex-wrap: wrap; gap: 10px; align-items: baseline; justify-content: space-between; }
+    .tender-review-head { position: sticky; top: 0; z-index: 8; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: #0b1828ee; box-shadow: 0 8px 24px #0006; }
+    .tender-review-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .step-num { color: var(--cyan); font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: end; margin-top: 18px; }
+    .field { display: grid; gap: 7px; }
+    .field label { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    input[type="text"], input[type="number"], input[type="email"], input[type="password"], select, textarea {
+      min-width: 200px;
+      padding: 11px 13px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #0b1828;
+      color: var(--text);
+      font: inherit;
+    }
+    input[type="file"] { color: var(--muted); font-size: 13px; max-width: 320px; }
+    textarea { width: 100%; min-height: 74px; font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 12.5px; }
+    button {
+      padding: 9px 16px;
+      border: 1px solid var(--cyan);
+      border-radius: 10px;
+      background: #0d2733;
+      color: var(--cyan);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    button.secondary { border-color: var(--line); background: var(--panel-2); color: var(--text); }
+    button:disabled { border-color: var(--line); color: var(--grey); cursor: not-allowed; opacity: .6; }
+    .button-loading::before {
+      content: "";
+      display: inline-block;
+      width: .8em;
+      height: .8em;
+      margin-right: 8px;
+      border: 2px solid currentColor;
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: button-spin .7s linear infinite;
+    }
+    @keyframes button-spin { to { transform: rotate(360deg); } }
+    button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--cyan); outline-offset: 1px; }
+    .account-shell { padding: 32px 0 64px; }
+    .account-shell:not(.auth-mode) { width: min(1280px, calc(100% - 40px)); }
+    .account-shell.auth-mode { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+    .account-shell.auth-mode .account-intro,
+    .account-shell.auth-mode .auth-grid,
+    .account-shell.auth-mode #account-message { width: min(520px, 100%); margin-inline: auto; }
+    .account-shell.auth-mode .account-intro { text-align: center; }
+    .account-shell.dashboard-mode .account-intro { display: none; }
+    .account-intro { max-width: 720px; margin-bottom: 24px; }
+    .auth-grid { display: grid; grid-template-columns: minmax(0, 520px); gap: 24px; }
+    .auth-card, .dashboard-card { padding: 28px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
+    .auth-card .field { margin-top: 14px; }
+    .auth-switch { margin-top: 18px; }
+    .auth-switch a { color: var(--cyan); font-weight: 700; }
+    .dashboard-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+    .dashboard-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .profile-settings { margin-top: 18px; background: #0b1828; }
+    .profile-settings summary { width: max-content; }
+    .profile-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 14px; align-items: end; margin-top: 14px; }
+    .tender-list-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-top: 28px; }
+    .tender-list-head h3 { margin-bottom: 2px; font-size: 17px; }
+    .tender-count { color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .project-list { display: grid; gap: 8px; margin-top: 14px; }
+    .project-card { display: grid; grid-template-columns: minmax(180px, 230px) minmax(280px, 1fr) 150px auto; gap: 18px; align-items: center; min-height: 84px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: #0b1828; }
+    .project-card:hover { border-color: #385475; background: #0d1c2e; }
+    .project-card h3 { margin: 2px 0 0; font-size: 15px; }
+    .project-number { font-weight: 750; overflow-wrap: anywhere; }
+    .project-status { display: grid; justify-items: start; gap: 4px; }
+    .project-card .meta { color: var(--muted); font-size: 12px; }
+    .project-card input { width: 100%; min-width: 0; }
+    .project-edit { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(180px, 230px) minmax(280px, 1fr) auto; gap: 14px; align-items: end; padding-top: 14px; border-top: 1px solid var(--line); }
+    .project-edit[hidden] { display: none; }
+    .project-edit .dashboard-actions { flex-wrap: nowrap; }
+    .status-line { margin-top: 10px; font-size: 13px; color: var(--muted); }
+    .status-line strong { color: var(--text); }
+    .message { margin-top: 14px; padding: 12px 14px; border-radius: 12px; font-size: 13px; display: none; }
+    .message.error { display: block; border: 1px solid #6e4626; background: #241521; color: var(--red); }
+    .message.ok { display: block; border: 1px solid #2c5d41; background: #0f2318; color: var(--green); }
+    .table-wrap { overflow-x: auto; margin-top: 14px; }
+    .tender-summary { margin-bottom: 16px; padding: 18px; border: 1px solid var(--cyan); border-radius: 14px; background: #0b1828; }
+    .tender-summary h3 { font-size: 17px; }
+    .summary-facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .summary-fact { padding: 6px 9px; border: 1px solid var(--line); border-radius: 9px; color: var(--text); font-size: 12px; }
+    .summary-fact strong { color: var(--muted); }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    caption { color: var(--muted); text-align: left; padding-bottom: 10px; font-size: 12px; }
+    th, td { padding: 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; }
+    td { font-size: 13px; }
+    .pill { display: inline-block; border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .pill.pass, .pill.found, .pill.complete, .pill.regression_gates_clear, .pill.approval { border-color: #2c5d41; color: var(--green); }
+    .pill.fail, .pill.fail_fact, .pill.present_but_invalid, .pill.missing_after_complete_search, .pill.regression_gate_failed, .pill.not_found, .pill.rejection { border-color: #6e2f2f; color: var(--red); }
+    .pill.review, .pill.human_review_required, .pill.conflict, .pill.unreadable_or_not_checked, .pill.partial, .pill.unverified, .pill.ambiguous, .pill.unresolved, .pill.change_request { border-color: #6e4626; color: var(--amber); }
+    .pill.blocked, .pill.not_evaluated_after_blocker, .pill.not_applicable { border-color: var(--line); color: var(--grey); }
+    .pill.review_note { border-color: #2c5d73; color: var(--cyan); }
+    .criterion-card { margin-top: 16px; padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel-2); }
+    .criterion-card.needs-input { border-color: #6e4626; }
+    .criterion-head { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+    summary.criterion-head { cursor: pointer; }
+    .criterion-head .title { font-weight: 800; }
+    .rule-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 12px; }
+    .rule-grid .field textarea { min-width: 0; }
+    .provenance { margin-top: 12px; padding: 10px 12px; border-left: 3px solid var(--line); background: #101e30; font-size: 12px; color: var(--muted); }
+    .provenance blockquote { margin: 6px 0 0; color: var(--text); font-size: 12.5px; }
+    .missing-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .missing-pill { display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center; border: 1px solid #6e4626; border-radius: 12px; padding: 7px 10px; color: var(--amber); font-size: 11.5px; }
+    .missing-pill button { padding: 1px 8px; font-size: 11px; border-radius: 999px; }
+    .missing-pill input { min-width: 190px; }
+    .contract-questions { margin-top: 20px; padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: #0b1828; }
+    .contract-question-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 10px; margin-top: 12px; }
+    .contract-question { display: grid; gap: 8px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; }
+    .contract-question.blocker { border-color: var(--amber); box-shadow: 0 0 0 2px #ffca7026; }
+    .contract-question small { color: var(--muted); }
+    .question-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .question-actions input { flex: 1 1 260px; }
+    .contract-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .ready-row { margin-top: 12px; display: flex; gap: 8px; align-items: center; font-size: 13px; }
+    .vendor-list { display: grid; gap: 8px; margin-top: 14px; }
+    .vendor-row { display: grid; grid-template-columns: minmax(180px, 1.2fr) minmax(180px, 1fr) minmax(150px, auto) auto; gap: 14px; align-items: center; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: #0b1828; }
+    .vendor-row strong, .vendor-row small { display: block; overflow-wrap: anywhere; }
+    .vendor-row small { margin-top: 3px; color: var(--muted); }
+    .vendor-empty { padding: 16px; border: 1px dashed var(--line); border-radius: 10px; color: var(--muted); text-align: center; }
+    .vendor-action { padding: 8px 12px; border: 1px solid var(--cyan); border-radius: 10px; color: var(--cyan); font-size: 12px; font-weight: 700; text-decoration: none; white-space: nowrap; }
+    .manual-review-toolbar, .manual-coverage { display: flex; flex-wrap: wrap; gap: 14px; align-items: end; margin-top: 18px; }
+    .manual-readiness { margin-top: 14px; padding: 15px 17px; border: 1px solid #6e4626; border-radius: 12px; background: #241d15; }
+    .manual-readiness h3 { margin-bottom: 5px; }
+    .manual-readiness a { display: inline-block; margin-top: 10px; padding: 8px 12px; border: 1px solid var(--amber); border-radius: 9px; color: var(--amber); font-weight: 700; text-decoration: none; }
+    .tender-mismatch { margin-top: 14px; padding: 17px; border: 2px solid var(--red); border-radius: 12px; background: #2a1117; color: #ffd3d3; }
+    .tender-mismatch strong { display: block; font-size: 16px; }
+    .tender-mismatch a { display: inline-block; margin-top: 11px; padding: 9px 13px; border-radius: 9px; background: var(--red); color: #1b0b0e; font-weight: 800; text-decoration: none; }
+    .manual-bidder-name { margin-top: 18px; font-size: 20px; }
+    .manual-review-layout { display: grid; grid-template-columns: minmax(600px, 1fr) minmax(640px, 1.08fr); gap: 22px; margin-top: 20px; }
+    .classification-editor-pane { display: grid; grid-template-rows: auto auto minmax(0, 1fr); gap: 14px; min-width: 0; max-height: 78vh; }
+    .classification-save-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: #0b1828; }
+    .classification-save-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .classification-category-guide { flex: 1 1 100%; display: grid; grid-template-columns: repeat(3, minmax(170px, 1fr)); gap: 8px; }
+    .classification-category-guide span { padding: 8px 10px; border: 1px solid var(--line); border-radius: 9px; color: var(--text); font-size: 12px; }
+    .manual-document-list { display: grid; gap: 16px; align-content: start; min-height: 0; overflow-y: auto; padding-right: 6px; }
+    .manual-document { padding: 13px; border: 1px solid var(--line); border-radius: 10px; background: #0b1828; }
+    .manual-document .criterion-head { margin-bottom: 8px; }
+    .manual-document p, .manual-document ul { margin: 7px 0 0; font-size: 12px; }
+    .manual-document ul { padding-left: 18px; color: var(--amber); }
+    .manual-excerpt { margin: 8px 0 0; padding-left: 10px; border-left: 2px solid var(--line); color: var(--muted); font-size: 12px; white-space: pre-wrap; }
+    .classification-file { padding: 20px; border: 1px solid var(--line); border-radius: 14px; background: #0b1828; }
+    .classification-file.active { border-color: var(--cyan); }
+    .classification-file-head { display: flex; gap: 10px; align-items: start; justify-content: space-between; }
+    .classification-file-head small { display: block; margin-top: 3px; color: var(--muted); }
+    .classification-business-summary { margin-top: 16px; }
+    .classification-business-summary h3 { margin: 0; font-size: 16px; }
+    .classification-contains { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 10px; color: var(--muted); font-size: 12px; }
+    .classification-tag { padding: 3px 8px; border: 1px solid var(--line); border-radius: 999px; color: var(--text); }
+    .classification-route-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+    .classification-route-controls select, .classification-route-controls input { width: 100%; min-width: 0; }
+    .classification-secondary, .classification-purpose-list { grid-column: 1 / -1; padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel-2); }
+    .classification-secondary summary { cursor: pointer; font-weight: 650; }
+    .classification-secondary-option { display: flex; gap: 8px; align-items: center; margin-top: 9px; font-weight: 500; }
+    .classification-secondary-option input { width: auto; }
+    .classification-purpose-list { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+    .classification-sections { display: grid; gap: 14px; margin-top: 16px; }
+    .classification-section { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; align-items: end; padding: 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel-2); }
+    .classification-section .field { min-width: 0; }
+    .classification-section input, .classification-section select { width: 100%; min-width: 0; }
+    .classification-section button { padding-inline: 12px; }
+    .classification-wide { grid-column: 1 / -1; }
+    .classification-reason { margin: 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: #0b1828; }
+    .classification-reason textarea { min-height: 66px; font-family: inherit; }
+    .classification-error { margin-top: 8px; color: var(--red); font-size: 12px; font-weight: 700; }
+    .classification-blocker-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .classification-blocker-actions button { padding: 6px 10px; font-size: 12px; }
+    .classification-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .classification-section .classification-actions { grid-column: 1 / -1; margin-top: 0; }
+    .classification-custom-type { grid-column: 1 / -1; }
+    .manual-pdf-viewer { display: grid; grid-template-rows: auto minmax(600px, 78vh); min-width: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: #0b1828; }
+    .manual-pdf-viewer .document-frame { min-height: 540px; }
+    .claim-block { margin-top: 8px; }
+    .results-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 18px; }
+    .result-stat { padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: #0b1828; }
+    .result-stat strong { display: block; margin-top: 2px; font-size: 24px; }
+    .result-stat span { color: var(--muted); font-size: 12px; }
+    .results-alert { margin-top: 12px; padding: 13px 15px; border: 1px solid #6e4626; border-radius: 12px; background: #241d15; color: var(--amber); font-weight: 700; }
+    .results-alert button { display: block; margin-top: 12px; }
+    .results-ready { border-color: #2c5d41; background: #10251a; color: var(--green); }
+    .report-vendor-picker { margin-top: 18px; padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: #0b1828; }
+    .report-vendor-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .report-vendor-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 8px; margin-top: 12px; }
+    .report-vendor-option { display: flex; gap: 9px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: 9px; color: var(--text); }
+    .report-vendor-option input { accent-color: var(--cyan); }
+    .report-downloads { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .audit-preview { display: grid; gap: 8px; margin-top: 14px; }
+    .audit-preview-item { display: grid; grid-template-columns: minmax(145px, .6fr) minmax(180px, .8fr) minmax(260px, 1.5fr) auto; gap: 12px; align-items: start; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; background: #0b1828; }
+    .audit-preview-item small { color: var(--muted); }
+    .audit-full { margin-top: 12px; }
+    .matrix-wrap { margin-top: 14px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: #0b1828; }
+    .result-table { min-width: 1080px; table-layout: fixed; }
+    .result-table th { white-space: nowrap; }
+    .result-table th:nth-child(1) { width: 260px; }
+    .result-table th:nth-child(2) { width: 260px; }
+    .result-row > td { vertical-align: top; }
+    .result-row > td:first-child strong, .result-row > td:first-child small { display: block; }
+    .result-row > td:first-child small { margin-top: 4px; color: var(--muted); }
+    button.vendor-check { display: grid; gap: 7px; width: 100%; min-height: 118px; padding: 12px; border-color: var(--line); background: #0b1828; color: var(--text); text-align: left; }
+    button.vendor-check.pass { border-color: #2c5d41; }
+    button.vendor-check.fail { border-color: #6e2f2f; }
+    button.vendor-check.review { border-color: #6e4626; }
+    .vendor-check strong { display: -webkit-box; overflow: hidden; overflow-wrap: anywhere; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+    .vendor-check small { color: var(--muted); overflow-wrap: anywhere; }
+    .vendor-check > span:last-child { color: var(--cyan); font-size: 12px; font-weight: 800; }
+    .table-grounds { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
+    .table-grounds strong, .table-grounds span { display: block; }
+    .table-grounds span { margin-top: 2px; color: var(--muted); font-size: 12px; }
+    .table-grounds .more-grounds { color: var(--cyan); font-size: 12px; font-weight: 700; }
+    .result-review-row[hidden] { display: none; }
+    .result-review-row > td { padding: 0; }
+    .result-review-workspace { padding: 20px; border-block: 1px solid var(--cyan); background: #091522; }
+    .result-review-workspace h3, .result-review-workspace h4 { margin-top: 0; }
+    .result-analysis { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+    .result-analysis li { padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: #101e30; }
+    .result-analysis strong, .result-analysis span { display: block; }
+    .result-analysis span { margin-top: 3px; color: var(--muted); font-size: 12px; }
+    .bid-result-review { display: grid; grid-template-columns: minmax(260px, .8fr) minmax(430px, 1.5fr) minmax(310px, .9fr); gap: 12px; height: min(78vh, 780px); padding: 12px; border-block: 1px solid var(--cyan); background: #091522; }
+    .review-pane { min-width: 0; overflow: auto; padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: #0b1828; }
+    .review-pane h3 { margin: 5px 0 12px; }
+    .review-pane h4 { margin: 18px 0 6px; }
+    .review-page-image { display: block; width: 100%; margin-top: 10px; border: 1px solid var(--line); border-radius: 10px; background: white; }
+    .observed-value { padding: 10px 12px; border-left: 3px solid var(--cyan); background: #101e30; font-weight: 800; overflow-wrap: anywhere; }
+    .human-review-pane .human-review-panel { padding: 0; border: 0; background: transparent; }
+    .human-review-pane .human-review-grid { grid-template-columns: 1fr; }
+    .requirement-list { margin: 8px 0 0; padding-left: 20px; color: var(--muted); font-size: 12.5px; }
+    .result-evidence { margin-top: 12px; }
+    .result-evidence > summary { color: var(--cyan); }
+    .evidence-browser { margin-top: 14px; }
+    .evidence-page-tabs { display: flex; gap: 7px; padding-bottom: 9px; overflow-x: auto; }
+    .evidence-page-tabs button { flex: 0 0 auto; padding: 6px 9px; border-color: var(--line); color: var(--muted); font-size: 11px; }
+    .evidence-page-tabs button.active { border-color: var(--cyan); color: var(--cyan); background: #102538; }
+    .evidence-page-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 9px 12px; border: 1px solid var(--line); border-bottom: 0; border-radius: 10px 10px 0 0; background: var(--panel-2); }
+    .evidence-page-header button { padding: 5px 8px; color: var(--cyan); font-size: 11px; }
+    .claim-page-image { display: block; width: 100%; max-height: 620px; margin: 0; object-fit: contain; border: 1px solid var(--line); border-radius: 0 0 10px 10px; background: white; }
+    .inline-pdf-shell { margin-top: 12px; }
+    .inline-pdf-status { margin-bottom: 7px; color: var(--cyan); font-size: 12px; font-weight: 700; }
+    .inline-bid-pdf { width: 100%; height: 64vh; border: 1px solid var(--cyan); border-radius: 10px; background: white; }
+    .tender-source { margin-top: 14px; }
+    .human-review-panel { display: grid; gap: 12px; margin-top: 12px; padding: 16px; border: 1px solid var(--cyan); border-radius: 12px; background: #091522; }
+    .human-review-panel[hidden] { display: none; }
+    .human-review-panel h4 { margin: 0; }
+    .human-review-grid { display: grid; grid-template-columns: minmax(220px, .55fr) minmax(320px, 1fr); gap: 12px; }
+    .human-review-panel select, .human-review-panel textarea { width: 100%; min-width: 0; }
+    .human-review-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    .human-review-saved { color: var(--green); font-size: 12px; }
+    .result-empty { margin-top: 14px; padding: 22px; border: 1px dashed var(--line); border-radius: 12px; text-align: center; }
+    details { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; background: #0b1828; }
+    details + details { margin-top: 6px; }
+    summary { cursor: pointer; font-size: 12.5px; color: var(--cyan); font-weight: 700; }
+    .ledger-value { white-space: pre-wrap; }
+    .ledger-evidence { width: 36%; min-width: 260px; }
+    .ledger-review { min-width: 150px; }
+    .ledger-review p { margin-top: 7px; font-size: 12px; overflow-wrap: anywhere; }
+    .ledger-workspace-row[hidden] { display: none; }
+    .ledger-workspace-row > td { padding: 0 0 18px; }
+    .ledger-workspace { display: grid; grid-template-columns: minmax(170px, 220px) minmax(420px, 1fr) minmax(290px, 360px); gap: 12px; width: 100%; height: min(78vh, 760px); padding: 12px; border: 1px solid var(--cyan); border-radius: 14px; background: #091522; }
+    .document-library, .document-viewer, .ledger-correction { min-width: 0; min-height: 0; border: 1px solid var(--line); border-radius: 10px; background: #0b1828; }
+    .document-library { padding: 12px; overflow-y: auto; }
+    .document-list { display: grid; gap: 8px; margin-top: 10px; }
+    button.document-link { display: grid; gap: 3px; width: 100%; padding: 9px 10px; border-color: var(--line); text-align: left; color: var(--text); }
+    .document-link span, .document-link small { color: var(--muted); overflow-wrap: anywhere; }
+    .document-viewer { display: grid; grid-template-rows: auto 1fr; overflow: hidden; }
+    .document-viewer-status { padding: 9px 12px; font-size: 12px; }
+    .document-frame { grid-row: 2; width: 100%; height: 100%; border: 0; background: white; }
+    .ledger-correction { display: grid; gap: 10px; padding: 12px; overflow-y: auto; }
+    .correction-extra { padding: 9px 10px; }
+    .correction-extra .field { margin-top: 10px; }
+    .ledger-correction input, .ledger-correction select, .ledger-correction textarea { min-width: 0; width: 100%; }
+    .evidence-detail blockquote { margin: 8px 0; padding-left: 10px; border-left: 2px solid var(--line); color: var(--muted); }
+    .evidence-detail p { margin-top: 8px; font-size: 12px; }
+    .evidence-group > .evidence-detail { margin-top: 8px; }
+    .evidence-preview { display: block; width: 100%; max-height: 70vh; margin-top: 8px; object-fit: contain; background: white; border-radius: 6px; cursor: zoom-in; }
+    .evidence-preview:not([src]) { display: none; }
+    .evidence-fullscreen { margin-top: 8px; }
+    .evidence-viewer { box-sizing: border-box; width: 100vw; height: 100vh; max-width: none; max-height: none; margin: 0; padding: 12px; border: 0; background: #07111e; color: var(--text); }
+    .evidence-viewer::backdrop { background: rgba(0, 0, 0, .88); }
+    .evidence-viewer-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; height: 42px; }
+    .evidence-viewer-bar p { margin: 0; }
+    .evidence-viewer-stage { height: calc(100vh - 66px); overflow: auto; text-align: center; background: #000; }
+    .evidence-viewer-stage img { width: 100%; height: 100%; object-fit: contain; cursor: zoom-in; }
+    .evidence-viewer-stage img.zoomed { width: 200%; height: auto; max-width: none; object-fit: contain; cursor: zoom-out; }
+    .claim-body { margin-top: 8px; font-size: 12.5px; }
+    .claim-body blockquote { margin: 6px 0; padding-left: 10px; border-left: 2px solid var(--line); color: var(--muted); }
+    .kv { display: grid; grid-template-columns: 160px 1fr; gap: 4px 12px; margin-top: 8px; font-size: 12.5px; }
+    .kv dt { color: var(--muted); }
+    .kv dd { margin: 0; overflow-wrap: anywhere; }
+    .reco-banner { margin-top: 14px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: #101e30; }
+    .trust-note { margin-top: 18px; padding: 12px 14px; border: 1px dashed var(--line); border-radius: 12px; color: var(--muted); font-size: 12px; }
+    .claim-row { align-items: stretch; }
+    .claim-row .field textarea { min-width: 260px; }
+    .pill.open_awaiting_response { border-color: #2c5d73; color: var(--cyan); }
+    .pill.answered_in_time { border-color: #2c5d41; color: var(--green); }
+    .pill.answered_late, .pill.no_response_after_deadline, .pill.conflicting_responses { border-color: #6e2f2f; color: var(--red); }
+    .pill.superseded { border-color: var(--line); color: var(--grey); }
+    @media (max-width: 1400px) {
+      .manual-review-layout { grid-template-columns: 1fr; }
+      .classification-editor-pane { max-height: none; }
+      .manual-document-list { max-height: 72vh; }
+      .manual-pdf-viewer { grid-template-rows: auto minmax(600px, 75vh); }
+    }
+    @media (max-width: 900px) {
+      .profile-row, .project-card, .project-edit { grid-template-columns: 1fr; }
+      .project-card { gap: 10px; }
+      .results-summary { grid-template-columns: 1fr 1fr; }
+      .vendor-decision { grid-template-columns: 1fr; }
+      .decision-side { justify-items: start; }
+      .human-review-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      .auth-grid { grid-template-columns: 1fr; }
+      section.panel { padding: 16px; }
+      .rule-grid { grid-template-columns: 1fr; }
+      input[type="text"], input[type="number"], input[type="email"], input[type="password"], select { min-width: 0; width: 100%; }
+      .field { width: 100%; }
+      .kv { grid-template-columns: 1fr; }
+      .vendor-row { grid-template-columns: 1fr; }
+      .manual-review-layout { grid-template-columns: 1fr; }
+      .classification-editor-pane { max-height: none; }
+      .classification-section { grid-template-columns: 1fr 1fr; }
+      .classification-category-guide { grid-template-columns: 1fr; }
+      .classification-route-controls { grid-template-columns: 1fr; }
+      .ledger-workspace { grid-template-columns: 1fr; height: auto; }
+      .document-frame { height: 65vh; }
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/workbench-theme.css?v=20260928-bid-evaluation-percent">
+</head>
+<body>
+  <div class="route-loading" id="route-loading" role="status" aria-live="polite" aria-busy="true">
+    <div class="route-loading-card">
+      <span class="route-loading-spinner" aria-hidden="true"></span>
+      <strong id="route-loading-title">Loading workspace</strong>
+    </div>
+  </div>
+  <header class="global-header" id="global-header" hidden>
+    <div class="global-header-inner">
+      <div class="global-brand" aria-label="Tenderabl - Bid Evaluation">
+        <span class="product-mark" aria-hidden="true"></span>
+        <strong>Tenderabl - Bid Evaluation</strong>
+      </div>
+      <div class="global-header-actions">
+        <span class="system-status"><span aria-hidden="true"></span></span>
+        <span class="reviewer-identity">
+          <span><small>Reviewer</small><strong id="reviewer-display">Local procurement operator</strong></span>
+          <span class="reviewer-avatar" id="reviewer-avatar" aria-label="Signed-in reviewer">LO</span>
+        </span>
+        <input class="visually-hidden" type="text" id="reviewer-name" autocomplete="name" aria-label="Reviewer name">
+      </div>
+    </div>
+  </header>
+  <section class="account-shell" id="account-shell" hidden>
+    <div class="account-intro">
+      <div class="account-brand">
+        <span class="product-mark" aria-hidden="true"></span>
+        <span class="product-name">
+          <strong>Tenderabl - Bid Evaluation</strong>
+        </span>
+      </div>
+      <div class="account-copy">
+        <span class="eyebrow">Bid evaluation</span>
+        <h1 id="account-title">Your tender workspace</h1>
+        <p id="account-subtitle">Access previous tenders or start a new evaluation.</p>
+      </div>
+    </div>
+    <div class="message" id="account-message" role="alert"></div>
+    <div class="auth-grid" id="auth-panel" hidden>
+      <div class="auth-card" id="register-card">
+        <h2>Create account</h2>
+        <div class="field"><label for="register-name">Name</label><input id="register-name" type="text" autocomplete="name"></div>
+        <div class="field"><label for="register-email">Email</label><input id="register-email" type="email" autocomplete="email"></div>
+        <div class="field"><label for="register-phone">Phone (optional)</label><input id="register-phone" type="text" autocomplete="tel"></div>
+        <div class="field"><label for="register-password">Password</label><input id="register-password" type="password" autocomplete="new-password"></div>
+        <button id="register-btn" type="button">Register</button>
+        <p class="auth-switch">Already have an account? <a href="/workbench/login">Sign in</a></p>
+      </div>
+      <div class="auth-card" id="login-card">
+        <h2>Sign in</h2>
+        <div class="field"><label for="login-username">Username</label><input id="login-username" type="text" autocomplete="username"></div>
+        <div class="field"><label for="login-password">Password</label><input id="login-password" type="password" autocomplete="current-password"></div>
+        <button id="login-btn" type="button">Sign in</button>
+        <p class="auth-note">Access is managed by your procurement administrator.</p>
+      </div>
+    </div>
+    <div class="dashboard-card" id="dashboard" hidden>
+      <div class="dashboard-head">
+        <div><span class="eyebrow">My workspace</span><h2 id="dashboard-title">Previous tenders</h2></div>
+        <div class="dashboard-actions">
+          <button class="secondary" id="portfolio-toggle-btn" type="button">Portfolio overview</button>
+          <button id="new-tender-btn" type="button">New tender</button>
+          <button class="secondary" id="logout-btn" type="button">Sign out</button>
+        </div>
+      </div>
+      <details class="profile-settings" id="profile-settings">
+        <summary>Profile settings</summary>
+        <div class="profile-row">
+          <div class="field"><label for="profile-name">Name</label><input id="profile-name" type="text" autocomplete="name"></div>
+          <div class="field"><label for="profile-phone">Phone</label><input id="profile-phone" type="text" autocomplete="tel"></div>
+          <button class="secondary" id="save-profile-btn" type="button">Save profile</button>
+        </div>
+      </details>
+      <section class="portfolio-overview" id="portfolio-overview" hidden>
+        <div class="portfolio-intro">
+          <div>
+            <span class="live-badge">Live portfolio</span>
+            <h3>Procurement portfolio</h3>
+            <p>Monitor tender progress, bidder outcomes, and decisions requiring attention.</p>
+          </div>
+          <span class="portfolio-updated" id="portfolio-updated"></span>
+        </div>
+        <div class="portfolio-stats" aria-label="Portfolio summary">
+          <div><span>Active tenders</span><strong id="portfolio-active-count">0</strong><small>Visible in this workspace</small></div>
+          <div><span>Evaluation complete</span><strong id="portfolio-complete-count">0</strong><small>Ready for committee action</small></div>
+          <div><span>In progress</span><strong id="portfolio-progress-count">0</strong><small>Intake or evaluation running</small></div>
+          <div class="attention"><span>Needs attention</span><strong id="portfolio-attention-count">0</strong><small>Evidence or approval pending</small></div>
+        </div>
+        <div class="portfolio-toolbar">
+          <div class="field">
+            <label for="portfolio-search">Search tenders</label>
+            <input id="portfolio-search" type="text" placeholder="Tender name or number">
+          </div>
+          <div class="field">
+            <label for="portfolio-status">Status</label>
+            <select id="portfolio-status">
+              <option value="">All statuses</option>
+              <option value="Complete">Complete</option>
+              <option value="In progress">In progress</option>
+              <option value="Needs attention">Needs attention</option>
+            </select>
+          </div>
+          <button class="secondary" id="portfolio-export-btn" type="button">Download portfolio CSV</button>
+        </div>
+        <div class="portfolio-table-wrap">
+          <table class="portfolio-table">
+            <thead>
+              <tr>
+                <th>Tender</th>
+                <th>Current stage</th>
+                <th>Bidders</th>
+                <th>Qualified</th>
+                <th>Failed</th>
+                <th>Review</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="portfolio-table-body"></tbody>
+          </table>
+        </div>
+        <p class="portfolio-empty" id="portfolio-empty" hidden>No tenders match these filters.</p>
+      </section>
+      <section class="bidder-comparison" id="bidder-comparison" hidden>
+        <div class="comparison-breadcrumb">
+          <button class="secondary" id="bidder-back-btn" type="button">← Portfolio overview</button>
+          <span id="comparison-tender-number"></span>
+        </div>
+        <div class="comparison-hero">
+          <div>
+            <span class="live-badge">Live evaluation</span>
+            <h3 id="comparison-tender-title">Tender bidder comparison</h3>
+            <p>Technical qualification summary across all submitted bidders.</p>
+          </div>
+          <div class="comparison-meta">
+            <span>Evaluation status</span>
+            <strong id="comparison-evaluation-status">Loading evaluation</strong>
+            <small id="comparison-evaluation-note">Commercial bids remain restricted</small>
+          </div>
+        </div>
+        <div class="portfolio-stats comparison-stats" aria-label="Bidder summary">
+          <div><span>Total bidders</span><strong id="comparison-bidder-count">0</strong><small>Submitted bidder packages</small></div>
+          <div><span>Qualified</span><strong id="comparison-qualified-count">0</strong><small>Mandatory checks passed</small></div>
+          <div class="failed"><span>Not qualified</span><strong id="comparison-failed-count">0</strong><small>Mandatory failures recorded</small></div>
+          <div class="attention"><span>Needs review</span><strong id="comparison-review-count">0</strong><small>Committee decision pending</small></div>
+        </div>
+        <div class="comparison-note">
+          <strong>Qualification view</strong>
+          <p>Outcomes are based on the approved tender criteria and reviewed bidder evidence. Price information is not shown on this screen.</p>
+        </div>
+        <div class="portfolio-toolbar">
+          <div class="field">
+            <label for="bidder-search">Search bidders</label>
+            <input id="bidder-search" type="text" placeholder="Bidder name">
+          </div>
+          <div class="field">
+            <label for="bidder-status">Outcome</label>
+            <select id="bidder-status">
+              <option value="">All outcomes</option>
+              <option value="Qualified">Qualified</option>
+              <option value="Not qualified">Not qualified</option>
+              <option value="Needs review">Needs review</option>
+              <option value="In progress">In progress</option>
+              <option value="Pending">Pending</option>
+            </select>
+          </div>
+          <button class="secondary" id="bidder-report-btn" type="button">Download comparison</button>
+        </div>
+        <div class="portfolio-table-wrap">
+          <table class="portfolio-table bidder-summary-table">
+            <thead>
+              <tr>
+                <th>Bidder</th>
+                <th>Checks</th>
+                <th>Passed</th>
+                <th>Failed</th>
+                <th>Review</th>
+                <th>Decisive finding</th>
+                <th>Outcome</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="bidder-table-body"></tbody>
+          </table>
+        </div>
+        <p class="portfolio-empty" id="bidder-empty" hidden>No bidders match these filters.</p>
+        <div class="criteria-comparison-head">
+          <div>
+            <h3>Qualification criteria comparison</h3>
+            <p>Compare every bidder against the same approved tender requirements.</p>
+          </div>
+          <span>Pass · Fail · Review</span>
+        </div>
+        <div class="portfolio-table-wrap criteria-matrix-wrap">
+          <table class="criteria-matrix" id="criteria-matrix"></table>
+        </div>
+      </section>
+      <div class="tender-list-head" id="tender-list-head">
+        <div><h3>Your tenders</h3><p>Continue where you left off, or edit a tender label when needed.</p></div>
+        <span class="tender-count" id="tender-count"></span>
+      </div>
+      <div class="project-list" id="project-list"></div>
+    </div>
+  </section>
+
+  <header id="workflow-header" hidden>
+    <div class="tender-context-bar">
+      <div class="tender-context-inner">
+        <button class="tender-back" id="back-dashboard-btn" type="button">← All tenders</button>
+        <span class="tender-context-divider" aria-hidden="true"></span>
+        <div class="tender-context-copy">
+          <span class="tender-breadcrumb">Tenders <span aria-hidden="true">/</span> <span id="workflow-tender-number"></span></span>
+          <strong id="workflow-tender-title">Loading tender…</strong>
+        </div>
+      </div>
+    </div>
+    <nav class="stepper" aria-label="Workflow progress">
+      <a class="step-pill" id="pill-1" href="/workbench"><span class="step-icon">1</span><span>Tender</span></a>
+      <a class="step-pill" id="pill-2" href="/workbench"><span class="step-icon">2</span><span>Review</span></a>
+      <a class="step-pill" id="pill-3" href="/workbench"><span class="step-icon">3</span><span>Compliance</span></a>
+      <a class="step-pill" id="pill-4" href="/workbench"><span class="step-icon">4</span><span>Checklist</span></a>
+      <a class="step-pill" id="pill-5" href="/workbench"><span class="step-icon">5</span><span>Bids</span></a>
+      <a class="step-pill" id="pill-6" href="/workbench"><span class="step-icon">6</span><span>Evaluate</span></a>
+      <a class="step-pill" id="pill-7" href="/workbench"><span class="step-icon">7</span><span>Results</span></a>
+      <a class="step-pill" id="pill-8" href="/workbench"><span class="step-icon">8</span><span>Report</span></a>
+    </nav>
+    <div class="message" id="message" role="alert"></div>
+  </header>
+
+  <main id="workflow-main" hidden>
+    <div class="message error" id="limitation-banner" role="status" hidden>
+      Limited evaluation: unresolved qualification checks were excluded. Results are incomplete and require human review.
+    </div>
+    <section class="panel tender-create" id="step-1" aria-labelledby="step-1-title">
+      <div class="tender-create-heading">
+        <span class="step-num">Step 1</span>
+        <h2 id="step-1-title">Create tender evaluation</h2>
+      </div>
+      <div class="tender-create-grid">
+        <section class="tender-create-card" aria-labelledby="tender-upload-title">
+          <h3 id="tender-upload-title">Upload tender package</h3>
+          <label class="tender-upload-zone" for="tender-file">
+            <span class="tender-file-icon" aria-hidden="true"></span>
+            <strong>Upload tender package</strong>
+            <span>PDF or ZIP</span>
+            <span class="tender-file-button">Choose file</span>
+            <input class="visually-hidden" type="file" id="tender-file" accept=".pdf,.zip">
+          </label>
+        </section>
+        <section class="tender-create-card analysis-setup" aria-labelledby="analysis-setup-title">
+          <h3 id="analysis-setup-title">Analysis setup</h3>
+          <div class="analysis-schema">
+            <span class="analysis-schema-icon" aria-hidden="true"></span>
+            <span>
+              <strong id="schema-mode-label">Standard tender fields</strong>
+              <small id="schema-count">Loading fields…</small>
+            </span>
+          </div>
+          <button class="text-action" id="schema-setup-tab" type="button" aria-expanded="false" aria-controls="schema-setup-panel">Use custom fields</button>
+          <label class="policy-switch" for="policy-audit-toggle">
+            <span>
+              <strong>BHEL policy compliance audit</strong>
+              <small>Purchase and Works policy</small>
+            </span>
+            <span class="optional-badge">Optional</span>
+            <input type="checkbox" id="policy-audit-toggle" checked>
+          </label>
+        </section>
+      </div>
+      <div class="setup-panel schema-setup" id="schema-setup-panel" aria-labelledby="schema-setup-tab" hidden>
+        <div class="schema-choice-head">
+          <div>
+            <strong>Evaluation fields</strong>
+            <p>Use the standard fields or upload an approved client-specific field definition.</p>
+          </div>
+          <span class="schema-selection" id="schema-selection">Loading standard fields…</span>
+        </div>
+        <div class="schema-input-grid">
+          <label class="schema-dropzone" for="field-schema-file">
+            <strong>Upload custom fields</strong>
+            <span>Choose an approved JSON field definition. Maximum size: 2 MB.</span>
+            <input type="file" id="field-schema-file" accept=".json,application/json">
+          </label>
+          <div class="field">
+            <label for="field-schema-json">Or paste JSON</label>
+            <textarea id="field-schema-json" spellcheck="false" placeholder="Paste the approved field-definition JSON"></textarea>
+          </div>
+        </div>
+        <div class="schema-actions">
+          <button class="secondary" id="use-default-schema-btn" type="button">Use standard fields</button>
+          <button id="use-schema-json-btn" type="button">Use this JSON</button>
+        </div>
+        <div class="status-line" id="schema-status" aria-live="polite"></div>
+      </div>
+      <div class="setup-footer tender-create-footer">
+        <input type="hidden" id="project-id">
+        <div class="setup-summary"><span>Tender package</span><strong id="selected-tender-name">No tender selected</strong></div>
+        <strong class="visually-hidden" id="selected-schema-name">Standard schema</strong>
+        <button id="create-project-btn" disabled>Create and analyze tender</button>
+        <button id="run-understanding-btn" hidden disabled>Analyze tender</button>
+      </div>
+      <div class="status-line" id="understand-status" aria-live="polite"></div>
+    </section>
+
+    <section class="panel locked" id="step-2" aria-labelledby="step-2-title">
+      <div class="step-head tender-review-head">
+        <h2 id="step-2-title"><span class="step-num">Step 2</span> · Review tender understanding</h2>
+        <div class="tender-review-actions" aria-label="Tender review actions">
+          <button class="secondary" id="load-ledger-btn">Reload findings</button>
+          <button id="open-checklist-btn">Proceed to compliance audit</button>
+        </div>
+      </div>
+      <p>Review the extracted requirements. Items needing attention appear first; edit only where a correction is required or mark an item not applicable.</p>
+      <span class="lock-note">Complete Step 1 first.</span>
+      <div class="table-wrap" id="ledger-wrap"></div>
+    </section>
+
+    <section class="panel locked" id="step-3" aria-labelledby="step-3-title">
+      <div class="step-head tender-review-head">
+        <h2 id="step-3-title"><span class="step-num">Step 3</span> · Review tender compliance</h2>
+        <div class="tender-review-actions" aria-label="Compliance actions">
+          <button class="secondary" id="back-to-tender-review-btn" type="button">Back to tender review</button>
+          <button class="secondary" id="reload-compliance-btn" type="button">Reload review</button>
+          <button class="secondary" id="run-compliance-btn" type="button">Re-run tender audit</button>
+          <button id="proceed-to-contract-btn" type="button">Proceed to evaluation checklist</button>
+        </div>
+      </div>
+      <p>Review tender provisions that may conflict with procurement policy. Address every blocking or uncertain finding before approving the bidder evaluation checklist.</p>
+      <span class="lock-note">Complete the tender review first.</span>
+      <div class="message" id="compliance-errors" role="alert"></div>
+      <div class="compliance-disabled-note" id="compliance-disabled-note" hidden>
+        <strong>Tender compliance review is not enabled for this project.</strong>
+        <p>Create a project with tender compliance enabled to review tender provisions against the configured procurement policies.</p>
+      </div>
+      <div id="compliance-body" hidden>
+        <div class="compliance-review-head">
+          <div>
+            <span class="eyebrow">Tender assurance</span>
+            <h3>Is this tender ready to issue?</h3>
+            <p>Start with the tender wording below. Policy clauses are shown as the governing reason for each finding.</p>
+          </div>
+          <div class="compliance-policy-context">
+            <span>Governing procurement policy</span>
+            <div id="compliance-policy-badge" class="compliance-policy-badge">
+              <strong>BHEL Purchase Policy (2013) &amp; Works Policy (2016)</strong>
+              <small>Inherently applied across standard PSU purchase &amp; works governance</small>
+            </div>
+          </div>
+        </div>
+        <div class="status-line" id="compliance-status" aria-live="polite"></div>
+        <div class="compliance-summary" id="compliance-summary" aria-live="polite"></div>
+        <div class="compliance-coverage" id="compliance-coverage" aria-live="polite"></div>
+        <div class="compliance-findings-head">
+          <div>
+            <h3>Tender findings</h3>
+            <p id="compliance-filter-summary">Review the tender wording, then confirm the action.</p>
+          </div>
+          <div class="compliance-filters" id="compliance-filters" role="toolbar" aria-label="Filter tender compliance findings"></div>
+        </div>
+        <div class="compliance-findings-list" id="compliance-findings"></div>
+        <details class="compliance-reupload">
+          <summary>Upload a corrected tender</summary>
+          <p>Use this only after the tender document has been corrected. Understanding and checklist work will restart.</p>
+          <div class="row">
+            <div class="field">
+              <label for="compliance-reupload-file">Fixed tender file (.pdf / .zip)</label>
+              <input type="file" id="compliance-reupload-file" accept=".pdf,.zip">
+            </div>
+            <button class="secondary" id="compliance-reupload-btn" type="button">Upload corrected tender</button>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="panel locked" id="step-4" aria-labelledby="step-4-title">
+      <div class="step-head tender-review-head">
+        <div>
+          <span class="step-num">Step 4</span>
+          <h2 id="step-4-title">Bid evaluation checklist</h2>
+        </div>
+        <div class="tender-review-actions" aria-label="Evaluation checklist actions">
+          <button class="secondary" id="back-to-ledger-btn">Back to compliance</button>
+          <button class="secondary" id="load-draft-btn">Reload checklist</button>
+          <button id="freeze-contract-btn" disabled>Approve checklist and continue</button>
+        </div>
+      </div>
+      <div class="message error" id="compliance-gate-banner" role="status" hidden></div>
+      <p>Confirm the evaluation basis that will be applied consistently to every bidder.</p>
+      <span class="lock-note">Complete the understanding run first.</span>
+      <div class="message" id="freeze-errors" role="alert"></div>
+      <div class="checklist-review-note">
+        <strong>How to review</strong>
+        <span>Choose a category, select a check, and review its requirement, expected proof, and tender evidence. Edit only when the tender has been interpreted incorrectly.</span>
+      </div>
+      <div class="checklist-summary" id="checklist-summary" aria-live="polite"></div>
+      <div class="checklist-toolbar" aria-label="Filter evaluation checklist">
+        <div class="field checklist-search-field">
+          <label for="checklist-search">Search checks</label>
+          <input type="search" id="checklist-search" placeholder="Search evaluation checks">
+        </div>
+        <div class="field checklist-mobile-category">
+          <label for="checklist-family-filter">Category</label>
+          <select id="checklist-family-filter">
+            <option value="all">All categories</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="checklist-state-filter">Status</label>
+          <select id="checklist-state-filter">
+            <option value="all">All checks</option>
+            <option value="included">Included</option>
+            <option value="unresolved">Needs attention</option>
+            <option value="excluded">Excluded</option>
+          </select>
+        </div>
+        <div class="field checklist-secondary-filter">
+          <label for="checklist-origin-filter">Source</label>
+          <select id="checklist-origin-filter">
+            <option value="all">All sources</option>
+          </select>
+        </div>
+        <button class="secondary" id="add-criterion-btn" type="button">Add check</button>
+      </div>
+      <div class="checklist-workspace">
+        <aside class="checklist-category-pane" aria-label="Evaluation categories">
+          <h3>Categories</h3>
+          <div id="checklist-category-nav"></div>
+        </aside>
+        <section class="checklist-list-pane" aria-label="Evaluation checks">
+          <div class="checklist-list-head">
+            <div>
+              <span class="eyebrow">Evaluation checks</span>
+              <h3 id="checklist-list-title">All categories</h3>
+            </div>
+            <p class="checklist-filter-status" id="checklist-filter-status" aria-live="polite"></p>
+          </div>
+          <div id="contract-criteria"></div>
+        </section>
+        <aside class="checklist-detail-pane" id="checklist-detail-panel" aria-live="polite"></aside>
+      </div>
+      <div class="contract-questions" id="contract-questions"></div>
+      <div class="checklist-save-bar" id="checklist-save-bar">
+        <div class="field checklist-reason-field">
+          <label for="checklist-change-reason">Reason for this checklist update (required)</label>
+          <input type="text" id="checklist-change-reason" autocomplete="off" placeholder="Describe what changed and why">
+          <small>Applies to all unsaved check changes in this save and is recorded in the audit trail.</small>
+        </div>
+        <div class="checklist-save-actions">
+          <span id="checklist-save-state" role="status" aria-live="polite">No unsaved changes</span>
+          <button id="save-contract-draft-btn" type="button" disabled>Save checklist changes</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel locked" id="step-5" aria-labelledby="step-5-title">
+      <div class="step-head">
+        <h2 id="step-5-title"><span class="step-num">Step 5</span> · Bidder submissions</h2>
+        <button id="run-intake-btn" disabled>Process documents</button>
+      </div>
+      <p id="bid-intake-help">Add one bidder at a time. Enter the bidder name and upload one PDF or ZIP containing that bidder's complete submission. Price material is quarantined automatically before technical extraction.</p>
+      <span class="lock-note">Freeze the contract first.</span>
+      <div class="row">
+        <div class="field">
+          <label for="bidder-name">Bidder name</label>
+          <input type="text" id="bidder-name" placeholder="e.g. Pacific Engineers">
+        </div>
+        <div class="field">
+          <label for="bid-file">Bid submission (.pdf / .zip)</label>
+          <input type="file" id="bid-file" accept=".pdf,.zip,application/pdf,application/zip">
+        </div>
+        <button id="add-bid-btn">Add bidder</button>
+      </div>
+      <div class="vendor-list" id="vendor-list"></div>
+      <div class="status-line" id="intake-status" aria-live="polite"></div>
+    </section>
+
+    <section class="panel locked" id="step-6" aria-labelledby="step-6-title">
+      <div class="step-head">
+        <h2 id="step-6-title"><span class="step-num">Step 6</span> · <span id="step-6-action-title">Evaluate</span></h2>
+        <div class="step-actions">
+          <button id="run-evaluate-btn" disabled>Run evaluation</button>
+          <button id="run-evaluate-all-btn" class="secondary" type="button" hidden>Run evaluation for all approved bidders</button>
+        </div>
+      </div>
+      <p id="evaluate-help">Evaluate each bidder against the approved tender requirements using verified document evidence.</p>
+      <div class="status-line" id="evaluation-status" aria-live="polite"></div>
+      <span class="lock-note" id="evaluate-lock">Run intake first.</span>
+      <div id="recommendations"></div>
+      <div id="manual-review-workspace" hidden>
+        <div class="manual-review-toolbar">
+          <button class="secondary" id="back-to-bidders" type="button">Back to bidders</button>
+          <div class="field">
+            <label for="manual-review-vendor">Bidder</label>
+            <select id="manual-review-vendor"></select>
+          </div>
+          <button id="propose-classification-btn" class="secondary" type="button">Re-analyze documents</button>
+        </div>
+        <h3 class="manual-bidder-name" id="manual-bidder-name"></h3>
+        <div class="tender-mismatch" id="tender-mismatch" hidden>
+          <strong id="tender-mismatch-message"></strong>
+          <a id="return-to-bidder-uploads" href="/workbench">Return to bidder uploads</a>
+        </div>
+        <div class="manual-readiness" id="manual-readiness">
+          <h3>First, confirm what each document contains</h3>
+          <p>The bidder files are grouped into procurement categories. Correct a category only when needed; page ranges appear when one PDF contains multiple documents.</p>
+        </div>
+        <div class="manual-coverage" id="manual-review-coverage"></div>
+        <div class="status-line" id="manual-review-status" aria-live="polite"></div>
+        <div class="manual-review-layout">
+          <div class="classification-editor-pane">
+            <div class="classification-save-bar">
+              <div>
+                <span id="classification-save-state">No unsaved changes</span>
+                <div class="classification-reason field" id="classification-reason-wrap" hidden>
+                  <label for="classification-reason">Reason for change (required)</label>
+                  <input id="classification-reason" type="text" placeholder="Example: Confirmed pages 1–19 are technical specifications">
+                </div>
+              </div>
+              <div class="classification-save-actions">
+                <button id="save-classification-btn" type="button">Save changes</button>
+                <button id="approve-classification-btn" class="secondary" type="button" aria-describedby="manual-review-status">Approve classification</button>
+                <button id="continue-to-evaluation-btn" type="button" aria-describedby="classification-continue-status" disabled>Run evaluation</button>
+              </div>
+            </div>
+            <div class="status-line" id="classification-continue-status" aria-live="polite"></div>
+            <div class="manual-document-list" id="manual-document-list"></div>
+          </div>
+          <div class="manual-pdf-viewer">
+            <p class="document-viewer-status" id="manual-pdf-status">Choose a PDF to inspect it here. Click inside it, then use Ctrl+F.</p>
+            <iframe class="document-frame" id="manual-pdf-frame" title="Bidder document"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel locked" id="step-7" aria-labelledby="step-7-title">
+      <div class="step-head">
+        <h2 id="step-7-title"><span class="step-num">Step 7</span> · Results</h2>
+        <button class="secondary" id="load-results-btn">Refresh results</button>
+      </div>
+      <p>Qualification decision, decisive reasons, and the next procurement action for every bidder.</p>
+      <span class="lock-note">Complete pending evaluations to view all results.</span>
+      <div id="results"></div>
+    </section>
+
+    <section class="panel locked" id="step-8" aria-labelledby="step-8-title">
+      <div class="step-head">
+        <h2 id="step-8-title"><span class="step-num">Step 8</span> · Report</h2>
+      </div>
+      <p>Compare bidder outcomes, review qualification blockers, and download the final evaluation record.</p>
+      <span class="lock-note">Complete pending evaluations to finalize the report.</span>
+      <div class="report-vendor-picker">
+        <strong>Select bidders</strong>
+        <div class="report-vendor-actions">
+          <button class="secondary" id="select-all-report-vendors" type="button">Select all</button>
+          <button class="secondary" id="clear-report-vendors" type="button">Clear</button>
+        </div>
+        <div class="report-vendor-options" id="report-vendors" aria-live="polite"></div>
+      </div>
+      <div id="report-summary" aria-live="polite"></div>
+      <div class="report-downloads">
+        <button id="download-xlsx-btn">Download formatted Excel</button>
+        <button class="secondary" id="download-json-btn">Download JSON</button>
+        <button class="secondary" id="download-md-btn">Download Markdown</button>
+      </div>
+      <div class="trust-note">Review and approve the evaluation before qualification or commercial action.</div>
+    </section>
+
+    <section class="panel locked" id="review-log-panel" aria-labelledby="review-log-title">
+      <div class="step-head">
+        <h2 id="review-log-title"><span class="step-num">Audit</span> · Review changes</h2>
+        <button class="secondary" id="load-review-log-btn">Refresh audit</button>
+      </div>
+      <p>Recent review actions are shown below. Open the complete history when required.</p>
+      <span class="lock-note">Load a project first.</span>
+      <div class="audit-preview" id="review-log-preview" aria-live="polite"></div>
+      <details class="audit-full" id="review-log-details">
+        <summary id="review-log-summary">View complete audit trail</summary>
+        <div class="table-wrap" id="review-log-wrap"></div>
+      </details>
+    </section>
+
+  </main>
+
+  <footer class="app-footer" id="app-footer" hidden>
+    <div class="app-footer-inner">
+      <div class="app-footer-brand"><span class="product-mark" aria-hidden="true"></span><strong>Tenderabl - Bid Evaluation</strong></div>
+      <span>Version 1.0</span>
+      <nav aria-label="Footer">
+        <a href="/docs">Documentation</a>
+        <a id="footer-audit-link" href="/workbench" hidden>Audit log</a>
+        <span>© 2026</span>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/assets/bid-workbench.js?v=20260923-assets-2" defer></script>
+</body>
+</html>

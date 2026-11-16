@@ -1,0 +1,37 @@
+{
+    "gate":  "procurement-security-release-gate",
+    "version":  1,
+    "status":  "pass",
+    "checks":  [
+                   {
+                       "name":  "dependency-vulnerability-scan",
+                       "status":  "pass",
+                       "report":  "pip-audit.json",
+                       "detail":  "pip-audit reported no known vulnerabilities"
+                   },
+                   {
+                       "name":  "sbom",
+                       "status":  "pass",
+                       "report":  "sbom.cyclonedx.json",
+                       "detail":  "CycloneDX JSON SBOM generated with cyclonedx-py"
+                   },
+                   {
+                       "name":  "package-license-inventory",
+                       "status":  "pass",
+                       "report":  "package-inventory.json",
+                       "detail":  "installed package and license inventory written"
+                   },
+                   {
+                       "name":  "secret-scan",
+                       "status":  "pass",
+                       "report":  "secret-scan.json",
+                       "detail":  "scanned 326 file(s); no embedded secrets found"
+                   },
+                   {
+                       "name":  "parse-check",
+                       "status":  "pass",
+                       "report":  "parse-check.json",
+                       "detail":  "parsed 14 PowerShell and 259 Python file(s)"
+                   }
+               ]
+}

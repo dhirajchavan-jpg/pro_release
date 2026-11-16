@@ -1,0 +1,8 @@
+﻿{
+    "name":  "LibreOffice",
+    "version":  "26.2.5",
+    "license":  "MPL-2.0",
+    "installer_sha256":  "f15ba07bfcb0186986cf3171063506f5d207c11f8cc051ba0d135209e9e915f9",
+    "signer":  "E=info@documentfoundation.org, CN=The Document Foundation, O=The Document Foundation, OU=LibreOffice Build Team, L=Berlin, S=Berlin, C=DE",
+    "deployment":  "application-local administrative extraction during Setup.bat"
+}

@@ -1,0 +1,47 @@
+sequenceDiagram
+    actor User as Officer / reviewer
+    participant Client
+    participant API as Procurement API
+    participant DB as PostgreSQL / object storage
+    participant Worker
+    participant AI as Configured AI / OCR services
+    Client->>API: POST /v1/pipeline/tenders/understand (multipart)
+    API->>DB: Store tender, project, version, documents and operation
+    API-->>Client: 202: job_id, job_url, project_id, tender/version IDs
+    Worker->>DB: Claim durable operation and load documents
+    Worker->>AI: Conditional OCR; field understanding calls
+    Worker->>DB: Save understanding and complete operation
+    loop Until complete or failed
+        Client->>API: GET /v1/pipeline/jobs/{job_id}
+        API-->>Client: status, error or result
+    end
+    User->>Client: Review tender evidence and correct findings
+    Client->>API: GET /v1/workbench/projects/{P}/ledger
+    opt Corrections needed
+        Client->>API: POST /v1/workbench/projects/{P}/ledger/corrections
+    end
+    Client->>API: POST /v1/workbench/projects/{P}/contract/draft
+    Client->>API: GET /v1/workbench/projects/{P}/contract/draft
+    User->>Client: Approve reviewed checklist
+    Client->>API: POST /v1/workbench/projects/{P}/contract/freeze
+    loop Each bidder
+        Client->>API: POST /v1/pipeline/bids/classify (file, project_id, vendor_name)
+        API-->>Client: 202: job_id, bid_id, vendor_id
+        Worker->>AI: OCR if needed; document/page classification
+        Worker->>DB: Save intake and classification
+        Client->>API: GET /v1/pipeline/jobs/{job_id} until terminal
+        User->>Client: Review and correct classification
+        Client->>API: POST /v1/workbench/projects/{P}/bids/{V}/classification/approve
+        Client->>API: POST /v1/pipeline/bids/evaluate (project_id, vendor_id)
+        API-->>Client: 202: job_id, evaluation_id
+        Worker->>DB: Load frozen checklist and approved bidder evidence
+        Worker->>AI: Evidence retrieval / verification / judging as needed
+        Worker->>DB: Save validated evaluation and audit artifacts
+        Client->>API: GET /v1/pipeline/jobs/{job_id} until terminal
+        API-->>Client: result.evaluation
+    end
+    Client->>API: GET /v1/workbench/projects/{P}/results
+    User->>Client: Review findings and record decisions where needed
+    Client->>API: POST /v1/workbench/projects/{P}/report/generate
+    Client->>API: GET /v1/workbench/projects/{P}/report/excel
+    API-->>Client: Report download

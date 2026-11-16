@@ -1,0 +1,102 @@
+# ============================================================================
+# Python Core & Byte-compiled files
+# ============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# ============================================================================
+# Virtual Environments (Crucial to ignore)
+# ============================================================================
+.venv/
+venv/
+ENV/
+env/
+Makefile.venv
+
+# ============================================================================
+# Distribution / Packaging
+# ============================================================================
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ============================================================================
+# Jupyter Notebooks & Data Science
+# ============================================================================
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# ============================================================================
+# Testing, Coverage, and Linting
+# ============================================================================
+htmlcov/
+.toml
+.cache
+.pytest_cache/
+.coverage
+.coverage.*
+.nosenv
+nosetests.json
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.nox/
+.ruff_cache/
+.mypy_cache/
+
+# ============================================================================
+# Environment Variables & Secrets (NEVER commit these)
+# ============================================================================
+.env
+.env.*
+!.env.example
+!**/.env.example
+*.env
+.secrets
+
+# ============================================================================
+# IDEs and Editors (Optional but highly recommended)
+# ============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+postgresql/
+wheelhouse/
+installers/
+libreoffice/
+runtime/
+Test Files/
+
+# ============================================================================
+# Local runtimes, dependencies, temporary files, and generated release output
+# ============================================================================
+.python/
+node_modules/
+tmp/
+temp/
+*.log
+logs/
+reports/
+python-*-amd64.exe
+PACKAGE_MANIFEST.sha256
+docs/LangGraph_Multi_Agent_Implementation_Plan.docx

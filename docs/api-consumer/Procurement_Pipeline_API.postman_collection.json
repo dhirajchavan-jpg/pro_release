@@ -1,0 +1,662 @@
+{
+  "info": {
+    "_postman_id": "procurement-pipeline-v1",
+    "name": "Procurement Pipeline API v1",
+    "description": "Three asynchronous pipeline APIs plus mandatory review, approval, evidence, and report calls.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "api_token",
+      "value": ""
+    },
+    {
+      "key": "project_id",
+      "value": ""
+    },
+    {
+      "key": "vendor_id",
+      "value": ""
+    },
+    {
+      "key": "job_id",
+      "value": ""
+    },
+    {
+      "key": "source_id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "1 - Tender understanding",
+      "item": [
+        {
+          "name": "Start tender understanding",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}",
+                "type": "text",
+                "disabled": false
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/pipeline/tenders/understand",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "pipeline",
+                "tenders",
+                "understand"
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                },
+                {
+                  "key": "project_key",
+                  "type": "text",
+                  "value": "sample-tender"
+                },
+                {
+                  "key": "title",
+                  "type": "text",
+                  "value": "Sample tender"
+                },
+                {
+                  "key": "schema_json",
+                  "type": "text",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Poll job",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/pipeline/jobs/{{job_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "pipeline",
+                "jobs",
+                "{{job_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Read reviewed field ledger",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/workbench/projects/{{project_id}}/ledger",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "workbench",
+                "projects",
+                "{{project_id}}",
+                "ledger"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create/read contract draft",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}",
+                "type": "text",
+                "disabled": false
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/workbench/projects/{{project_id}}/contract/draft",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "workbench",
+                "projects",
+                "{{project_id}}",
+                "contract",
+                "draft"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Freeze approved tender contract",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}",
+                "type": "text",
+                "disabled": false
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/workbench/projects/{{project_id}}/contract/freeze",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "workbench",
+                "projects",
+                "{{project_id}}",
+                "contract",
+                "freeze"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"draft\": {\n    \"criteria\": []\n  },\n  \"reviewed_by\": \"Reviewer name\",\n  \"reviewed_at\": \"2026-07-28T12:00:00Z\",\n  \"continue_with_limitations\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2 - Bid classification",
+      "item": [
+        {
+          "name": "Start bid classification",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}",
+                "type": "text",
+                "disabled": false
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/pipeline/bids/classify",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "pipeline",
+                "bids",
+                "classify"
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                },
+                {
+                  "key": "project_id",
+                  "type": "text",
+                  "value": "{{project_id}}"
+                },
+                {
+                  "key": "vendor_name",
+                  "type": "text",
+                  "value": "Sample bidder"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Read classification",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/workbench/projects/{{project_id}}/bids/{{vendor_id}}/classification",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "workbench",
+                "projects",
+                "{{project_id}}",
+                "bids",
+                "{{vendor_id}}",
+                "classification"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Approve classification",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}",
+                "type": "text",
+                "disabled": false
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/workbench/projects/{{project_id}}/bids/{{vendor_id}}/classification/approve",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "workbench",
+                "projects",
+                "{{project_id}}",
+                "bids",
+                "{{vendor_id}}",
+                "classification",
+                "approve"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reviewed_by\": \"Reviewer name\",\n  \"reviewed_at\": \"2026-07-28T12:00:00Z\",\n  \"reason\": \"Bidder document classification reviewed and approved.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3 - Bid evaluation and reports",
+      "item": [
+        {
+          "name": "Start bid evaluation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}",
+                "type": "text",
+                "disabled": false
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/pipeline/bids/evaluate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "pipeline",
+                "bids",
+                "evaluate"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"project_id\": \"{{project_id}}\",\n  \"vendor_id\": \"{{vendor_id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Read project results",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/workbench/projects/{{project_id}}/results",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "workbench",
+                "projects",
+                "{{project_id}}",
+                "results"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Read BHEL bidder result",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/pipeline/fixed-schema/projects/{{project_id}}/bids/{{vendor_id}}/evaluation/bhel",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "pipeline",
+                "fixed-schema",
+                "projects",
+                "{{project_id}}",
+                "bids",
+                "{{vendor_id}}",
+                "evaluation",
+                "bhel"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Read BHEL comparative result",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/workbench/projects/{{project_id}}/results/bhel",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "workbench",
+                "projects",
+                "{{project_id}}",
+                "results",
+                "bhel"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Generate report",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}",
+                "type": "text",
+                "disabled": false
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/workbench/projects/{{project_id}}/report/generate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "workbench",
+                "projects",
+                "{{project_id}}",
+                "report",
+                "generate"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Read JSON report",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/workbench/projects/{{project_id}}/report",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "workbench",
+                "projects",
+                "{{project_id}}",
+                "report"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Download Markdown report",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/workbench/projects/{{project_id}}/report/markdown",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "workbench",
+                "projects",
+                "{{project_id}}",
+                "report",
+                "markdown"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Download Excel report",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{$guid}}",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/workbench/projects/{{project_id}}/report/excel",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "workbench",
+                "projects",
+                "{{project_id}}",
+                "report",
+                "excel"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

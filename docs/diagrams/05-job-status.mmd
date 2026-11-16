@@ -1,0 +1,7 @@
+stateDiagram-v2
+    [*] --> queued: Start accepted
+    queued --> running: Worker claims operation
+    running --> complete: Result persisted successfully
+    running --> failed: Failure recorded
+    complete --> [*]
+    failed --> [*]

@@ -1,0 +1,23 @@
+flowchart TD
+    A["POST F/tenders<br/>Multipart: file, optional project_key and title"] --> B["GET F/jobs/{J}<br/>Poll until complete or failed"]
+    B --> C["GET F/tenders/{P}<br/>Read fields, evidence and revision"]
+    C --> D{Corrections needed?}
+    D -->|Yes| E["PUT F/tenders/{P}<br/>Full fields payload + expected_revision"]
+    E --> C
+    D -->|No / reviewed| G["POST F/tenders/{P}/approve<br/>expected_revision, reviewed_by, reason"]
+    G --> H["Backend compiles and freezes contract<br/>Tender approved; revision increments"]
+    H --> I["POST F/bids<br/>Multipart: file, project_id, vendor_name"]
+    I --> J["GET F/jobs/{J}<br/>Wait for classification"]
+    J --> K["GET F/projects/{P}/bids/{V}/classification"]
+    K --> L{Corrections needed?}
+    L -->|Yes| M["PUT F/projects/{P}/bids/{V}/classification<br/>Full logical_documents, physical_routes and revision"]
+    M --> K
+    L -->|No / reviewed| N["POST F/projects/{P}/bids/{V}/classification/approve"]
+    N --> O["POST F/bids/evaluate<br/>JSON: project_id, vendor_id"]
+    O --> Q["GET F/jobs/{J}<br/>Wait for evaluation"]
+    Q --> R["GET F/projects/{P}/bids/{V}/evaluation<br/>Read result and source-linked criterion evidence"]
+    R --> S{More bidders?}
+    S -->|Yes| I
+    S -->|No| T["GET /v1/workbench/projects/{P}/results<br/>Human review as required"]
+    T --> U["POST /v1/workbench/projects/{P}/report/generate"]
+    U --> V["GET report / report/markdown / report/excel<br/>under /v1/workbench/projects/{P}"]

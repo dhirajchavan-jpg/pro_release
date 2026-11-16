@@ -1,0 +1,39 @@
+flowchart TD
+    A["Open /workbench/login"] --> B["POST /workbench/account/login<br/>Authenticate and establish browser session"]
+    B --> C["GET /workbench/account<br/>GET /v1/workbench/projects<br/>Load account and existing projects"]
+    C --> D["GET /v1/workbench/field-schema/default<br/>POST /v1/workbench/projects<br/>Upload tender and create project"]
+    D --> E["POST /understand<br/>Queue tender understanding"]
+    E --> F["GET /v1/workbench/jobs/{J}<br/>Poll worker operation"]
+    F --> G{Completed successfully?}
+    G -->|Running| F
+    G -->|Failed| X["Show error; retain IDs<br/>Resolve cause before retry"]
+    G -->|Yes| H["GET /ledger and /documents<br/>Review extracted tender fields and sources"]
+    H -.-> I["POST /ledger/corrections<br/>Correct fields with reason and reviewer"]
+    I --> H
+    H -.-> K["POST /compliance/run<br/>Poll job; GET /compliance"]
+    K -.-> L["POST /compliance/policy<br/>POST /compliance/findings/{finding_id}/resolve<br/>Resolve applicable policy findings"]
+    L --> M
+    H --> M["POST /contract/draft<br/>GET /contract/draft<br/>Build and review evaluation checklist"]
+    M -.-> N["PATCH /contract/draft<br/>Save checklist edits"]
+    N --> M
+    M --> O["POST /contract/freeze<br/>Approve tender and freeze criteria"]
+    O --> Q{Freeze accepted?}
+    Q -->|409; unresolved requirements| M
+    Q -->|Yes| R["POST /bids<br/>Upload bidder package; repeat per bidder"]
+    R --> S["POST /intake<br/>Queue bidder classification"]
+    S --> T["GET /v1/workbench/jobs/{J}<br/>Wait for intake completion"]
+    T --> U["GET /bids/{V}/classification<br/>GET /bids/{V}/review<br/>Inspect document types, pages and evidence"]
+    U -.-> W["POST /bids/{V}/classification/correct<br/>Correct boundaries and document routes"]
+    W --> U
+    U --> Y["POST /bids/{V}/classification/approve<br/>Approve classification for each bidder"]
+    Y --> Z["POST /evaluate<br/>Queue approved bidder evaluations"]
+    Z --> AA["Poll returned jobs<br/>GET /results<br/>Read criterion decisions and evidence"]
+    AA -.-> AB["POST /vendors/{V}/criteria/{criterion_id}/human-review<br/>Record reasoned human decision"]
+    AB --> AA
+    AA -.-> AC["Clarification lifecycle if enabled<br/>Create, issue, record response, close"]
+    AC --> AA
+    AA --> AD{All bidder reports available?}
+    AD -->|No| AA
+    AD -->|Yes| AE["POST /report/generate<br/>Set report_generated and assemble reports"]
+    AE --> AF["GET /report<br/>GET /report/markdown<br/>GET /report/excel"]
+    AF --> AG["End: committee reviews results and recommendation<br/>No automatic procurement award is implied"]

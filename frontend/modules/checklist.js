@@ -1,0 +1,76 @@
+"use strict";
+/* Evaluation checklist compatibility facade. */
+
+import {
+  CHECKLIST_GROUPS,
+  CHECKLIST_GROUP_ORDER,
+  criterionConfirmed,
+  criterionDisplayParts,
+  criterionGroup,
+  criterionImpact,
+  criterionIncluded,
+  criterionNeedsAttention,
+  criterionTerms,
+  friendlyKey,
+  friendlyMissing,
+  friendlyStatus,
+  ledgerValueToText,
+  missingParts,
+  normalizeDraft,
+  ruleValueToText,
+  coerceRuleValue,
+  criterionTitle as findCriterionTitle,
+} from "./checklist-model.js";
+import { installChecklistActions } from "./checklist-actions.js";
+import { installChecklistView } from "./checklist-view.js";
+
+export function installChecklist(ctx) {
+  var view = installChecklistView(ctx);
+  var actions = installChecklistActions(ctx);
+  Object.assign(ctx, {
+    CHECKLIST_GROUPS: CHECKLIST_GROUPS,
+    CHECKLIST_GROUP_ORDER: CHECKLIST_GROUP_ORDER,
+    loadDraft: actions.loadDraft,
+    normalizeDraft: normalizeDraft,
+    criterionIncluded: criterionIncluded,
+    criterionConfirmed: criterionConfirmed,
+    criterionNeedsAttention: criterionNeedsAttention,
+    markCriterionChanged: actions.markCriterionChanged,
+    updateChecklistSaveState: actions.updateChecklistSaveState,
+    openChecklist: actions.openChecklist,
+    ensureTenderDocuments: actions.ensureTenderDocuments,
+    showCriterionSource: actions.showCriterionSource,
+    coerceRuleValue: coerceRuleValue,
+    ruleValueToText: ruleValueToText,
+    ledgerValueToText: ledgerValueToText,
+    friendlyKey: friendlyKey,
+    friendlyStatus: friendlyStatus,
+    criterionGroup: criterionGroup,
+    criterionDisplayParts: criterionDisplayParts,
+    criterionTerms: criterionTerms,
+    criterionImpact: criterionImpact,
+    missingParts: missingParts,
+    friendlyMissing: friendlyMissing,
+    criterionTitle: function (criterionId) { return findCriterionTitle(ctx, criterionId); },
+    renderDraft: view.renderDraft,
+    renderChecklistCategoryNav: view.renderChecklistCategoryNav,
+    renderCriterionRow: view.renderCriterionRow,
+    toggleCriterionIncluded: view.toggleCriterionIncluded,
+    setCriterionConfirmation: view.setCriterionConfirmation,
+    renderCriterionDetail: view.renderCriterionDetail,
+    renderChecklistSummary: view.renderChecklistSummary,
+    renderChecklistFamilyFilter: view.renderChecklistFamilyFilter,
+    renderChecklistOriginFilter: view.renderChecklistOriginFilter,
+    criterionMatchesFilters: view.criterionMatchesFilters,
+    criterionField: view.criterionField,
+    renderCriterion: view.renderCriterion,
+    blockingQuestions: view.blockingQuestions,
+    openTenderQuestion: view.openTenderQuestion,
+    renderBlockingQuestions: view.renderBlockingQuestions,
+    updateFreezeButton: actions.updateFreezeButton,
+    attemptContinue: actions.attemptContinue,
+    addChecklistCriterion: actions.addChecklistCriterion,
+    saveContractDraft: actions.saveContractDraft,
+    freezeContract: actions.freezeContract,
+  });
+}

@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "procurement-evaluator"
+version = "0.1.0"
+description = "Procurement evaluation API and durable worker"
+requires-python = ">=3.12,<3.13"
+dynamic = ["dependencies"]
+
+[project.scripts]
+procurement-api = "procurement.launch:run_api"
+procurement-worker = "procurement.worker:run_forever"
+procurement-verify-config = "procurement.preflight:main"
+procurement-prepare-local-env = "procurement.prepare_env:main"
+procurement-retention = "procurement.retention:main"
+
+[tool.setuptools]
+py-modules = ["app", "ai_provider", "base_rfp", "rfp_atoms"]
+
+[tool.setuptools.packages.find]
+include = ["procurement*"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}

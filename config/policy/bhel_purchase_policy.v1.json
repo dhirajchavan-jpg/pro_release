@@ -1,0 +1,1516 @@
+{
+ "schema_version": "policy-corpus.v1",
+ "policy_id": "bhel_purchase_policy",
+ "name": "BHEL Purchase Policy-2013",
+ "version": "2013",
+ "source_file": "Sahaj-Purchase-Policy-2026-07-31.doc",
+ "source_sha256": "d5bb6b3ba49573373fee272bdb8d602c000db655c0ebf646da297e0d0356abb4",
+ "clause_count": 188,
+ "clauses": [
+  {
+   "clause_id": "1.0",
+   "title": "PURCHASE OBJECTIVE",
+   "text": "Objective of procurement activity shall be to purchase the required materials, equipments and related or associated services at the right time, at an optimum price, consistent with quality requirements, in a transparent and fair manner in line with extant guidelines and Government directives, to meet Customer commitments.",
+   "section": "1.0",
+   "section_title": "PURCHASE OBJECTIVE",
+   "sha256": "5b185a820dbd8f4f4737fd2aa05eed7a107c8489ddf9fb891de6a91249ef97d2"
+  },
+  {
+   "clause_id": "2.0",
+   "title": "PURCHASE POLICY",
+   "text": "",
+   "section": "2.0",
+   "section_title": "PURCHASE POLICY",
+   "sha256": "c5f873e85b09c04d31f03e099a928d74cea2818fa1c11c55817b568ebe7a1c18"
+  },
+  {
+   "clause_id": "2.1",
+   "title": "",
+   "text": "BHEL should procure only from suppliers committed to Quality on long term basis, so as to improve quality, reduce cost and procurement time.",
+   "section": "2.0",
+   "section_title": "PURCHASE POLICY",
+   "sha256": "0a940fdc5735cb0c4c68c85aad5b73012b95d7a3741ec5f8854de1cbd67104a0"
+  },
+  {
+   "clause_id": "2.2",
+   "title": "",
+   "text": "Emphasis shall be more on process control rather than end inspection of the product.",
+   "section": "2.0",
+   "section_title": "PURCHASE POLICY",
+   "sha256": "65c1f171afeb7da5fde11089e3395c5b4f7f10e095761244223992ecd6dd6117"
+  },
+  {
+   "clause_id": "2.3",
+   "title": "",
+   "text": "BHEL shall maintain goodwill of registered suppliers, treating them as business partners.\nProcurement shall be from suppliers registered as per the extant 'Supplier Evaluation, Approval and Review Procedure' (SEARP) issued by Corp. MM.",
+   "section": "2.0",
+   "section_title": "PURCHASE POLICY",
+   "sha256": "cd9964dd86a92151ec63bdc824130421b620be7a8f35c6b89e75fbd34f1d723f"
+  },
+  {
+   "clause_id": "2.4",
+   "title": "",
+   "text": "Bulk buying & bunching of materials shall be done, to the maximum extent possible, to derive price advantage.",
+   "section": "2.0",
+   "section_title": "PURCHASE POLICY",
+   "sha256": "84f7ce2b418d25165f6a1f4ea89e8a84d934d1712ffbaee1585611f4d953ee01"
+  },
+  {
+   "clause_id": "2.5",
+   "title": "",
+   "text": "No purchase orders shall be placed against anticipated customer orders except under special circumstances for which prior specific approvals of CMD shall be taken",
+   "section": "2.0",
+   "section_title": "PURCHASE POLICY",
+   "sha256": "36462e52edf38895638406e46be0bdec158d21468f009a75339e44b9be0c213c"
+  },
+  {
+   "clause_id": "2.6",
+   "title": "",
+   "text": "There shall be continuous effort to regulate inventory levels.",
+   "section": "2.0",
+   "section_title": "PURCHASE POLICY",
+   "sha256": "07b0de8c2f3fff36ec3e9296bdf67bd5ef0b9e80cc66e266a01cf697712714cf"
+  },
+  {
+   "clause_id": "3.0",
+   "title": "SUPPLIER REGISTRATION",
+   "text": "",
+   "section": "3.0",
+   "section_title": "SUPPLIER REGISTRATION",
+   "sha256": "c31cfcf5ff55e9437000091498ef01233afdddd822c058abc55d48e1cd690755"
+  },
+  {
+   "clause_id": "3.1",
+   "title": "",
+   "text": "Supplier evaluation and registration shall be a continuous and dynamic process with provision to induct new competent suppliers and to weed out non performing suppliers from time to time.\nThe criteria shall be based on process and organizational capability, requisite facilities, financial soundness, quality systems, quality/ delivery/ service performance etc. of the supplier.",
+   "section": "3.0",
+   "section_title": "SUPPLIER REGISTRATION",
+   "sha256": "66e90b76054aec27986b204b61db346af879625a7f2947360c4862fd5499b3eb"
+  },
+  {
+   "clause_id": "3.2",
+   "title": "",
+   "text": "Procedure for registration of suppliers, their periodic performance evaluation and feedback shall be as per extant guidelines on SEARP.",
+   "section": "3.0",
+   "section_title": "SUPPLIER REGISTRATION",
+   "sha256": "4c1fc3bdbb9c7ca44261f1f237159d91d6b7951c829731d5e5d6295d92646aa8"
+  },
+  {
+   "clause_id": "3.3",
+   "title": "",
+   "text": "Corp. MM will notify the procedure in respect of items for which SEARP guidelines will not be applicable.",
+   "section": "3.0",
+   "section_title": "SUPPLIER REGISTRATION",
+   "sha256": "d1ecb7976256ff187e853edcd812f32191a3b3f9e0cbd7f8fd6c074f37fd1ae7"
+  },
+  {
+   "clause_id": "3.4",
+   "title": "",
+   "text": "In addition to other modes, publication on the website of the Unit and Company (indicating approx. annual procurement value) shall be resorted to for registration of suppliers, wherever necessary and especially where there are less than four suppliers for an item in the Product Material Directory (PMD). The fact of such publication on the website shall also be advertised at least once a year in minimum two National dailies.\nThe specified formats for registration and pre-qualification criteria etc. should also be hosted on website of the Unit and Company and prospective suppliers shall be permitted to download and use these documents.",
+   "section": "3.0",
+   "section_title": "SUPPLIER REGISTRATION",
+   "sha256": "62283b0fe985f31f785ff78a4c163b46e41ee30d547188513fb45ccc6b9a6c65"
+  },
+  {
+   "clause_id": "3.5",
+   "title": "Expression of Interest",
+   "text": "For items where specifications/ requirements are not very clear or items which are not frequently procured, 'Expressions of Interest' (EOI) may be published in the website of BHEL/ National daily, as mentioned at Clause 5.1.1. EOI should include in brief, the broad scope of the requirement, eligibility and the pre-qualification criteria to be met by the prospective suppliers, their past experience etc. The prospective suppliers may also be asked to send their comments on the scope of work projected in the EOI. Adequate time should be allowed for getting responses from the prospective suppliers. The purpose of EOl is to:\n(a) Arrive at uniform specification parameters meeting technical requirements, and\n(b) Shortlist interested parties.\nThe suppliers meeting the finalized specifications shall be short-listed for further process of issuing Open tender, or Limited tender with recorded reasons.",
+   "section": "3.0",
+   "section_title": "SUPPLIER REGISTRATION",
+   "sha256": "689da169c466dfba3b1ebaaf0d5d7e421a12d1e83e33b2663a4b4e61122acd4c"
+  },
+  {
+   "clause_id": "3.6",
+   "title": "",
+   "text": "Units shall maintain the lists of registered suppliers in Product Material Directories (PMD; also called Supplier Directory-SD, in case of regions) on the VPN/ intranet (web pages internal to all BHEL Units) and/ or hard copy, with authorized access (user ID/ password protected), based on the material specification/ category/ item/ system/ Balance of Plant (BOP). All PMD/ SD suppliers shall be addressed as registered suppliers.",
+   "section": "3.0",
+   "section_title": "SUPPLIER REGISTRATION",
+   "sha256": "a2bf030dba7b81ba8fd7e59d9391359fd36866642a0d5e21dafc843b42c12174"
+  },
+  {
+   "clause_id": "3.7",
+   "title": "",
+   "text": "Based on certification from Material Identification and Supplier Control Committee (MISCC; Supplier Review Committee- SRC, in case of regions), Product Manager/ MM Head shall at the start of every financial year certify that the PMDs are updated and comprise active suppliers.",
+   "section": "3.0",
+   "section_title": "SUPPLIER REGISTRATION",
+   "sha256": "e5de5835e78f966866381fde392fc04b27656dbe0c458a6ab767cb63d27785b3"
+  },
+  {
+   "clause_id": "3.8",
+   "title": "",
+   "text": "PMDs of various Units shall be coordinated and link provided on the intranet with authorized access (user ID/ password protected) by Corp. MM for use amongst BHEL units.",
+   "section": "3.0",
+   "section_title": "SUPPLIER REGISTRATION",
+   "sha256": "11669505921cbbbc292a9702d59efe739c582d53ec25db911f80ec6df7f0a235"
+  },
+  {
+   "clause_id": "3.9",
+   "title": "",
+   "text": "To have the advantage of more competition, supplier(s) registered with a permanent code by one Unit (as appearing in the PMD of that Unit) may be considered as registered supplier by any other Unit for the same item/ class of material.",
+   "section": "3.0",
+   "section_title": "SUPPLIER REGISTRATION",
+   "sha256": "f821301cefe54c042e5d4edcd59ca035e5ae1d724f2cd974c86491e9e220151f"
+  },
+  {
+   "clause_id": "3.10",
+   "title": "",
+   "text": "Procedure for suspension of suppliers shall be as per the extant 'Guidelines for Suspension of business dealings with Suppliers/ Contractors'.",
+   "section": "3.0",
+   "section_title": "SUPPLIER REGISTRATION",
+   "sha256": "714667e6e750dd135abee30a8ad0597fe980e211ef1972a2244a3687522aa4fa"
+  },
+  {
+   "clause_id": "4.0",
+   "title": "ESTIMATES",
+   "text": "Estimates shall be prepared and indicated in the indent.\nThe estimated rate is a vital element in establishing the reasonableness of prices and it is important that it is worked out in an objective manner on the basis of indicative market rates/ budgetary offers/ trend of last or previous purchase prices (LPP)/ rates at which procurements were made by sister unit(s)/ economic indices for the raw material/ labour/ other input costs/ LME price trends/ relevant industry formula, as applicable/ demand supply situation, etc. Country specific/ local environmental factors or specific site conditions or any other factor affecting the cost of the proposed purchases may also be considered.\nAccordingly, the price reasonability by the Indentor/ Purchase Committee, as applicable, to be established as part of their recommendations.",
+   "section": "4.0",
+   "section_title": "ESTIMATES",
+   "sha256": "606a0344e2a297cda806f1aed27b60c5ada615a50b9fd421e5af1857799af538"
+  },
+  {
+   "clause_id": "5.0",
+   "title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "text": "Tender system is adopted to procure materials at the most competitive rates. Three kinds of tenders are in vogue viz., Open tender, Limited tender and Single tender.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "1508bb439893ab75ef0576887f9421ad1cfe3f20847d949d5f36f96ef2b2ab85"
+  },
+  {
+   "clause_id": "5A",
+   "title": "BID SECURITY/ Earnest Money Deposit (EMD)",
+   "text": "To safe guard against a bidder's withdrawing or altering its/ his bid during the bid validity period, Bid Security [also known as Earnest Money Deposit (EMD)] is to be obtained from the bidders along with their bids (except Micro and Small Enterprises (MSEs) or Startups as recognized by Department for Promotion of Industry and Internal Trade (DPIIT)).",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "f27115f678809be17d1885c355a06f67238a2c7d0e9e8ecbdb4c47240696e05c"
+  },
+  {
+   "clause_id": "5A.1",
+   "title": "",
+   "text": "Rates of EMD shall be as under:\n|\nEstimated Tender Value (Rs Crs)\n|\nEMD value\n|\nUpto Rs. 2 Cr\n|\nNot mandatory\n|\n>Rs 2 Cr upto Rs 10 Cr\n|\nRs 6 Lakhs\n|\n>Rs 10 Cr upto Rs 100 Cr\n|\nRs 40 Lakhs\n|\nMore than Rs 100 Crs\n|\nRs 300 Lakhs\nWherever the quantity is to be split on two or more suppliers, amount of EMD may be based on the maximum quantity envisaged on one Supplier.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "8d3c96535f29285856ecb3c521d303458f2bd8bb579a3e1fe79cd50a9fbe31f5"
+  },
+  {
+   "clause_id": "5A.2",
+   "title": "Modes of deposit",
+   "text": "a) The EMD may be accepted only in the following forms:\n(i) Electronic Fund Transfer credited in BHEL account (before tender opening).\n(ii) Banker's cheque/ Pay order/ Demand draft, in favour of BHEL (along with offer).\n(iii) Fixed Deposit Receipt (FDR).\n(iv) Bank Guarantee from any of the Scheduled Banks.\n(v) Insurance Surety Bonds.\nb) In case the EMD is more than Rupees Two lakh and in case of foreign bidders, it may be in the form of a bank guarantee (in equivalent Foreign Exchange amount, in case of foreign bidders) issued/ confirmed from any of the scheduled commercial bank in India in an acceptable form. The EMD shall remain valid for a period of 45 (forty-five) days beyond the final bid validity period.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "750730f258bafb06683dcffbd48e248d1df5df8763d22839ca1016d401b32ed7"
+  },
+  {
+   "clause_id": "5A.3",
+   "title": "",
+   "text": "a) The EMD may be waived or amount reduced in following cases with the prior approval of the Head of the Contracting deptt., not below the rank of AGM:\n(i) Central/ State PSUs/ Government deptts/ Autonomous/ Educational/ Research institutions.\n(ii) Joint Venture or Subsidiary companies of BHEL.\n(iii) Trial / Development tenders.\n(iv) Limited Tenders/ Single Tenders.\n(v) Procurements directly from the manufacturer or authorised agents.\n(vi) Raw material like Steel, insulating material, electronic components, etc.\nb) The EMD may be waived or amount reduced/ increased in other cases for reasons to be recorded with the prior approval of the Unit Head.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "50b01ebcb27060562fadd562ffe0ea85f3676037fb540b004f4bd23ceacbea80"
+  },
+  {
+   "clause_id": "5A.4",
+   "title": "Forfeiture of EMD",
+   "text": "(i) A bidder's EMD will be forfeited if the bidder withdraws or amends its/ his tender or impairs or derogates from the tender in any respect within the period of validity of the tender or if the successful bidder fails to furnish the required performance security within the specified period mentioned in the Tender.\n(ii) EMD by the tenderer to be withheld in case any action on the bidder is envisaged under the provisions of extant \"Guidelines on Suspension of business dealings with suppliers/ contractors\" and forfeited/ released based on the action as determined under these guidelines.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "375e64f3c03139e40f4e27cde9ca2264c85d4029f12db11df721672496f42fec"
+  },
+  {
+   "clause_id": "5A.5",
+   "title": "",
+   "text": "(i) Bid securities of the unsuccessful bidders should be returned to them at the earliest after expiry of the final bid validity period and latest by the 30th day after the award of the contract. However, in case of two packet or two stage bidding, Bid securities of unsuccessful bidders during first stage i.e. technical evaluation etc. should be returned within 30 days of declaration of result of first stage i.e. technical evaluation etc.\n(ii) Bid security should be refunded to the successful bidder on conclusion of the order/ receipt of a performance security (if called in the tender).\n(iii) In case of expiry of offer validity period or any other circumstances, EMD can be released with the approval of Head of Contracting deptt., not below the rank of AGM.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "26b413baf669ba1875d25609dcc601d114e2f183318fc5a15ed0de44755ebaff"
+  },
+  {
+   "clause_id": "5A.6",
+   "title": "",
+   "text": "EMD shall not carry any interest.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "e9b52aca4f6af6c4d87b37a59bfb85498159977f6dbc7551d8e65f4078f377a2"
+  },
+  {
+   "clause_id": "5B",
+   "title": "PERFORMANCE SECURITY",
+   "text": "To ensure due performance of the contract, Performance Bank Guarantee (PBG) or Security Deposit (SD), hereafter referred as performance security is to be obtained from the successful bidder awarded the contract. The need for the Performance Security depends on the market conditions and commercial practice for the particular kind of goods. Performance security is to be submitted by the date specified in the contract.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "c4377cea7fac3bde90dcd25c001bf5afe5574744a95bff359d1a806a0ff1974d"
+  },
+  {
+   "clause_id": "5B.1",
+   "title": "",
+   "text": "The total amount of Performance Security should not be less than five percent (5%) of the contract value.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "0f09cb82d081cf13acb0a089db744d4f8023dda143a6ebf82d5f09e9b8efebc0"
+  },
+  {
+   "clause_id": "5B.2",
+   "title": "",
+   "text": "Modes of deposit:\na) Performance security may be furnished in the following forms:\n(i) Local cheques of Scheduled Banks (subject to realization)/ Pay Order/ Demand Draft/ Electronic Fund Transfer in favour of BHEL.\n(ii) Bank Guarantee from Scheduled Banks / Public Financial Institutions as defined in the Companies Act. The Bank Guarantee format should have the approval of BHEL.\n(iii) Fixed Deposit Receipt issued by Scheduled Banks / Public Financial Institutions as defined in the Companies Act (FDR should be in the name of the Contractor, a/c BHEL).\n(iv) Securities available from Indian Post offices such as National Savings Certificates, Kisan Vikas Patras etc. (held in the name of Contractor furnishing the security and duly endorsed/ hypothecated/ pledged, as applicable, in favour of BHEL).\n(v) Insurance Surety Bond.\n(Note: BHEL will not be liable or responsible in any manner for the collection of interest or renewal of the documents or in any other matter connected therewith)\nb) In case of GTE tenders, the performance security should be in the same currency as the contract and must conform to Uniform Rules for Demand Guarantees (URDG 758) - an international convention regulating international securities.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "9b845be34638e5cb51b62770f0e36095333c057464b13afae3b0b1caddb5c70e"
+  },
+  {
+   "clause_id": "5B.3",
+   "title": "",
+   "text": "a) Performance Security is to be furnished by a specified date (generally 14(fourteen) days after notification of the award) and it should remain valid for a period of 60 (sixty) days beyond the date of completion of all contractual obligations of the supplier, including warranty obligations.\nb) Performance Security is not mandatory for all tenders with estimated value less than Rs 2 crores.\nc) The Performance Security may be waived or amount reduced in following cases with the approval (before tendering) of the Head of the Contracting deptt., not below the rank of AGM:\n(i) Central/ State PSUs/ Government deptts / Autonomous/ Educational/ Research institutions.\n(ii) Joint Venture or Subsidiary companies of BHEL.\n(iii) Trial/ Development tenders.\n(iv) Raw material like Steel, insulating material, electronic components, etc.\nd) The Performance Security may be waived or amount reduced/ increased in other cases for reasons to be recorded with the prior approval of the Unit Head.\n(The requirement of Performance Security or otherwise, as the case may be, shall be clearly specified in the tender conditions)",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "b9a09633ebbb1944996f2de4c410971253468a110d77ed1eb5e69743d1f3ca2f"
+  },
+  {
+   "clause_id": "5B.4",
+   "title": "",
+   "text": "Forfeiture of Performance Security:\nThe performance security will be forfeited and credited to BHEL's account in the event of a breach of contract by the supplier.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "dd38e9a10fccb91ce44af7ba380b09bb1d150e20c70b5ca4371757a28b742ddb"
+  },
+  {
+   "clause_id": "5B.5",
+   "title": "",
+   "text": "PS should be refunded to the contractor without interest, after he duly performs and completes the contract in all respects but not later than 60 (sixty) days of completion of all such obligations including the warranty under the contract.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "8d1d06b70dcede45d4840f15f3ae3946bec1dcafc2c448b9b962794ad52f5024"
+  },
+  {
+   "clause_id": "5B.6",
+   "title": "",
+   "text": "The Performance Security shall not carry any interest.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "a65e907ddc65c69522bcf0fd27ae08e2ea7ad8ce1d9f974934b79166c2e1ef8f"
+  },
+  {
+   "clause_id": "5.1",
+   "title": "Open Tender",
+   "text": "",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "c603fab2414ca094fd570bab2e0d768d9f43f2edd4a412afbc95dee2de4e997d"
+  },
+  {
+   "clause_id": "5.1.1",
+   "title": "",
+   "text": "Open tender shall generally be resorted for Purchases above Rs 20 Cr. This can also be resorted to in the following cases:\ni) Cases where adequate number of registered suppliers are not available.\nii) Procurement from Limited tender is considered not desirable.\niii) First time procurements and where PMD needs to be evolved.\nPre-Qualification procedure should be adopted for selection of prospective suppliers from whom offers can be solicited and Pre-Qualification criteria (i.e. past experience/ performance, financial soundness, technical competence, organizational capability etc., commensurate with the requirements) shall form part of the NIT. For this purpose, two/ three part bid system shall be followed in all cases of Open tenders.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "30d54cc01eceaae909f27985e4666e1080aa06a761f70feee6137eb7da5811e2"
+  },
+  {
+   "clause_id": "5.1.2",
+   "title": "",
+   "text": "Open tender shall be hosted on the website of the Unit and BHEL.\nGlobal Tender\nWhere competition from more than one source from different countries is envisaged, Global tendering is to be resorted to. A copy of NIT will be endorsed to the respective Embassies and High Commissions in India to seek offers through their liaison.\nThe selection of Embassies/ High Commissions in India will depend on the possibility of availability of the required material in such countries.\nIn addition to above, attention of registered suppliers and other probable suppliers may also be drawn to the Open/ Global tender.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "f3d0e4f301687218c6ecce9b1569f00f7a2fe0f6addef09b44fc12f364e80977"
+  },
+  {
+   "clause_id": "5.1.3",
+   "title": "",
+   "text": "Tender documents shall be hosted on the website and prospective suppliers shall be permitted to download and use these documents for submission of bids.\nIn case of any inability/ restrictions to host certain drawings/ part of tender documents on the website, the modalities for sending/ collection of such documents shall be clearly stated in the NIT.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "19a7afaeeb520ec2d2cac5d233050ec903585bfccba53facf29d289bd14d74eb"
+  },
+  {
+   "clause_id": "5.1.4",
+   "title": "",
+   "text": "In case of two/ three acceptable offers, the Open tender shall be treated as Limited tender for further processing as per DoP.\nIn case of a single acceptable offer, if it is considered necessary to proceed further in the same tender enquiry (reasons to be recorded), the Open tender shall be treated as Single tender for further processing as per DoP.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "da99a4fa25dbb36985cf396efa6d5ef23e375f2b50e77946b8f6107226cfd0bf"
+  },
+  {
+   "clause_id": "5.2",
+   "title": "Limited Tender",
+   "text": "",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "e02b6c677296af8f14ef522f7f9afadfa8c8b2d360a3c1c774025fa3c482955f"
+  },
+  {
+   "clause_id": "5.2.1",
+   "title": "",
+   "text": "Limited tender shall be addressed to all registered suppliers with approval of competent authority as per DoP. However, approval of Product Manager/ Head of MM (not below the rank of AGM) is required (reasons shall be recorded with rationale) in the following cases:\n(i) For not addressing Limited tender enquiry to any of the registered supplier/s.\n(ii) For addressing Limited tender enquiry to registered suppliers with low performance rating as per SEARP.\n(iii) For addressing Limited tender enquiry to suppliers short listed through EOI.\nFor addressing Limited tender enquiry to unregistered supplier(s) referred by the Customer, approval of Product Manager/ Head of MM (not below the rank of AGM) shall be taken with recorded reasons. In such cases, bids should be invited in two/ three parts, and the offers of such suppliers will be considered provided they are registered with permanent code in line with the provisions of SEARP, before price bid opening.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "b8bbb117e3c6ff3657554e3c816a169cabb683a937b63e80726c7801a844d47e"
+  },
+  {
+   "clause_id": "5.2.2",
+   "title": "",
+   "text": "Wherever the number of registered suppliers in PMD is less than four, it should be recorded that the process as in clause 3.4 is being followed.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "0d1b7fc1a379650f90368772ed3f5b77897bbac3d810b89f5d2e8f204d818531"
+  },
+  {
+   "clause_id": "5.2.3",
+   "title": "",
+   "text": "In case of a single acceptable offer, if it is considered necessary to proceed further in the same tender enquiry (reasons to be recorded), the Limited tender shall be treated as Single tender for further processing as per DoP.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "ff8b2bbc9938feb77676e1b4a73f96741ea40c586ed74528c21c061f34bac187"
+  },
+  {
+   "clause_id": "5.3",
+   "title": "Single Tender",
+   "text": "",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "d238c9cda0363cbe8dd5232c901c8e50b32fc57cff092058854d9b03bd95d384"
+  },
+  {
+   "clause_id": "5.3.1",
+   "title": "",
+   "text": "The Single tender route shall be resorted to only in exceptional cases. Single tender may be invited from the registered/ other supplier due to any of the following reasons, duly certified by the Head of the Indenting department (not below the rank of DGM):\na) Proprietary in nature;\nb) Purchases from collaborators or from their recommended suppliers;\nc) Customer's contract requirement;\nd) Urgency of requirement (to be certified by Head of Indenting department/ Product/ Project Manager/ Site-in-charge, with recorded reasons underlying the urgency);\ne) Source standardisation;\nf) Developmental/Trial orders;\ng) Availability of Pattern/ Die/ Special Toolings with a single supplier;\nh) Value of purchases being less than Rs. 50,000/- (USD 5,000 for purchases made abroad for foreign site/s);\ni) Spares from Original Equipment Manufacturers;\nj) Only one registered supplier in the PMD/ SD, subject to fulfilment of the following:\n(i) Process at 3.4 is being followed, and\n(ii) In case the estimated value of the tender is more than Rs. 20 Lakhs, it shall be recorded that Open tender for procurement has been resorted to in last financial year and there was no new qualified response.\nk) Strategic Purchases from CPSEs for items in their manufacturing range, based on sectoral preference guidelines from administrative ministry;\nl) Purchases of Non-standard items of R&D projects;\n(to be certified by Head of the Indenting department, not below the rank of AGM, that the 'Non-standard' item has been selected in line with BHEL's R&D Policy).\nm) Counter Trade arrangements with the approval of the Board;\n(to be certified by the concerned Business Sector/ Marketing Group that source/ supplier has been identified as per clause 35.10, and bears the approval of the Competent Authority)\nn) Requirements resulting from Strategic tie-ups/ Business Sharing Agreements approved by Functional Director/ CMD.\n(to be certified by the concerned Business Group/ Unit that source /supplier/ technology partner has been identified as per clause 35.11, and bears the approval of the Competent Authority)",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "f909545bcba6aad1aa02d5119a4ca63ae76ee9049f48a1db53315ab2b7e5ffbf"
+  },
+  {
+   "clause_id": "5.3.2",
+   "title": "",
+   "text": "Head of MM can also certify for reasons under clauses (f), (h), (j) & (k). Head of Commercial/ Marketing department can also certify for reasons under clauses (c).",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "2b8409fabd4bd31f7517167db13d8d252841726f1488ea64d79c654fe152a4a7"
+  },
+  {
+   "clause_id": "5.3.3",
+   "title": "",
+   "text": "On successful completion of the job, such suppliers, if not registered earlier, may be included in the PMD, as per SEARP.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "f1b99f977ae092020b11d1fc53f6854d8e5bdfb18ce38a0902612ec66a7a9b4b"
+  },
+  {
+   "clause_id": "5.3.4",
+   "title": "",
+   "text": "In order to reduce cases of Single tender procurement, all such purchases shall be reviewed by the Product/ Function/ MM Head every quarter. In addition, following cases shall be reviewed by Unit Head at least once in six months:\n- Single response finalized against Open/ Limited tender.\n- Single tender purchases under 5.3.1 (j)\n- All other Single tender purchases valued above Rs.100 Lakhs.",
+   "section": "5.0",
+   "section_title": "PROCUREMENT THROUGH TENDER SYSTEM",
+   "sha256": "e884c9207739763bba3454c83c90c63008227d0111bab2fa13969cbbd627225c"
+  },
+  {
+   "clause_id": "6.0",
+   "title": "REVERSE AUCTION",
+   "text": "Procurement through reverse auction is preferred. The norms and procedure for reverse auction shall be as per extant guidelines issued by Corp. MM.",
+   "section": "6.0",
+   "section_title": "REVERSE AUCTION",
+   "sha256": "9cede007a59dd4d4292da43bd0af0475f76c56ec89855bb66af83b28c6d78404"
+  },
+  {
+   "clause_id": "7.0",
+   "title": "E-PROCUREMENT",
+   "text": "Procurement process can also be through electronic mode, within the provisions of the Purchase Policy and relevant acts, where bidding, contracting and payments etc. are accomplished electronically improving the process time and thus efficiency.",
+   "section": "7.0",
+   "section_title": "E-PROCUREMENT",
+   "sha256": "5592a8c1e1c95f5ed265c66ed1c6883ec380e38055dd692de6a790a159df5f6f"
+  },
+  {
+   "clause_id": "8.0",
+   "title": "QUOTATIONS AND OPENING OF TENDERS",
+   "text": "",
+   "section": "8.0",
+   "section_title": "QUOTATIONS AND OPENING OF TENDERS",
+   "sha256": "1a41c9c8f7636d9a949cfc9a0e7794e2de18ac01ab8ac18319d2e435d43004a5"
+  },
+  {
+   "clause_id": "8.1",
+   "title": "Type of Bids",
+   "text": "a) Generally, two-part bid system is preferred where bids are invited in two parts viz. Techno-commercial (Part-I) and Price (Part-II) bids. Techno-commercial bids are opened first, evaluated and only then the price bids of qualified suppliers are opened.\nb) Single-part bid system may be followed where technical specifications and requirements are clear and no deviations are acceptable. No post-tender opening clarifications are allowed in single-part bids. The evaluation/ exclusion criteria for commercial terms shall be stated in the NIT. Bids not meeting the evaluation/ exclusion criteria stated in the NIT will be rejected. However, in Limited tender single-part bids, retendering (two-part bidding) shall be resorted to in the event of L-1 bidder getting rejected on technical grounds.\nc) Wherever bidders need to be pre-qualified first, bids can also be invited in three parts viz. Pre-qualification (Part-I), Techno-commercial (Part-II), and Price (Part-III) bids.",
+   "section": "8.0",
+   "section_title": "QUOTATIONS AND OPENING OF TENDERS",
+   "sha256": "010a093f20150f2e0417ccecd253212a6a33a80f8ffe296dfe6775c7a1c89e38"
+  },
+  {
+   "clause_id": "8.2",
+   "title": "Submission Time",
+   "text": "Adequate notice should be given to suppliers for submission of offers which should not be less than three weeks for Open tenders, two weeks for Limited tenders and ten days for E-procurement.\nThis time limit may be reduced or extended for recorded reasons, with the approval of next higher authority competent for inviting tenders (limited to Product/ Function/ MM Head).",
+   "section": "8.0",
+   "section_title": "QUOTATIONS AND OPENING OF TENDERS",
+   "sha256": "790d87ba0d971a095267468a8455e73555ed34c9297c440c2d506fad536ba8d1"
+  },
+  {
+   "clause_id": "8.3",
+   "title": "Offers by FAX/ E-mail/ EDI",
+   "text": "Fax/ E-Mail/ internet/ EDI offers received in time shall be considered only when such offers are complete in all respects. In case of offers through E-mail, suppliers shall be asked to send the offers to an E-mail id pre-specified in the NIT, which will have controlled joint access to identified Purchase and Finance executives.",
+   "section": "8.0",
+   "section_title": "QUOTATIONS AND OPENING OF TENDERS",
+   "sha256": "a45311366c7980523148035f22b21c8de740c8781c9538ae9b07142a2ba00827"
+  },
+  {
+   "clause_id": "8.4",
+   "title": "Receipt of Tenders",
+   "text": "In general, the receipt of tenders should be through tender boxes. The location of tender box should be clearly indicated in NIT. Tender box should be conspicuously located in a secured environment in conveniently approachable premises.\nHowever, in cases where tenders are bulky, or due to some reasons tenders are required to be submitted by hand, the names and designation of atleast two officers to whom such tenders are to be submitted should be mentioned in the bid documents. Else such tenders may be submitted in a secured tender room identified for the purpose and indicated in NIT.\nThe latest technology such as webcam etc. may be used.",
+   "section": "8.0",
+   "section_title": "QUOTATIONS AND OPENING OF TENDERS",
+   "sha256": "82b7823f02454cb7fc5033674b8045537b1f7404bff25967fd923f629c102e35"
+  },
+  {
+   "clause_id": "8.5",
+   "title": "Tender Opening",
+   "text": "All tenders shall be opened at a specified place and appointed date and time (or the extended date/ time, if any) by representatives of Purchase and Finance departments in the presence of representatives of suppliers who would like to be present. The last day of submission (or the extended date of submission) and the opening date shall be same.\nProper records of proceedings (like date, place, time, number of tenders received, signature of bidders on attendance sheets/ register, etc.) of tender opening shall be maintained.",
+   "section": "8.0",
+   "section_title": "QUOTATIONS AND OPENING OF TENDERS",
+   "sha256": "d7a4f4ad1b7592269a53c86f9374abc3f92016c7720118a4523bef03902f6464"
+  },
+  {
+   "clause_id": "8.6",
+   "title": "Tender Evaluation",
+   "text": "Tender evaluation shall be carried out on the basis of technical specifications and commercial terms & conditions specified in the tender documents and changes thereof, if any, shall be communicated to all the bidders before price bid opening. Techno-commercial bid should normally not be rejected (in the case of two-part bid system) without giving the bidder an opportunity to withdraw the deviations/ furnish the clarifications/ documents by appropriate cut-off date. Reasons for rejecting a bid shall be clearly recorded.",
+   "section": "8.0",
+   "section_title": "QUOTATIONS AND OPENING OF TENDERS",
+   "sha256": "2bd79324e59b14a48698ff2b023c81deac7d99d6d9b00bbdf6111571d8892433"
+  },
+  {
+   "clause_id": "8.7",
+   "title": "Loading Criteria",
+   "text": "The list of permissible technical/ commercial deviations and the loading criteria thereof shall be informed in the NIT through tender conditions. In respect of any additional technical deviations for which loading criterion is required to be framed after opening of techno-commercial bid, the Engineering/ Indenting head shall be authorized to accept any technical deviations and frame the additional loading criteria thereof. As regards any additional commercial deviations for which loading criteria is required to be framed after opening of techno-commercial bid, approval of the authority competent to approve the placement of order (limited to Product/ Functional/ MM Head) shall be obtained for accepting the deviations and framing the loading criteria thereof. Such additional deviations and the loading criteria shall be communicated to all the qualified bidders before the price bid opening.",
+   "section": "8.0",
+   "section_title": "QUOTATIONS AND OPENING OF TENDERS",
+   "sha256": "fdb2859e8b151cc931e4963faa9dc99ea4a97a3ed33bf3abb3b6aad9052c5419"
+  },
+  {
+   "clause_id": "8.8",
+   "title": "Price Bids (in two/ three-part bid system)",
+   "text": "",
+   "section": "8.0",
+   "section_title": "QUOTATIONS AND OPENING OF TENDERS",
+   "sha256": "417ffdf922333bd77778070f9f9ca9a5a3705ed3091ece31bd3d86db6715f7cb"
+  },
+  {
+   "clause_id": "8.8.1",
+   "title": "",
+   "text": "Any discount/ revised offer submitted by a bidder on its own shall be accepted provided it is received on or before the due date and time of offer submission (i.e. Part-I bid). The discount shall be applied on pro-rata basis to all items unless specified otherwise by the bidder.\nUnsolicited discounts/ revised offers given after Part-I bid opening shall not be accepted.",
+   "section": "8.0",
+   "section_title": "QUOTATIONS AND OPENING OF TENDERS",
+   "sha256": "918d40098bd0a5a50c1df9671846016442ba8ae872a9d165052054281670d762"
+  },
+  {
+   "clause_id": "8.8.2",
+   "title": "",
+   "text": "In case there is no change in the technical scope and/ or specifications and/ or commercial terms & conditions, the bidder/s shall not be allowed to change his/ their price bids after the due date, within the validity period.",
+   "section": "8.0",
+   "section_title": "QUOTATIONS AND OPENING OF TENDERS",
+   "sha256": "e514c1db7c9428932d8e77808f8b73df16dfb1d0ee7a792cdbeb07b112289957"
+  },
+  {
+   "clause_id": "8.8.3",
+   "title": "",
+   "text": "In case of changes in scope and/ or technical specifications and/ or commercial terms & conditions, having price implications, techno-commercially acceptable bidders shall be asked by BHEL (after freezing the scope, technical specifications and commercial terms & conditions) to submit the impact of such changes on their price bid. A suitable cut-off date and time should be given to all the techno-commercially acceptable bidders to submit the impact on their price bids.\nIn such cases, the estimates prepared may be re-examined w.r.t. the changes in specification/ terms & conditions.\nIn the event of any bidder, after finalizing the technical specification & scope of supply, opting to revise and submit their latest price bid instead of submitting impact on their price bid asked by BHEL, then their original price (i.e. the previous bid) shall also be opened to know the price impact.",
+   "section": "8.0",
+   "section_title": "QUOTATIONS AND OPENING OF TENDERS",
+   "sha256": "fec5f38d645023799fbfa2906e70d8e5b8134e912559eeb2af5d432a99250272"
+  },
+  {
+   "clause_id": "8.8.4",
+   "title": "",
+   "text": "All the techno-commercially acceptable bidders shall be informed of the date and time of opening of price bids. The price bids shall be opened on the due date and time by representative of Purchase and Finance Departments in the presence of representatives of suppliers who would like to be present.",
+   "section": "8.0",
+   "section_title": "QUOTATIONS AND OPENING OF TENDERS",
+   "sha256": "d796170060aaa34ba1cfa16e54113bf5504e1283622437c815aa9c9b6c50a7a3"
+  },
+  {
+   "clause_id": "8.9",
+   "title": "Safe Custody of Bids",
+   "text": "After tender opening, all the un-opened bids (including price bids) shall be stored in safe custody. Units to incorporate suitable instructions in their Departmental Procedures/ Work Instructions.",
+   "section": "8.0",
+   "section_title": "QUOTATIONS AND OPENING OF TENDERS",
+   "sha256": "39839ca7e6c04bd7552c3a2ce2331667cbac991f302ffa7a9d979565f83f93c2"
+  },
+  {
+   "clause_id": "8.10",
+   "title": "Return of Un-opened Bids",
+   "text": "After release of letter of intent/ purchase order, the un-opened bids (including price bids) shall be returned to the respective bidders along with reasons for not opening the bids.",
+   "section": "8.0",
+   "section_title": "QUOTATIONS AND OPENING OF TENDERS",
+   "sha256": "635eb7eb71d380f8241a7b71cdaa344a369cf87e0453a6cee957ee75c5a45c62"
+  },
+  {
+   "clause_id": "9.0",
+   "title": "LATE TENDERS",
+   "text": "In case of Open/ Limited tenders, offers received after the specified time of their 'Submission' are treated as Late Tenders and shall not be considered.\nIn case of Single tender enquiry, late offers may be considered with the prior approval of next higher authority competent to invite tenders (limited to Unit Head).",
+   "section": "9.0",
+   "section_title": "LATE TENDERS",
+   "sha256": "4fd5dcf3080ce14b484ccbd2c13e19594a5b19adbdc1fbd77ec3643f168296c3"
+  },
+  {
+   "clause_id": "10.0",
+   "title": "COST EVALUATION",
+   "text": "",
+   "section": "10.0",
+   "section_title": "COST EVALUATION",
+   "sha256": "60b8443224c328a0423b7044a623e955756b72ed9b31f42642ea1c29ee44e322"
+  },
+  {
+   "clause_id": "10.1",
+   "title": "",
+   "text": "Evaluation shall be on the basis of delivered cost (I.e. \"total cost to BHEL\").",
+   "section": "10.0",
+   "section_title": "COST EVALUATION",
+   "sha256": "8a27cfa6970df484a1f24657e9da3784a4038d3d3c59d6a00ba21b48f4f46b93"
+  },
+  {
+   "clause_id": "10.2",
+   "title": "",
+   "text": "For evaluation, the exchange rate (TT selling rate of SBI) shall be taken as under:\n|\nSingle part bids\n|\nDate of tender opening\n|\nTwo/ three part bids\n|\nDate of Part-I bid opening\n|\nReverseAuction\n|\nDate of Part-I bid opening\nIf the relevant day happens to be a bank holiday, then the forex rate as on the previous bank (SBI) working day shall be taken.\nAll the above shall also be stated in the tender conditions.",
+   "section": "10.0",
+   "section_title": "COST EVALUATION",
+   "sha256": "a122e024530bf2913a7ecbbf6d612d85f6398eb11964c96f7af740472f8bb7dd"
+  },
+  {
+   "clause_id": "10.3",
+   "title": "",
+   "text": "Ranking (L-1, L-2 etc.) shall be done only for the techno-commercially acceptable offers.",
+   "section": "10.0",
+   "section_title": "COST EVALUATION",
+   "sha256": "05ef594436734b3ddb989c96b652ee77f92eff7e841a2471493afcf22b23c065"
+  },
+  {
+   "clause_id": "11.0",
+   "title": "TENDER PROCESSING AND COMMITTEE APPROACH",
+   "text": "",
+   "section": "11.0",
+   "section_title": "TENDER PROCESSING AND COMMITTEE APPROACH",
+   "sha256": "a8175060e8cd15bd1304d47a42e4850f97762f871182b392e60278f4116ff735"
+  },
+  {
+   "clause_id": "11.1",
+   "title": "",
+   "text": "Technical evaluation of the offers shall be done by the Indentor/ Technical Committee. The Technical Committee, if necessary, shall be constituted by the Product/ Functional/ Unit Head indicating the terms of reference.\nEvaluation of the offers on commercial terms/ financial capability shall be done by the respective MM/ Finance executives/ Purchase Committee.",
+   "section": "11.0",
+   "section_title": "TENDER PROCESSING AND COMMITTEE APPROACH",
+   "sha256": "a322465c2e40f4ec5005758e8f8b033dfb4f5878ff0395fbd65357bccfd06618"
+  },
+  {
+   "clause_id": "11.2",
+   "title": "Purchase Committee",
+   "text": "Subsequent to price bid opening and vetting of the comparative statement, the proposal shall be processed accordingly by the dealing MM executive/ Purchase Committee. The Purchase Committee, if necessary, may be constituted by indicating the terms of reference, by an authority one step higher than the Competent Authority for ordering (limited to Unit Head).\nPurchase Committee shall consist of officers from Indenting, Purchase and Finance departments (in consultation with respective Head of departments) as per Annexure-I (Chapter-2).\nHowever, Purchase Committee shall be mandatory in the following cases:\na) All tenders above Rs. 20 Crores;\nb) L-1 prices are higher by 20% or more than the estimates, for all tenders above Rs. 20 Lakhs as per approved indent.",
+   "section": "11.0",
+   "section_title": "TENDER PROCESSING AND COMMITTEE APPROACH",
+   "sha256": "e4eae70bc40b1767d14f9e6ede1e40325a1c74791142899e1c30d5bf9a88edd3"
+  },
+  {
+   "clause_id": "11.2.1",
+   "title": "",
+   "text": "The role of the Purchase Committee may commence prior to price bid opening. The role of Purchase Committee shall also include negotiations, wherever required.\nThe Purchase Committee shall also consider acceptance/ rejection of abnormally low bids, as provided at 11.4 below.\nIf Purchase Committee has not been formed earlier, it shall be formed in case of negotiations.",
+   "section": "11.0",
+   "section_title": "TENDER PROCESSING AND COMMITTEE APPROACH",
+   "sha256": "633b110c04b15e7ff6ce0c0b24929d5b9ff48bb10077927bf6dae36cf53559cb"
+  },
+  {
+   "clause_id": "11.2.2",
+   "title": "",
+   "text": "Purchase executive will be convener of the Committee. Quality/ Engg. Representative (s)/ any other related department may also be co-opted, where necessary.",
+   "section": "11.0",
+   "section_title": "TENDER PROCESSING AND COMMITTEE APPROACH",
+   "sha256": "60497b0f2f519707f210e59c335e4364d3a8472a2d17110aacca8bb32b19f7d0"
+  },
+  {
+   "clause_id": "11.3",
+   "title": "Negotiations",
+   "text": "(i) Normally, there should be no negotiation. Price negotiations may be conducted as an exception, with L-1 bidder, by the Purchase / Negotiation Committee with prior approval of the next higher authority competent for purchase ordering approval (limited to the Unit Head). Wherever necessary, an expert may also be associated.\n(ii) Unless decided otherwise, negotiations shall not be conducted for tenders value upto Rs 20 lakhs, provided the following criteria is met:\n(a) L-1 price is less than estimate, or\n(b) L-1 price is within +5% of estimates and atleast four technocommercially qualified bidders have participated in the price bids/ RA.\n(iii) After negotiation, bidder may be asked to submit his revised price.\n(iv) The negotiation committee should sign the minutes of the meeting of the negotiation held with bidder, immediately after negotiations.\n(Note: Counter offering to L-I bidder tantamounts to negotiation)",
+   "section": "11.0",
+   "section_title": "TENDER PROCESSING AND COMMITTEE APPROACH",
+   "sha256": "6c763fd54852742aecc2fc7f8e0bb0ed3c5bf26940b25f4a71c520665383809a"
+  },
+  {
+   "clause_id": "11.4",
+   "title": "Abnormally Low Bids",
+   "text": "A bid may be considered as abnormally low bid if (i) the bid price by the L-1 is lower by 30% (or more) than the indent estimate against Open tender and (ii) the difference between L-1 and L-2 bid price is more than 10% of the estimate.\nSuch bids may be rejected if the Purchase Committee determines that the price quoted by the bidder is abnormally low, as defined above, in relation to the subject matter of the procurement and raises concerns on the ability of the bidder to execute the order/ contract.\nHowever, following actions shall be taken before a decision is taken:\n(a) The bidder shall be informed with reasons that the quoted price gives rise to concerns on the ability of the bidder to execute the order/ contract and a reply shall be sought within a stipulated time frame.\n(b) The Purchase Committee shall take into account the reply provided by the bidder and submit its recommendations.\n(c) In case the bidder does not reply within the stipulated time, the bid can be rejected.\nThe speaking recommendations of the Purchase Committee shall be duly recorded and put up to the Competent Authority for ordering, not below Product/ Functional Managers/ Head MM (not below the rank of AGM) with full powers to the Unit Head, who will decide regarding acceptance/ rejection of such bid. In case the bid is rejected, the reasons shall be promptly communicated to the bidder concerned.\nUpon rejection of the abnormally low bid as above, only the remaining bids available for reckoning shall be considered and ranked.",
+   "section": "11.0",
+   "section_title": "TENDER PROCESSING AND COMMITTEE APPROACH",
+   "sha256": "0ec901eec5adb3afcd52c9e15cf859c33fadb1682fbed2fb62d24bc2baa2d966"
+  },
+  {
+   "clause_id": "11.5",
+   "title": "",
+   "text": "The Purchase Committee is empowered to make, and is accountable for their final recommendation to the Competent Authority.\nThe Committee in their recommendations should state whether the prices are reasonable or not, keeping in view of the consideration given in estimates, submit recommendations and clearly indicate further course of action to be adopted.\nRecommendations of the Committee shall be submitted for approval of the Competent Authority.",
+   "section": "11.0",
+   "section_title": "TENDER PROCESSING AND COMMITTEE APPROACH",
+   "sha256": "fe09cc71cad2e8143468906704beb35798b13c506fbd222ae9fa72ba85260380"
+  },
+  {
+   "clause_id": "11.6",
+   "title": "",
+   "text": "In the decisions of the Committee(s), the responsibility of individual members will be confined to their specific area/ function with collective responsibility for the final recommendations.",
+   "section": "11.0",
+   "section_title": "TENDER PROCESSING AND COMMITTEE APPROACH",
+   "sha256": "593b8b1f4af4093aca6be01be14bec4f90a88eb411f12000ddffa5eda56d709a"
+  },
+  {
+   "clause_id": "12.0",
+   "title": "SPLITTING THE ORDER",
+   "text": "",
+   "section": "12.0",
+   "section_title": "SPLITTING THE ORDER",
+   "sha256": "c96c8ddf1c20a13b2c435037d3227b6d5be138dd20d08e31673874e95da71d23"
+  },
+  {
+   "clause_id": "12.1",
+   "title": "",
+   "text": "Wherever necessary, orders can also be placed on more than one supplier. The distribution is to be done in a fair and transparent manner whereby the distribution is guided by the order of tender rankings.",
+   "section": "12.0",
+   "section_title": "SPLITTING THE ORDER",
+   "sha256": "a783968ecae58735041b84eabdede722eabc53127b105cc86d6cbb7eeeac3643"
+  },
+  {
+   "clause_id": "12.2",
+   "title": "",
+   "text": "In cases where it is decided in advance to have more than one source of supply, the intention and the manner of splitting shall be stated in the tender enquiry.\nIn case of two/ three part bid, if the intention and the manner of splitting was not predisclosed in the NIT, and it is later discovered that the quantity needs to be distributed on more than one supplier, the intention and manner of splitting shall be disclosed to all the techno-commercially acceptable bidders before price bid opening.\nIn case of single-part bid, if the distribution of quantities is not envisaged in the NIT, and if, after due processing, it is discovered that the quantity to be ordered is far more than what L1 alone is capable of supplying and since there was no prior decision to split the quantities, the balance quantity should be distributed among the other bidders, at L-1 rates, in a manner that is fair, transparent and equitable.\nWherever the numbers of qualified responses (N) are three or more, the distribution shall be limited to (N-1) qualified responses. Distribution in case of two qualified bidders shall require approval of Unit Head (not below the rank of GM).",
+   "section": "12.0",
+   "section_title": "SPLITTING THE ORDER",
+   "sha256": "17a9ac1780cb0023abb89c1a2e1d083e0c0cb19ea3ba5a0e6911fafbbc99f2fa"
+  },
+  {
+   "clause_id": "12.3",
+   "title": "",
+   "text": "L-1 rates, as finalized, shall be counter offered to the other bidders in case of splitting of order. In case any bidder(s) do not accept the L-1 rates, the counter-offer may be extended to other bidders.",
+   "section": "12.0",
+   "section_title": "SPLITTING THE ORDER",
+   "sha256": "663ca7a628cc892aa88bb6b8f8f4e3e969e96274268f0d2493a93b34360bb1de"
+  },
+  {
+   "clause_id": "13.0",
+   "title": "RE-TENDERING",
+   "text": "Re-tendering may be resorted to only after the administrative approval of one step higher than the Competent Authority (limited to Unit Head) for ordering under the circumstances such as:\n(a) Inadequate response / Lack of Competition (refer note below);\n(b) Unreasonably high/ low price;\n(c) Suspected cartel formation;\n(d) Sudden slump in market prices;\n(e) Major changes in scope and/ or pre-qualification requirement in a tender.\nIn case L-1 bidder backs out, re-tendering shall be done (without including the L1 bidder who had backed out).\nNote:\nInadequate response / Lack of competition shall not be determined solely on the basis of the number of Bidders. Even when only one bid is submitted, the process should be considered valid provided following conditions are satisfied:\n(i) The procurement was satisfactorily advertised and sufficient time was given for submission of bids\n(ii) The qualification criteria were not unduly restrictive, and\n(iii) Prices are reasonable in comparison to market values",
+   "section": "13.0",
+   "section_title": "RE-TENDERING",
+   "sha256": "00ed1f9b5e99388602f698a17c8d4bec00be6638f4c12f92db356c016dd3d615"
+  },
+  {
+   "clause_id": "14.0",
+   "title": "REPEAT ORDERS",
+   "text": "",
+   "section": "14.0",
+   "section_title": "REPEAT ORDERS",
+   "sha256": "fbd34c1b6733798c63e0456ef4c45909aa2a01e270f200116d3ee48a018743e2"
+  },
+  {
+   "clause_id": "14.1",
+   "title": "",
+   "text": "Repeat Orders for the same item(s), without calling for fresh tenders, may be resorted to with recorded reasons and approval of Competent Authority as per DoP, provided (a) there is no downward price trend (with supporting data/ rationale), and (b) it should give benefit in delivery.",
+   "section": "14.0",
+   "section_title": "REPEAT ORDERS",
+   "sha256": "b3820c31242446af7ca43fd5a91dfb234a1bd66ddba82d8544709439fdb4053e"
+  },
+  {
+   "clause_id": "14.2",
+   "title": "",
+   "text": "Repeat ordering is not permitted if (a) for individual item(s) of the package if the original order was evaluated on total package basis, (b) the original order was placed on Single tender basis, (c) the original order was placed on Single acceptable response basis against Open/ Limited tender, (d) the bidder(s) were rejected on delivery grounds in the original tender, (e) high value Capital equipment (item value more than Rs. 1 Crore) and (f) it is a Framework Agreement.",
+   "section": "14.0",
+   "section_title": "REPEAT ORDERS",
+   "sha256": "8864e969404cf7e827b58d622446c38868b2d3fc42d983cf83c897298ecab77b"
+  },
+  {
+   "clause_id": "14.3",
+   "title": "(Blank)",
+   "text": "",
+   "section": "14.0",
+   "section_title": "REPEAT ORDERS",
+   "sha256": "26d9ca4940820cc46abcd14dd9c1dcc3fa204908f5773229df2ed354f311d5a4"
+  },
+  {
+   "clause_id": "14.4",
+   "title": "",
+   "text": "Quantity discount/ reduction in price by the supplier due to reduced effort on his part (design/ marketing effort etc.) shall neither be treated as downward price trend nor as negotiation. The impact due to taxes, duties and freight shall be considered by the Purchase Committee/ dealing Purchase Executive while reviewing and recommending the discount/ price reduction offered.",
+   "section": "14.0",
+   "section_title": "REPEAT ORDERS",
+   "sha256": "4b0f72709450cfacaba529674d6780760e0729a9361a6fa3c574b6e999103b0a"
+  },
+  {
+   "clause_id": "14.5",
+   "title": "",
+   "text": "Total increase in quantity through amendments or repeat orders should not exceed two times (200%) the originally ordered quantity. Repeat order/s may be placed within 2 years from the date of original order.",
+   "section": "14.0",
+   "section_title": "REPEAT ORDERS",
+   "sha256": "8e51ab572e351237a44f6b9318d67fe0a30b2a4852c7bbe006c439029e4c5146"
+  },
+  {
+   "clause_id": "14.6",
+   "title": "",
+   "text": "In case original orders were placed on two or more suppliers at L-1 rate after splitting, the repeat order quantities should be split in same ratio; and if not possible, the quantities should be split in a transparent and fair manner, also taking into account the suppliers' performance in supplies against the original orders.",
+   "section": "14.0",
+   "section_title": "REPEAT ORDERS",
+   "sha256": "89f989b0adb086653f26e4b3390e22c893df43a0995a193dd759d29bbd384a1e"
+  },
+  {
+   "clause_id": "14.7",
+   "title": "",
+   "text": "The sister Unit wanting to place the 'Repeat Order' shall also comply with the following:\na) Request the original Unit for placement of repeat order, or\nb) Shall ensure fulfillment of the conditions of 'Repeat Ordering' and will take clearance of the original Unit, followed by confirmatory information and PO copy to the original Unit.",
+   "section": "14.0",
+   "section_title": "REPEAT ORDERS",
+   "sha256": "586b85d2ab64d7f3dca5168a1e515f41da8749e16cea4b1ead0a6231155a2824"
+  },
+  {
+   "clause_id": "15.0",
+   "title": "PURCHASES THROUGH PERSONAL ENQUIRY",
+   "text": "",
+   "section": "15.0",
+   "section_title": "PURCHASES THROUGH PERSONAL ENQUIRY",
+   "sha256": "815245580a91baa40857cc5203982ff0011a3e10a9864282a1f7d7d4bbb97ca9"
+  },
+  {
+   "clause_id": "15.1",
+   "title": "",
+   "text": "Small value items and petty purchases can be done under the following provisions. However, Units shall issue suitable work instructions for accountals and maintenance of records.\nFor purchases through personal enquiry under this clause, registration of suppliers is not mandatory.",
+   "section": "15.0",
+   "section_title": "PURCHASES THROUGH PERSONAL ENQUIRY",
+   "sha256": "6e3d4b9ec553ab36219f131308220ab5c030aae0b21b04f533c491041cecae90"
+  },
+  {
+   "clause_id": "15.2",
+   "title": "",
+   "text": "Procurement of small value items and other unforeseen emergency requirements (as per Sl 16/ Note 6 of DoP) may be carried out by a committee of representatives from Indenting, Purchase/ User and Finance departments constituted by Competent Authority as per DoP.\nIn case of project sites, if requisite no. of members (including finance member) are not available, prior approval of Site-in-Charge, not below the rank of AGM, shall be required for constituting the two member Committee. Order can be placed and payment made on the spot by the Committee.\nPurchase order may be signed by the representative of Purchase/ User department after taking the signature of other committee member/s on the office copy.",
+   "section": "15.0",
+   "section_title": "PURCHASES THROUGH PERSONAL ENQUIRY",
+   "sha256": "02154eec20f24d9e5bf42429e5ff9d2d9eb0c83280f4e68e65fbeba19c0c30c1"
+  },
+  {
+   "clause_id": "15.2.1",
+   "title": "",
+   "text": "If three or more quotations are obtained by the Committee, DoP as per Sl 16.1/ Note 6 of DoP shall be used.",
+   "section": "15.0",
+   "section_title": "PURCHASES THROUGH PERSONAL ENQUIRY",
+   "sha256": "44610bf460a4982edf677b765733304d0b78c4883c608329437eb3a44316124a"
+  },
+  {
+   "clause_id": "15.2.2",
+   "title": "",
+   "text": "Petty purchases without obtaining any quotations/ bids (including purchases with less than three quotations) can be made by the concerned department, under Sl 16.2/ Note 6 of DoP.\nFor such purchases a certificate will be recorded by the concerned executive in the following format.\n\"I,____________________, am satisfied that these goods have been purchased at a reasonable price, under the given circumstances.\"",
+   "section": "15.0",
+   "section_title": "PURCHASES THROUGH PERSONAL ENQUIRY",
+   "sha256": "1830f75672ad0d975e0e59ea1c5b514b736bb7094dbf0700b237859e42bb24c0"
+  },
+  {
+   "clause_id": "16.0",
+   "title": "INTER-UNIT PURCHASES AND PURCHASES FROM SUBSIDIARY & JOINT VENTURE COMPANIES",
+   "text": "",
+   "section": "16.0",
+   "section_title": "INTER-UNIT PURCHASES AND PURCHASES FROM SUBSIDIARY & JOINT VENTURE COMPANIES",
+   "sha256": "6b4ae839f6f9c05469f5865d869c31bc3c86122c1445ce4f24641ae3dfcc58a3"
+  },
+  {
+   "clause_id": "16.1",
+   "title": "",
+   "text": "Purchases of items within the manufacturing range of the sister Units shall be made from them if delivery and quality requirements are met, and the landed cost of purchase from outside sources is more than the incremental cash cost (including freight) of the sister Unit. The incremental cash cost shall be vetted by Head of Finance of the Unit who is getting the order from other Unit.\nSuch orders shall not be offloaded on back to back basis by the sister unit and there has to be minimum 10% value addition in such orders.\nThe cases where incremental cash cost of the sister unit is more than the market price, are to be reviewed periodically by the sister unit so as to bring down the costs.\nNote: Corporate Finance shall issue the necessary guidelines for defining the Incremental Cash Cost.",
+   "section": "16.0",
+   "section_title": "INTER-UNIT PURCHASES AND PURCHASES FROM SUBSIDIARY & JOINT VENTURE COMPANIES",
+   "sha256": "5c5f72cf78b8ecd1522442a7497fd8621430f59cec5d49646cd4d63dbe341779"
+  },
+  {
+   "clause_id": "16.1.1",
+   "title": "",
+   "text": "Purchases of items within the manufacturing range of the Subsidiary Companies of BHEL/ Joint Venture Companies of BHEL (where BHEL is having paid up share capital of 50% or above and balance paid-up share capital is not held by private entity) shall be made from them if delivery and quality requirements are met and prices are reasonable. The total order placed by BHEL shall not be offloaded on back-to-back basis by the Subsidiary/ concerned JV Company and there has to be value addition in such orders. A confirmation to this effect shall be obtained before placement of order.",
+   "section": "16.0",
+   "section_title": "INTER-UNIT PURCHASES AND PURCHASES FROM SUBSIDIARY & JOINT VENTURE COMPANIES",
+   "sha256": "46334515a8d4952f4324c58aab42d8ff99be46744fe84bfdc48d5804752c732b"
+  },
+  {
+   "clause_id": "16.2",
+   "title": "",
+   "text": "In such cases, tenders need not be called from other parties and order can be placed directly on the sister Units/ Subsidiary/ JV Companies of BHEL at mutually agreed prices.",
+   "section": "16.0",
+   "section_title": "INTER-UNIT PURCHASES AND PURCHASES FROM SUBSIDIARY & JOINT VENTURE COMPANIES",
+   "sha256": "5465573f502971115d5f407bbecf1330ea5d5fd68ea98ae236505ba541f19452"
+  },
+  {
+   "clause_id": "16.3",
+   "title": "",
+   "text": "Procurement from outside sources, of items falling within the manufacturing range of the sister Units/ Subsidiary/ JV Companies of BHEL may be carried out only with prior approval of the Unit Head for recorded reasons.\nIn case it is decided to continue with purchase of certain items from the sister unit irrespective of its incremental cash cost being higher than the cost of purchase from outside source, the same may be recommended by Unit Head for approval of Head/ COC, Corporate Office.",
+   "section": "16.0",
+   "section_title": "INTER-UNIT PURCHASES AND PURCHASES FROM SUBSIDIARY & JOINT VENTURE COMPANIES",
+   "sha256": "8c169390459d80ff35fa22a4edf35411db8730a8578ea7d73f730036da0fe2b4"
+  },
+  {
+   "clause_id": "16.4",
+   "title": "",
+   "text": "In order to utilise surplus machining and fabrication capacity in the sister Units/ Subsidiary/ JV Companies of BHEL, each such Unit/ Company shall indicate its surplus capacity on their respective intra net for information of sister Units.",
+   "section": "16.0",
+   "section_title": "INTER-UNIT PURCHASES AND PURCHASES FROM SUBSIDIARY & JOINT VENTURE COMPANIES",
+   "sha256": "b31e8cb503cdd7f3580150b449980d1ca40e36feaf3da82407cbbedcfb4ab161"
+  },
+  {
+   "clause_id": "17.0",
+   "title": "CAPITAL PROCUREMENTS, BALANCE OF PLANTS (BOPs) AND SUBCONTRACTING BY MANUFACTURING UNITS",
+   "text": "",
+   "section": "17.0",
+   "section_title": "CAPITAL PROCUREMENTS, BALANCE OF PLANTS (BOPs) AND SUBCONTRACTING BY MANUFACTURING UNITS",
+   "sha256": "b53de668a0089626ee91d4e7cdd47aef817075b562e2e385718be74fd28c850d"
+  },
+  {
+   "clause_id": "17.1",
+   "title": "Capital procurement",
+   "text": "In addition to the guidelines in this Policy, the following provisions shall be applicable:\ni) The specification of the equipment to be procured shall be finalized based on functional requirements and may be guided by the following criteria:\na) Pre-bid meeting with prospective suppliers, in cases where considered necessary.\nb) Efforts shall be made for obtaining budgetary offers from two or more suppliers to enable better preparation of generic specification.\nc) Assimilation of market information/ experience of other Units.\nii) The proposal for purchase of capital equipment should indicate that the commitments are within the approved budget\niii) Bank Guarantee/s of appropriate value/s are to be ensured from the suppliers for the performance against 'contract' and 'equipment'.\nThe extant guidelines issued by CMT&IP with approval of Director (E,R&D) shall also be followed.",
+   "section": "17.0",
+   "section_title": "CAPITAL PROCUREMENTS, BALANCE OF PLANTS (BOPs) AND SUBCONTRACTING BY MANUFACTURING UNITS",
+   "sha256": "c291ea0f02aea1bd9452127e4ab0856d380e5c87a7c6e3f19b275b34689642dd"
+  },
+  {
+   "clause_id": "17.2",
+   "title": "Balance of Plants",
+   "text": "Bank Guarantee/s of appropriate value/s are to be ensured from the suppliers for the performance against 'contract' and 'equipment'.",
+   "section": "17.0",
+   "section_title": "CAPITAL PROCUREMENTS, BALANCE OF PLANTS (BOPs) AND SUBCONTRACTING BY MANUFACTURING UNITS",
+   "sha256": "cc0a8daef22915d20c60cd06aa885646b7eb45ccb007c0f765333618c79563f3"
+  },
+  {
+   "clause_id": "17.3",
+   "title": "Sub-contracting by Manufacturing Units",
+   "text": "Wherever material is issued by BHEL, Bank Guarantee/s of appropriate value are to be ensured from the suppliers for the performance of the order. The percentage of Bank Guarantee is to be decided by the Unit/ Regions in their work instructions and the same to be informed in respective NITs.",
+   "section": "17.0",
+   "section_title": "CAPITAL PROCUREMENTS, BALANCE OF PLANTS (BOPs) AND SUBCONTRACTING BY MANUFACTURING UNITS",
+   "sha256": "73df2da5d0423b42dfa78662aeab2f6b42e7490e98ecc159fa1c05afe887d265"
+  },
+  {
+   "clause_id": "17.4",
+   "title": "",
+   "text": "The percentage of Bank Guarantee should not be less than 3% for Capital items and 5% for BOPs.",
+   "section": "17.0",
+   "section_title": "CAPITAL PROCUREMENTS, BALANCE OF PLANTS (BOPs) AND SUBCONTRACTING BY MANUFACTURING UNITS",
+   "sha256": "b6219007f0e5821356e724d5e8936c9c63d134cf11e5284bcf5851a43b087f63"
+  },
+  {
+   "clause_id": "18.0",
+   "title": "PRE-BID/ POST-BID/ PRE-AWARD TIE-UPS/ MOUs",
+   "text": "",
+   "section": "18.0",
+   "section_title": "PRE-BID/ POST-BID/ PRE-AWARD TIE-UPS/ MOUs",
+   "sha256": "76599cfdebfdc5e9a5799ecb9d505d83296f120212089c8ecd344d4a78285c9f"
+  },
+  {
+   "clause_id": "18.1",
+   "title": "Pre-bid Tie-ups/ MOUs",
+   "text": "",
+   "section": "18.0",
+   "section_title": "PRE-BID/ POST-BID/ PRE-AWARD TIE-UPS/ MOUs",
+   "sha256": "6a19060dc4f4411dda323e291e60936be07ef7049ebb5836f37e2a473f016e8a"
+  },
+  {
+   "clause_id": "18.1.1",
+   "title": "",
+   "text": "Pre-bid activities are undertaken before submission of BHEL's bid to the prospective Customers. These are for high-value products and services, not within the manufacturing range of BHEL.\nSuch a mutually exclusive arrangement is desirable to firm up estimated costs of high value packages, goods and related services.\nFollowing additional guidelines shall be applicable in respect of such tie-ups/ MOUs:\ni) A Committee consisting of indenting, engineering, purchase and finance may be constituted by the Unit Head, for entering into MOU/ Tie-up.\nii) Bids obtained from supplier(s) may be opened in-camera.\niii) Negotiations (with L-1 only) may be conducted by a Committee and an MOU entered into with due approvals.\niv) MOUs shall contain all major terms and conditions to be included in Purchase Order, with ample scope for negotiations with Customer without involving the supplier.\nMOUs shall be as comprehensive as possible requiring minimum alterations at the time of placing Purchase Orders, and shall specify \"Customer-BHEL-Supplier\" back-to-back arrangements/ commitments to the maximum extent possible.\nv) MOU should contain stipulation that in the event of price reduction during negotiation by BHEL with the customer, corresponding reduction will be passed on to the supplier(s).\nvi) MOU should contain adequate safeguards regarding requisite technical parameters and the quality requirement, along with appropriate clauses for alteration in prices in case of deviation from the stipulated technical parameters.\nvii) MOUs shall contain adequate provisions for variance in financial commitments quantified against Additions, Deletions and Changes in scope of supplies and works, preferably identifying them against bills of materials, rates per unit of supplies or services.\nviii) Within 30 days of signing the MOU, 1 % of the value of MOU shall be taken from the supplier as bid bond in the form of bank guarantee or security deposit etc, in order to ensure the supplier's continued commitment during the validity period of the MOU.\nHowever, the Unit Head may relax this condition for registered suppliers of BHEL.\nix) MOUs may be converted into Purchase Orders on receiving the order from the Customers, without going through the tender procedure.",
+   "section": "18.0",
+   "section_title": "PRE-BID/ POST-BID/ PRE-AWARD TIE-UPS/ MOUs",
+   "sha256": "66c93cfc35882259c9d3b6f4fcd394f0b3eda051499fff6a16ad857c0d8e928f"
+  },
+  {
+   "clause_id": "18.1.2",
+   "title": "",
+   "text": "In emergent cases, where there is no previous experience of purchase relating to an item, budgetary quotation may be invited by department, other than purchase, with the prior approval of the Unit Head. Such budgetary quotation after proper negotiation (with L-1 only), if required, may be converted into MOU and/ or a Purchase Order on receiving the order from the Customers, without going through the tendering process. The Purchase Order in such cases would be on Single tender basis.",
+   "section": "18.0",
+   "section_title": "PRE-BID/ POST-BID/ PRE-AWARD TIE-UPS/ MOUs",
+   "sha256": "3a440d77a450f2c5e228a371258eb36f4b4b8fbf17ca99362b3aaad377ea19dd"
+  },
+  {
+   "clause_id": "18.1.3",
+   "title": "",
+   "text": "Wherever, the tie-up has to be finalised on Single tender basis, with the collaborator/ or with the supplier recommended by Head of concerned Marketing Group with approval of competent authority, as per clause 5.3.1 (n), the bids received may be negotiated and converted into MOU and/ or a Purchase Order on receiving the order from the Customers, without going through the tendering process.",
+   "section": "18.0",
+   "section_title": "PRE-BID/ POST-BID/ PRE-AWARD TIE-UPS/ MOUs",
+   "sha256": "b4233301b012e30e4e5bae416dfb50375f134f42cefdf3992bf603574c377ac4"
+  },
+  {
+   "clause_id": "18.2",
+   "title": "Post-bid Tie-ups/ MOUs",
+   "text": "",
+   "section": "18.0",
+   "section_title": "PRE-BID/ POST-BID/ PRE-AWARD TIE-UPS/ MOUs",
+   "sha256": "6b470237819cab7221b7d58204f5ece0922eec328d114b7aea9a121f5b3fbe57"
+  },
+  {
+   "clause_id": "18.2.1",
+   "title": "",
+   "text": "Pre-bid tie-up is the most preferable mode of finalizing MOUs, as it is done before bid is submitted by BHEL to the Customer. In the eventuality of Pre-bid tie-up/ MOU process not being completed by the time BHEL submits its bids to prospective customers, the necessity of continuing with the process at the post-bid stage requires approval of Heads of Unit and the concerned Business Sector/ Marketing Group. However, it may be ensured that the price bids of techno-commercially acceptable bidders are opened and comparative statement is vetted before BHEL submits its bid proposal to the Customer.\nOn approval, the process may be continued at post-bid stage and MOUs finalized in line with the guidelines at 18.1.",
+   "section": "18.0",
+   "section_title": "PRE-BID/ POST-BID/ PRE-AWARD TIE-UPS/ MOUs",
+   "sha256": "15073a0f27326fbe37700793adb8c9843e415202ae3a95c0cac4c3cb18ee41d0"
+  },
+  {
+   "clause_id": "18.3",
+   "title": "Pre-award Tie-ups/ MOUs",
+   "text": "Based on marketing intelligence of the concerned Business Sector/ Marketing Group, tieup process can also be initiated, with the approval of the Unit Head, at pre-award stage and MOUs finalized in line with the guidelines at 18.1.",
+   "section": "18.0",
+   "section_title": "PRE-BID/ POST-BID/ PRE-AWARD TIE-UPS/ MOUs",
+   "sha256": "edf12ed94f86dae94a9e9955082ec596ac38af424339e74623969505aba69679"
+  },
+  {
+   "clause_id": "18.4",
+   "title": "",
+   "text": "All Pre-bid/ Post-Bid/ Pre-award Tie-ups/ MOUs shall require approval of the Unit Head. In order to facilitate such approvals, the units may develop and finalise detailed procedures from time to time within the framework of this Policy.",
+   "section": "18.0",
+   "section_title": "PRE-BID/ POST-BID/ PRE-AWARD TIE-UPS/ MOUs",
+   "sha256": "e8cca3bc8b8c65657398146421e94b4eef492801daec402b0305173167d54ac7"
+  },
+  {
+   "clause_id": "19.0",
+   "title": "PURCHASES THROUGH FRAMEWORK AGREEMENTS",
+   "text": "Framework Agreement (FA) means an agreement with one or more registered suppliers for procurement of regular consumption items for a period not exceeding two years. FA sets out terms and conditions under which specific purchases can be made during the term of the agreement and shall include agreement on prices which are determined after following the tendering procedure.\nThe intention and the manner to split the quantities on more than one supplier shall be stated in the tender enquiry/ MOU terms as per clause 12.0.",
+   "section": "19.0",
+   "section_title": "PURCHASES THROUGH FRAMEWORK AGREEMENTS",
+   "sha256": "3bcc0f4cb27e4468cb6a87c963d486aa14ea663934c8f5dd7831ba70ec690dbd"
+  },
+  {
+   "clause_id": "19.1",
+   "title": "",
+   "text": "The items for which Unit has or intends to have FAs with the objective of having steady supply of regular consumption items at competitive rates shall always be available on Unit/ BHEL website so that interested suppliers can contact the concerned Unit for registration.\nSuch FAs shall have provisions for suitable price variation (wherever possible), short closing of agreements, performance monitoring, quality surveillance at supplier's end, etc.\nHowever, price trends/ developments are to be watched. Concurrence of Finance and approval of Competent Authority to be obtained in case of any cost implications for which approval was not taken during finalization of the FA.\nIndividual supply/ delivery orders can be placed within the value approved for FA.",
+   "section": "19.0",
+   "section_title": "PURCHASES THROUGH FRAMEWORK AGREEMENTS",
+   "sha256": "48ca991418d162f6198e6440f5d527bef6561d41c5fa7e6b380c54c96bf1c2f6"
+  },
+  {
+   "clause_id": "19.2",
+   "title": "",
+   "text": "In case of items for which delivery locations are not known at the time of issue of tender, evaluation may, if necessary, be done on Ex-works basis.\nFAs can then be entered into for the agreed rates and terms with the approval of Competent Authority for the estimated value of purchases.\nIn such cases, after the specific project/ location becomes known, separate approval shall be obtained for release of individual orders on the L-1 supplier(s) as per DoP, after evaluation based on delivered cost, i.e. \"total cost to BHEL\".\nIt should be stated in the NIT that any distribution pattern cannot be committed as evaluation will be done when the delivery location becomes known. Evaluation for each destination shall be done on 'total cost to BHEL' basis, and firm Purchase Order placed accordingly.",
+   "section": "19.0",
+   "section_title": "PURCHASES THROUGH FRAMEWORK AGREEMENTS",
+   "sha256": "197845f1c1af0c8ad23f4051396c38bc9b8a4a2e8b413de672507d70e12f8f9a"
+  },
+  {
+   "clause_id": "19.3",
+   "title": "",
+   "text": "A common category or class of items required by more than one BHEL Unit may be bunched and FAs finalized by the Lead Agency (or Corp. MM, as may be decided).\nThe Lead Agency for a category or class of items shall be identified by Corp. MM. Lead Agency shall be responsible for all pre-purchase activities i.e. till entering into the FA. Such agreements with the supplier/s may contain provision for mutually agreed quantity variation.\nNo separate approval shall be required by the user Unit/s for issue of individual Purchase/ Delivery orders within the value/ quantity allocated.",
+   "section": "19.0",
+   "section_title": "PURCHASES THROUGH FRAMEWORK AGREEMENTS",
+   "sha256": "b84c0cd90b6aa3a1b2b731628d7c23380be33bcc106bcdd0aaa4c1623ec44a82"
+  },
+  {
+   "clause_id": "19.4",
+   "title": "",
+   "text": "The user Unit operating the FAs shall maintain a centralized register of orders placed against its allocation. Any increase beyond the allocation can be done only after clearance from the Lead Agency.\nThe Lead Agency shall consolidate the usage/ actual orders released against FA periodically.",
+   "section": "19.0",
+   "section_title": "PURCHASES THROUGH FRAMEWORK AGREEMENTS",
+   "sha256": "cbc75eb20261db9e4d8ba6e4c165d2cb136de2fde6c8db1a110326ef2d8929d0"
+  },
+  {
+   "clause_id": "19.5",
+   "title": "",
+   "text": "Extension of FA should normally be avoided. Timely action for entering into fresh FA should be initiated.\nHowever, validity of existing FA may be extended for recorded reasons, provided there is no downward trend in prices and the total period including extensionls does not exceed two years limit.\nAny further extension of the existing FA beyond the two years limit, upto a period of three months will require approval of Unit Head, provided action has been initiated for the fresh FA. There will be no extension of FA beyond two years three months.\nQuantity increase, if any, can be permitted on pro-rata basis for the extended period.\nExtension of a FA and / or increase in quantity shall require approval as per sl 7 of DoP of Purchase Policy.",
+   "section": "19.0",
+   "section_title": "PURCHASES THROUGH FRAMEWORK AGREEMENTS",
+   "sha256": "ebee3bcda222d06837721b6964ebe5e0bfbeac9344fe72195cfe39bf3e3a224c"
+  },
+  {
+   "clause_id": "19.6",
+   "title": "DGS&D Rate/ Running contract",
+   "text": "Units may place orders against rate/ running contract of DGS&D after obtaining approval of Competent Authority as per DoP.",
+   "section": "19.0",
+   "section_title": "PURCHASES THROUGH FRAMEWORK AGREEMENTS",
+   "sha256": "d27f6991fd03446e05b1d13ec1e1cf7cada91c6abb9ffac274b22b9faf89de2d"
+  },
+  {
+   "clause_id": "19.7",
+   "title": "Techno-commercial MOUs",
+   "text": "Units may enter into Technical and Commercial MOUs with registered suppliers, so as to finalise the technical and commercial terms & conditions in advance, thereby reducing the procurement cycle. Subsequently, the bids may be invited in singlel two parts, as the case maybe.\nThe items for which units have or intend to have techno-commercial MOUs shall always be available on the Unit/ BHEL website so that interested suppliers can contact the concerned Unit for registration/ MOU.",
+   "section": "19.0",
+   "section_title": "PURCHASES THROUGH FRAMEWORK AGREEMENTS",
+   "sha256": "f42455d4bf9880c91fe47266f18ebc292163e1010b41701e96c3f3fca88b2fc4"
+  },
+  {
+   "clause_id": "20.0",
+   "title": "PROCUREMENT THROUGH EMPOWERED COMMITTEE",
+   "text": "",
+   "section": "20.0",
+   "section_title": "PROCUREMENT THROUGH EMPOWERED COMMITTEE",
+   "sha256": "8c5b95dd255b9404e397c89b4a74ec9a0243852e3c651eb46d863e753bea3d9d"
+  },
+  {
+   "clause_id": "20.1",
+   "title": "Spot Purchase",
+   "text": "Empowered Committee can be formed by the Unit Head for participation and bidding in forward auctions conducted by CPSEs or their Authorized agencies, Government (Central/ State) and Government promoted or supported portals/ agencies. However, Empowered Committee shall ensure and record the price reasonability. Estimated price shall be vetted by finance before participating in the auction. The Empowered Committee shall have the approval from the Unit Head for the limit upto which the spot decision in the auction can be taken by the Committee.\nSuch a Committee shall consist of senior level officers not below the rank of DGM from Indenting, Purchase and Finance departments and shall be specifically constituted for each case separately.",
+   "section": "20.0",
+   "section_title": "PROCUREMENT THROUGH EMPOWERED COMMITTEE",
+   "sha256": "7f7397b6cdd47a3868e289f02fcce496c4d64ec40ba371f274db12d186c407f7"
+  },
+  {
+   "clause_id": "20.2",
+   "title": "Capacity Booking",
+   "text": "Separate Policy/ Guidelines on Capacity Booking can be issued by Corp. MM, with the approval of the Board.",
+   "section": "20.0",
+   "section_title": "PROCUREMENT THROUGH EMPOWERED COMMITTEE",
+   "sha256": "a9a6615e3c0cbf9295abf05d2f8ee245f915ea1efd0add5ba283f4da31b39e1c"
+  },
+  {
+   "clause_id": "21.0",
+   "title": "PRICE VARIATION",
+   "text": "",
+   "section": "21.0",
+   "section_title": "PRICE VARIATION",
+   "sha256": "aff4458e08dce662a543f23fab1866e8368ff188539e2bb76f3bf733c42386cd"
+  },
+  {
+   "clause_id": "21.1",
+   "title": "",
+   "text": "Purchases shall normally be made on the basis of firm prices.",
+   "section": "21.0",
+   "section_title": "PRICE VARIATION",
+   "sha256": "c898a11a8e865be7bf7c4fe135fff8316211c9d1e5c5b23847c49df211295741"
+  },
+  {
+   "clause_id": "21.2",
+   "title": "",
+   "text": "In cases where material cost depends upon statutory regulations or otherwise controlled/ administered prices or in cases where material costs are liable to wide fluctuations, price variation clause may be allowed with mathematical based formula.",
+   "section": "21.0",
+   "section_title": "PRICE VARIATION",
+   "sha256": "4f14fafb32970e72ec1eb4d81a2ef23af3ab2ab36ec5943b0a95a64c6b1aabea"
+  },
+  {
+   "clause_id": "22.0",
+   "title": "PENALTY/ LD FOR DELAYED DELIVERY",
+   "text": "",
+   "section": "22.0",
+   "section_title": "PENALTY/ LD FOR DELAYED DELIVERY",
+   "sha256": "765823cf1bb623a396987222b21493608edf6148518c4be2bf02ce5bd0821710"
+  },
+  {
+   "clause_id": "22.1",
+   "title": "",
+   "text": "Units should incorporate proper penalty/ Liquidated Damages (LD) clause in the NIT. Any proposal to waive penalty/ LD requires the concurrence of Finance and approval shall be as per DoP.",
+   "section": "22.0",
+   "section_title": "PENALTY/ LD FOR DELAYED DELIVERY",
+   "sha256": "ab31322b26e426557e03dc8159aeac4d129b50053bd128d915f969164aa573eb"
+  },
+  {
+   "clause_id": "22.2",
+   "title": "",
+   "text": "In case delivery extension becomes necessary for reasons not attributable to the supplier, due analysis shall be done and financial concurrence obtained before approval by Competent Authority as per SI 9 of DoP. For expeditious handling of such cases, Units shall suitably modify their respective Departmental Procedures/ Work Instructions.",
+   "section": "22.0",
+   "section_title": "PENALTY/ LD FOR DELAYED DELIVERY",
+   "sha256": "515ae12db1f58e4ffda151dd67a2c1e311233acd2c5194b984c9c961957ba002"
+  },
+  {
+   "clause_id": "23.0",
+   "title": "COMMERCIAL SETTLEMENT",
+   "text": "Any extra contractual claims/ counter claims which are not possible to be settled under the extant Delegation of Powers would be referred by the Unit Head to a committee of two General Managers and Head of Finance/ Unit, who shall recommend the commercial settlement, on case to case basis, for approval of the Unit Head (not below the rank of ED), for limits as under.\n|\nContract value\n|\nSettlement Amount\n|\nUpto Rs. 1 Cr.\n|\n20% of Contract value\n|\nRs 1 to 5Cr.\n|\nRs 20 Lakhs + 15% of Contract value exceeding Rs 1 Cr\n|\nAbove Rs 5 Cr.\n|\nRs 80 Lakhs + 10 % of Contract value exceeding Rs. 5 Cr; limited to Rs 2 Cr.\nAll commercial settlements exceeding above limits shall require recommendation of the Unit Head and concerned Functional Director (Director/ E,R&D, in case of units directly reporting to CMD), for concurrence of Director (Finance) and approval of CMD.\nNote: This provision shall be applicable only for services portion of BOPs. Separate operating guidelines will be issued by Corp.MM.",
+   "section": "23.0",
+   "section_title": "COMMERCIAL SETTLEMENT",
+   "sha256": "541ddc0f897a7627bf1253d550da235261b2dc1adf7c4e645bc21f9deaa76fbe"
+  },
+  {
+   "clause_id": "24.0",
+   "title": "FINANCIAL CONCURRENCE",
+   "text": "",
+   "section": "24.0",
+   "section_title": "FINANCIAL CONCURRENCE",
+   "sha256": "b0d23dfa26ce62fd4c0f7bc14958a2702bc0bc3506f6734a70b0804a7f6d3cf8"
+  },
+  {
+   "clause_id": "24.1",
+   "title": "",
+   "text": "Financial concurrence implies a second check to ensure that the Purchase Policy, DoP and administrative instructions are complied with, apart from a thorough checking of all calculations.",
+   "section": "24.0",
+   "section_title": "FINANCIAL CONCURRENCE",
+   "sha256": "15a9a1f8f87a27697807533b86ba9c11ab3eccd2ec48c273d05072ecf9e24b05"
+  },
+  {
+   "clause_id": "24.2",
+   "title": "",
+   "text": "Authority for according financial concurrence shall be one step lower than the approving authority, with full powers to Head of Finance not below the rank of AGM. In the absence of finance executive of the required rank, powers of financial concurrence can be subdelegated by Director (Finance).",
+   "section": "24.0",
+   "section_title": "FINANCIAL CONCURRENCE",
+   "sha256": "31357d71d57076cefc709c89f1ce7f643d23ca10cfb2ce6837cf27313f6ebada"
+  },
+  {
+   "clause_id": "24.3",
+   "title": "",
+   "text": "Financial concurrence shall necessarily be required for the following:\na) Provision for advance payment, including activity linked payment (drawing/ engg. documentation etc.) in stages;\nb) Vetting the comparative statements for ordering proposals requiring Financial Concurrence;\nc) Proposal for negotiation/ counteroffer (if any);\nd) Proposal for ordering/ FA provided total order value (including amendments) exceeds:\n|\nType af tender\n|\n|\ni) Open\n|\nRs Six lakhs\n|\nii) Limited\n|\nRs Four lakhs\n|\niii) Single\n|\nRs Two lakhs\ne) Proposal for amendments to orders having financial implications, except where the order value including amendments is within the limits at (d);\nf) Procurement through Empowered Committee;\ng) Proposals for Repeat Ordering;\nh) Provision for unsecured advance to foreign suppliers;\ni) Waiver of Bank Guarantee towards:\n- Advance to PSUs/ Government departments.\n- Towards safe custody and return of eqUipment after repairs etc.lmaterial after processing/ conversion/ machining etc.\nj) Proposals in respect of:\n- additional cost implications for which approval was not taken during finalisation of Framework Agreement and\n- validity extension of Framework Agreement\nk) Escalation claim and/ or provision and approval of PVC in respect of contracts where PVC has not been provided;\nI) Sanction of extra items/ substitution of items/ deviation from approved quantities;\nm) Reduction/ Waiver of Penalty/ LD;\nn) Cancellation of contract;\no) Ex-gratia payment to supplier;\np) Commercial Settlement;\nq) Proposals for delivery extensions;\nr) Proposals for ordering on Subsidiary/ JV Companies for items within their manufacturing range.",
+   "section": "24.0",
+   "section_title": "FINANCIAL CONCURRENCE",
+   "sha256": "9dbf422a941529cdd78fe474b3f7bb5ad9147de8c7399c27e1e2ab71b23a87a6"
+  },
+  {
+   "clause_id": "24.4",
+   "title": "",
+   "text": "Financial concurrence is not required for the following:\na) Proposals for ordering on sister Units for items within their manufacturing range, including amendmentis;\nb) Release of individual purchase/ delivery orders within the approved value of the Framework Agreement;\nc) Proposals for Airlifting/ Courier/ Fast Cargo.",
+   "section": "24.0",
+   "section_title": "FINANCIAL CONCURRENCE",
+   "sha256": "b3a67e5e8b2de3b93d376248d03dd9685ad90c21dd757deac8ec57290dbf4c80"
+  },
+  {
+   "clause_id": "24.5",
+   "title": "",
+   "text": "These policy guidelines supercede the powers relating to financial concurrence of purchase proposals (Clause nos. 8.6-A, 8.6-B - sub clause a, b, & c and SI.1 to 14 & 23) contained in Chapter No. 8 \"Powers of Financial Concurrence\" of \"Handbook of Delegation of Powers\" issued in 1990.\nFurther administrative instructions on Financial Concurrence would be issued by Director (Finance) from time to time.",
+   "section": "24.0",
+   "section_title": "FINANCIAL CONCURRENCE",
+   "sha256": "1ddefbd0bf8bb0f9bcae1742d488d0d21953996d48e1aff51fd50c0493df010d"
+  },
+  {
+   "clause_id": "25.0",
+   "title": "COMMITMENT REGISTER",
+   "text": "The anticipated cash outflows arising from every purchase order shall be entered into a computerised commitment register, to enable detailed planning of cash requirements.\nThis register shall be available to Finance & Materials Management departments for planning of cash requirements. Follow-up with suppliers may also be made on the basis of Commitment Register, to enable realistic assessment of cash requirement.",
+   "section": "25.0",
+   "section_title": "COMMITMENT REGISTER",
+   "sha256": "fa37c5d78661ef1a0a6ac7c41f2d6c5fdf94ed15df73119353200f868fb1324a"
+  },
+  {
+   "clause_id": "26.0",
+   "title": "GENERAL",
+   "text": "a) The consultant/ firm (and any of its afiliates) shall not be eligible to participate in tender/s for the related goods or works or services for the same project, if they were engaged for the consultancy services.\nb) Procurement directly from the manufacturers/ suppliers shall be preferred. However, if the OEM/ Principal insists on engaging the services of an agent, such agent shall not be allowed to represent more than one manufacturer/ supplier in the same tender. Moreover, either the agent could bid on behalf of the manufacturer/ supplier or the manufacturer/ supplier could bid directly but not both. In case bids are received from both the manufacturer/ supplier and the agent, bid received from the agent shall be ignored.\nThe extant guidelines issued by Corp. MM for regulation of Agents of foreign principals shall be followed.\nc) Head of MM, wherever mentioned in the Purchase Policy/ DoP, shall include Head of Purchase department in case of Regions, not below the rank of DGM, unless the rank/ level has been specifically provided for.\nd) Wherever specific committee has not been constituted, rejection of a bid on technical/ commercial grounds shall be with the approval of concerned Section Head of Indenting/ Purchase group, not below the rank of DGM.\ne) Next higher authority, wherever mentioned in the Purchase Policy/ DoP, shall mean the authority one step higher than the authority competent to approve that action, but limited to the Unit Head. Next higher authority shall be from the same department/ function.\nf) A senior level officer shall always deemed to have and can exercise the powers of lower authority.\ng) In the absence of an authority competent to approve an action, a senior level officer may approve that action. However, such approval by the senior officer shall not vitiate the powers of the original authority and all future processing/ approvals shall be with reference to the original authority that was competent to approve that action.\nh) Notice Inviting Tenders, Letters of Intent/ Purchase Orders, Amendments, FAs etc., after due approvals, shall be signed by an executive of minimum E1A level. Any deviation shall be with the specific approval of the Unit Head.\ni) All tender enquiries (except E-procurement) addressed to suppliers shall be sent through Registered Post/ Courier Service/ Speed Post/ FAX/ E-Mail/ Hand delivered (with due receipt having signature, name and date).\nj) To deal with tenders having offers of short validity or cut-off date/s for acceptance of Repeat Orders, urgency etc., offer acceptance/ LOI/ Purchase Orders/ Amendments can be given through E-mail/ Fax followed by the post confirmation copy.\nk) If all or group of the items have to be necessarily procured as a package from a single/ common source (due to reasons like design and compatibility, customer requirement, kitting, etc.), it shall be indicated in the purchase Indent. Such conditions shall be incorporated in the tender enquiry and evaluation of prices and ranking in the comparative statement shall be done accordingly.\nWherever felt necessary, MM may also decide to bunch and package small/ ancillary/ sundry items.\nI) When both Supplier and Purchaser meet their respective obligations as per the contract, payments are settled, Bank Guarantees etc. returned/ discharged, the contract shall be closed.\nAll tender documents/ purchase files shall be retained as per Departmental Procedures/ Work Instructions of the respective Unit.\nm) Wherever approval is indicated, it implies written approval of the Competent Authority.",
+   "section": "26.0",
+   "section_title": "GENERAL",
+   "sha256": "15e6b440da02304530d1ad47083e812028dfc976d5b479448f307287d3ee86da"
+  },
+  {
+   "clause_id": "27.0",
+   "title": "MISCELLANEOUS INSTRUCTIONS",
+   "text": "",
+   "section": "27.0",
+   "section_title": "MISCELLANEOUS INSTRUCTIONS",
+   "sha256": "89866a80ec590fca33a7a2d2e96016a3b37ae897bf47165712e67a6f72c24d5c"
+  },
+  {
+   "clause_id": "27.1",
+   "title": "",
+   "text": "It is desirable that the purchase activities relating to the following may be assigned to the respective Functional Heads:\ni) Township requirements;\nii) Administrative requirements such as office equipments, stationery and consumables etc;\niii) Medical equipment and hospital/ dispensary requirement (including medicines);\niv) Welfare items, Requirements of Canteen, Guest house and Publicity, Public Relations & CSR related items.\nUnit Heads may consider de-centralisation of the above-mentioned purchase activities, keeping in view the Purchase Policy, and may issue necessary instructions in respect of DoP.",
+   "section": "27.0",
+   "section_title": "MISCELLANEOUS INSTRUCTIONS",
+   "sha256": "98a84b5396fd4ffd714b0784d6cc447718df9ee97bdf7fa67eee78c0b45e8322"
+  },
+  {
+   "clause_id": "27.2",
+   "title": "",
+   "text": "Units may procure certain select items made by BHEL aided Welfare Organizations/ Societies located within the BHEL Campus, on Single tender basis, for which Units may frame their guidelines with the approval of the Unit Head. The selection of items and source(s) for the same shall be reviewed and approved annually by the Unit Head.",
+   "section": "27.0",
+   "section_title": "MISCELLANEOUS INSTRUCTIONS",
+   "sha256": "f69350a9f44d7215d9984bcd0fb52a01c98956402b7abe801fb9a10c90cb8afc"
+  },
+  {
+   "clause_id": "28.0",
+   "title": "SHARING OF INFORMATION",
+   "text": "The list of registered suppliers shall be uploaded on the respective intranet for access of all Units/ Regions. The list of banned suppliers shall be sent to Corp. MM for uploading on the intranet.\nUnits may share the information with sister Units relating to the performance of suppliers, delisting/ banning of suppliers, price trends of common materials, etc.",
+   "section": "28.0",
+   "section_title": "SHARING OF INFORMATION",
+   "sha256": "21402598a31cc706a355cfbda08b022fc11f8fd9522fcd887a04005aa9034145"
+  },
+  {
+   "clause_id": "29.0",
+   "title": "MATERIAL BUDGETTING",
+   "text": "",
+   "section": "29.0",
+   "section_title": "MATERIAL BUDGETTING",
+   "sha256": "05744648c69c39502ef4135539c2f34b12b0accd77592faaee9d804b7bd306f8"
+  },
+  {
+   "clause_id": "29.1",
+   "title": "",
+   "text": "The delegated powers for material procurement are to be exercised for meeting contractual commitments to the customer.\nThe approved Material Budget may be segregated into:\n(a) materials against firm orders,\n(b) materials against anticipated orders, and\n(c) stocking requirements.",
+   "section": "29.0",
+   "section_title": "MATERIAL BUDGETTING",
+   "sha256": "054b7a383d366cdb91af7bbb3f9e57c1871c0c07be21e4a88a7fef2fbc2f12b6"
+  },
+  {
+   "clause_id": "29.2",
+   "title": "Procurement in anticipation of customer orders",
+   "text": "Procurement in anticipation of customer orders shall require prior approval of CMD before commitment and the extant guidelines issued by Corp.MM for Stocking/ Advance Manufacturing Action shall be followed.",
+   "section": "29.0",
+   "section_title": "MATERIAL BUDGETTING",
+   "sha256": "f1de6169d9e18ea4903a1db2472357eac84b5270d00b1114a3274c40131fc796"
+  },
+  {
+   "clause_id": "29.3",
+   "title": "",
+   "text": "Material budgeting is a means for meeting customer commitments. Any modification to the production/ erection programme and consequential material management schedule maybe made.\nThe Commercial Groups need to be vigilant about funds position with customers, requirement of supplies at the project site and other relevant factors affecting production programmes, in order to advise Unit Heads and purchase groups about re-scheduling the supplies to non-paying customers. Materials procurement may have to be deferred where customers are not in a position to pay as per contracts. Continuous interaction between Commercial, Production, MM and Finance departments in respect of each contract is necessary.\nAs a consequence, material budget and deliveries may have to be modified from time to time, with a view to regulate inventories and reduce sundry debtors.",
+   "section": "29.0",
+   "section_title": "MATERIAL BUDGETTING",
+   "sha256": "d0c1d4deed75727efdd2b162e0be66e669741d07f7c8e0fef67c5f1601449998"
+  },
+  {
+   "clause_id": "30.0",
+   "title": "NORMS FOR PROCUREMENT",
+   "text": "Unit should evolve and fix norms for purchase lead time (i.e. from the date of indent, raising enquiry, order placement and receipt of material) for different types of materials/ components depending on the complexity of the product. Summary analysis shall be reviewed by the Unit Head every quarter.",
+   "section": "30.0",
+   "section_title": "NORMS FOR PROCUREMENT",
+   "sha256": "13ae134c075178a009d75a6d88ab4aa7501bbac7d43c93507eec4b1117802dde"
+  },
+  {
+   "clause_id": "31.0",
+   "title": "PRICE TRENDS & VALUE OF PURCHASES",
+   "text": "The financial limits in the Purchase Policy and DoP relating to materials purchase are based on the price index as on Jan 2013. With the concurrence of Director (Finance) and approval of CMD, the financial limits may be modified from time to time, depending upon the price levels.",
+   "section": "31.0",
+   "section_title": "PRICE TRENDS & VALUE OF PURCHASES",
+   "sha256": "3884e0b4cfedba3217307945caa0538d349ba37e2e6d3e2820840779bd8bf5d8"
+  },
+  {
+   "clause_id": "32.0",
+   "title": "GUIDELINES/ INSTRUCTIONS",
+   "text": "",
+   "section": "32.0",
+   "section_title": "GUIDELINES/ INSTRUCTIONS",
+   "sha256": "1f965f759b0f16e98a3e2764c7c0b8171dbf3678c2eda59ca1809c5d21173dcc"
+  },
+  {
+   "clause_id": "32.1",
+   "title": "",
+   "text": "Guidelines/ Instructions issued by Government from time to time relating to Purchase activities, which are mandatory and have the force of Law (such as CVC instructions, Presidential directives, MSMED Act 2006 etc.) shall be adhered to without waiting for formal amendment to the Purchase Policy document.\nAny cases of adoption of the provisions of DoE Manuals, will be recommended by the Committee for Interpretation/ Clarification/ Deviation of Purchase Policy (formed as per clause 34.1), for suitable incorporation in the Purchase Policy by way of amendments. The recommendations of the committee, vetted by concerned Functional Director(s) and concurred by Director/ Finance will be approved by Director/ E, R&D.",
+   "section": "32.0",
+   "section_title": "GUIDELINES/ INSTRUCTIONS",
+   "sha256": "67be0a472eb2dcfcf11ce9a448d42418be8f21664b4af252f81c6779904d18bb"
+  },
+  {
+   "clause_id": "32.2",
+   "title": "",
+   "text": "Any sub-level guidelines on matters related to the Purchase Policy shall be issued with the approval of Director (E, R&D), and these guidelines shall not be repugnant to the provisions of this Policy.",
+   "section": "32.0",
+   "section_title": "GUIDELINES/ INSTRUCTIONS",
+   "sha256": "0182b938eae71ff7c6f9ab09184f520e8bc289c032e1e643700baa33e2a753cc"
+  },
+  {
+   "clause_id": "33.0",
+   "title": "FEEDBACK AND PURCHASE POLICY REVIEW",
+   "text": "Adaptation of company's procurement policies to a continuously changing environment in terms of liberalization, Trade policies, Industrial policies and etc. is very essential to make BHEL's products, systems & services competitive in both domestic and international market.\nInput for such an adaptation or changes in procurement policies may be derived based on feedback about the effectiveness of the manner in which the present policy is implemented and the qualitative results of purchasing.",
+   "section": "33.0",
+   "section_title": "FEEDBACK AND PURCHASE POLICY REVIEW",
+   "sha256": "f03167c79d9347b8db5f0bb2cfcd3b75a3eb3c96c817bbfea468a4490c74d814"
+  },
+  {
+   "clause_id": "34.0",
+   "title": "INTERPRETATIONS/ CLARIFICATIONS/ DEVIATIONS TO PURCHASE POLICY",
+   "text": "",
+   "section": "34.0",
+   "section_title": "INTERPRETATIONS/ CLARIFICATIONS/ DEVIATIONS TO PURCHASE POLICY",
+   "sha256": "80bdc41c7f61735bc5d913e521956e98099fd8b0b541f043744968b1eaf20688"
+  },
+  {
+   "clause_id": "34.1",
+   "title": "",
+   "text": "A Committee comprising officers one each from Corp. MM (nominated by Director/ E,R&D), Corp. Finance (nominated by Director/ Finance) and Head MM of a major Manufacturing Unit (nominated by Director/ E,R&D) shall be constituted every year for deliberations on interpretations/ clarifications for implementation on matters covered in this policy.\nAny issue needing clarification/ interpretation can be referred by Unit's MM Head alongwith views of the Head of Finance for due consideration by the Committee.\nBased on the decisions of this committee, necessary clarifications shall be issued by Corp. MM.",
+   "section": "34.0",
+   "section_title": "INTERPRETATIONS/ CLARIFICATIONS/ DEVIATIONS TO PURCHASE POLICY",
+   "sha256": "0250f060d03249be4487eff769cbe52e6304af1a2322f241ccf78294a15e268f"
+  },
+  {
+   "clause_id": "34.2",
+   "title": "",
+   "text": "Any deviation, which is not in conformity with the Purchase Policy shall require recommendation of the concerned Functional Director & Director/ E,R&D, financial Concurrence of Director/ Finance and approval of CMD.",
+   "section": "34.0",
+   "section_title": "INTERPRETATIONS/ CLARIFICATIONS/ DEVIATIONS TO PURCHASE POLICY",
+   "sha256": "b860b5ff4292c23acf00a659666d8b1a444e7fa5fcc516f0c671b245b1bdb11e"
+  },
+  {
+   "clause_id": "34.3",
+   "title": "",
+   "text": "All relevant guidelines on specific issues of the policy issued by Corp. MM from time to time shall be uploaded on Corp. MM intranet.",
+   "section": "34.0",
+   "section_title": "INTERPRETATIONS/ CLARIFICATIONS/ DEVIATIONS TO PURCHASE POLICY",
+   "sha256": "78f35ade36dade2a69162ccbf00c75b1bdf3e241d04c04cd4865ee9b7dd87ee8"
+  },
+  {
+   "clause_id": "35.0",
+   "title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "text": "",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "0ec77bf6365bc95ecfa99bb37b7ad51a2e19fc6efdf9def15e5aae6d73db37a4"
+  },
+  {
+   "clause_id": "35.1",
+   "title": "Materials",
+   "text": "The term 'Materials', wherever used in this policy shall mean and include raw materials, consumables, tools, castings, forgings, components, sub-assemblies, assemblies, equipments or plants, including Balance of Plants (BOPs), and machinery, capital goods, vehicles, instruments and spares etc. purchased or otherwise acquired. It also includes Computer Software/ Software package alongwith AMC (if any) or licenses, indirect materials, non-production and welfare items, articles, commodities, etc.\nThis would also be applicable for BHEL/ Customer supplied materials on free issue or chargeable basis or with supplier's own materials.\nWorks and Services which are incidental or consequential to supply of materials/ equipment shall be covered by this Policy.",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "1c9563a5e71a572138e9f4b1384203bcecc4832d9bc4d0b808ce7484b4e05688"
+  },
+  {
+   "clause_id": "35.2",
+   "title": "Stock Items",
+   "text": "These are the regularly used items/ components/ sub-assemblies having multiple/ multiproduct usage, identified based on past consumption, either manually or through computer system, having low value and high volume yearly requirements. Consumables, low/ medium value items regularly used and likely to be used for a longer period are also chosen for stocking. Such of the raw materials like steel, etc. in sizes/ sections having recurring/ multi- product/ project usage (against firm Customer orders) with remote risk of obsolescence can also be considered under this category. Those high value items which have single project usage or bear potentially higher risk of becoming slow/ non-moving shall not be covered under this category.\nUnits to formulate their own system for the identification, indenting/ procurement support and stocking of items falling under this category. In a computerised system, details such as following are normally maintained for each of such items depending upon their product profile and their manufacturing/ delivery cycles:\n- Maximum stock level\n- Minimum stock level\n- Safety stock level (to cater to the extreme contingencies) .\n- Re-order level\n- Re-order point time (depends upon the ordering lead time vs consumption)\n- Replenishment time\n- Lot size, as applicable (minimum order quantity (MOQ)/ standard packing quantity (SPQ) etc.)\nAbove system shall include the item-wise review mechanism (at least once in a year) and also address technological obsolescence issues, slow/ non-moving items and alternate use strategies.\nStock Items are included in the annual revenue budget for materials and inventory is limited to the approved budget level.\nProject based indents are not raised for such identified Stock Items in the current list.",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "d235ff7217a8151f2c4355c4ff65aac084620022518c2903d3541deed9c5ccf6"
+  },
+  {
+   "clause_id": "35.3",
+   "title": "Proprietary item",
+   "text": "These are items for which there is only one manufacturer and no equivalents are acceptable (for recorded reasons) from any other source and, at times, due to patent/ copy right limitations too. Proprietary items need to be certified by the Head of the Indenting/ Engineering Department (not below the rank of DGM).\nThe list of proprietary items may be reviewed from time to time for exploring the possibility of alternatives, at least after every two years by the Head of Design/ Indenting department and shall be approved by the Unit Head.\nSuch list shall be maintained and updated by the Unit on the intranet. Corp. MM shall provide a link on its intra net to the lists of all such Proprietary Items maintained by the Units.",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "427a6c1bdd47663fbf100c383f9983be9acb1cc6ccf08b99e0499c609ea6eedf"
+  },
+  {
+   "clause_id": "35.4",
+   "title": "Collaborator and its recommended suppliers",
+   "text": "Collaborator shall mean an entity which has been or is a partner of BHEL and has furnished or made available to BHEL technical information including amongst others, designs, drawings and/ or intellectual property rights for the manufacture of components, products or systems by BHEL (upon expiry of Collaboration agreement, Single tender purchases from collaborator recommended supplier shall not be operated under clause 5.3.1(b)).",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "dfb496ad28fdfa1f2484336047905e015ab57c6d8749809a79a57c5686e052d1"
+  },
+  {
+   "clause_id": "35.5",
+   "title": "Customer Contract Requirement",
+   "text": "Tenders/ contracts with customers may contain provisions wherein the approval of customer is required for suppliers of certain materials/ packages. Such provisions may also specify that the procurement of materials/ packages should be of a particular make/ type or from specified source(s). These requirements are termed as Customer Contract Requirement.",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "103c03490382bd7787d327dc524fc6716e36b2b5e60dcb90730aa56125647fed"
+  },
+  {
+   "clause_id": "35.6",
+   "title": "Source Standardisation",
+   "text": "Decision to purchase from a source due to design, for considerations of harmonization/ uniformity/ contract requirement, although equivalent or near-equivalent makes which could serve the purpose are available.\nStandardisation of source shall be approved by the Unit Head, in consultation with Design/ Indenting department.\nSuch lists shall be reviewed annually by the Head of Design/ Indenting department for approval of the Unit Head, in regard to the advantage from the source standardization and for exploring the possibility of alternatives.",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "cd79840b866e0d224468540eaae4a74cc760c6e5e6b13a5fa92cf3c22c5696ee"
+  },
+  {
+   "clause_id": "35.7",
+   "title": "Developmental/ Trial orders",
+   "text": "When BHEL determines the technical or commercial need in order to develop local capability or to judge supplier's capability to enhance the existing supplier base, it may place:\n(i) Developmental orders: If an item or product is developed by the supplier for BHEL with or without BHEL's assistance. If the Development Order is based on BHEL's own design, a condition of exclusivity of design may be placed on the supplier. DoP Line item 3.3.1A to be followed.\n(ii) Trial orders: For judging supplier's capability to perform the job.\n\"SEARP\" provisions to be followed for treatment of Developmental/ Trial orders.",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "b5c3aad02f29e3994764a164485f4c2a623626bbfce7c6bdcb03aa1b98894dec"
+  },
+  {
+   "clause_id": "35.8",
+   "title": "Urgency",
+   "text": "Urgency is a situation or circumstance needing immediate procurement measures.",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "546d3d88988b2687dafb636fd84115cf67d875a754c68b8e84ca5ebdeaf46645"
+  },
+  {
+   "clause_id": "35.9",
+   "title": "Balance of Plants (BOPs)",
+   "text": "BOPs are the products, systems and services which may not be in the manufacturing range of BHEL but which form part of the BHEL scope of project requirement.",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "b76789d5b76a67a190356365aaac17f83f336e6458ad33bc39e03f27c7035fc0"
+  },
+  {
+   "clause_id": "35.10",
+   "title": "Counter Trade",
+   "text": "Counter trade means exchanging goods or services which are paid for, in whole or in part, with other goods or services, rather than with money as a means of purchase or payment. Such arrangements by the Company are generally packaged to meet (i) requirement of a customer, (ii) requirement of foreign government and/ or (iii) the business needs for securing more orders by the Company.",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "cb42b1d723542ddf0bfbbe8df09e541de3c6b638bc24e53f328c412fc9b80425"
+  },
+  {
+   "clause_id": "35.11",
+   "title": "Requirement resulting from Strategic tie-ups/ Business Sharing Agreements",
+   "text": "In those cases where the scope of work of another company/ supplier is substantial, or to garner specialised technological edge for harnessing company's business, BHEL may decide as its marketing strategy to submit its proposal/ bid together with one or more supplier/ partner.\nThere could also be cases where BHEL may decide, to select a partner for technological tie up, as part of its marketing strategy, and submit a composite proposal for the total scope to its prospective Customers.\nThe Purchase Policy will not be applicable for the selection of proposal/ bid partner/s and such strategic marketing (including technological) tie-ups with supplier/ partner.\nHowever, selection of Business/ Technology partners for Strategic tie-ups/ Business Sharing Agreements, including those on nomination basis in exceptional cases, shall be decided after following a transparent process with concurrence of Head of Finance and recommendation of Head of the concerned Business Group/ Head of Unit, vetting by a Standing Committee which includes Heads of Corp Law, Corp Technology Management, Corp Finance, Corp SS&P, concurrence of Head Corporate Finance and approval of Competent Authority i.e. Functional Director/ CMD.\nProcurement by BHEL resulting out of such strategic marketing (including technological) tie-ups shall be sourced from the partner/s identified by the concerned Business Group / Unit and dealt under Purchase Policy for which the scope shall be defined in the agreement. However, the value of order/s should be within the value apportioned to the supplier(s)/partner(s) in the bid/ proposal.",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "6038a7504bc32c1769c2050d36093ae897cb2bb78653b4964c6b1b4d1e1db925"
+  },
+  {
+   "clause_id": "35.12",
+   "title": "Breach of contract, Remedies and Termination",
+   "text": "In case of breach of contract, wherever the value of security instruments like performance bank guarantee available with BHEL against the said contract is atleast 10% of the contract value, the same be encashed. In case the value of the security instruments available is less than 10% of the contract value, the balance amount be recovered from other financial remedies (i.e. available bills of the contractor, retention amount, etc. with BHEL) or legal remedies be pursued. The balance scope shall be got done independently without Risk & Cost of the failed supplier/ contractor.\nFurther, levy of liquidated damages, debarment, termination, de-scoping, short-closure, etc., shall be applied as per provisions of the contract.\nAccordingly, the tender/ contract terms shall be structured in such a way to ensure recovery of an amount equivalent to 10% of the contract value in case of breach of contract.\n| DoP |\nDELEGATION OF POWERS\nTo facilitate implementation of the Purchase Policy with the objective scheme of empowerment and faster decision making, the Chairman and Managing Director is delegating powers to various levels of officers and/ or committees constituted under this policy. However, the Delegation of Powers (DoPs) also implies 'authority with accountability'.\nThe Competent Authority approving the expenditure must ensure financial propriety, transparency and fair play as well as the objective to optimize resources being used. The designated Competent Authority and the Empowered Committee, as the case may be, is accountable for all decisions taken by them while approving any measure involving company funds.\nUnits, based on their product spectrum, may reduce the financial limits within overall ambit of Delegation of Powers, under intimation to Director (Fin) and Corporate SS&P.\nThese powers cannot be further sub-delegated to a lower authority. In exceptional cases where such sub-delegation is considered necessary, prior approval of the CMD shall be obtained.\nIn respect of powers delegated to the Unit Head and in cases of extreme urgency, i.e. when in the absence of decision/ sanction/ approval, the Company is likely to be put to a loss of revenue, disadvantage, embarrassment, increase in expenditure directly or indirectly and the Unit Head is not available to accord approval, the next lower authority may exercise the power after recording the fact of urgency and of non-availability of the higher authority. The decision/ sanction/ approval shall, however, be shown promptly to the Unit Head for post-facto approval. This shall not however apply to modification in terms of payment and payment to vendors beyond the contract provisions.\nThe exercise of powers delegated will be subject to availability of provisions in the approved budget, policies laid down and management reports prescribed from time to time While exercising the powers for project sites notified by PMG of Business Sector, canons of financial propriety to be adhered to and self-contained speaking note should be in place while approving such cases. Further, necessary measures for course correction to be identified to prevent recurrence of such situations.\n| Annexure-I |\nAnnexure-I\nCONSTITUTION OF PURCHASE/ NEGOTIATION COMMITTEE\n|\nSL. NO.\n|\nPARTICULARS\n|\nCONVENOR PURCHASE EXECUTIVE\n|\nMEMBERS\n|\nFINANCE\n|\nINDENTOR\n|\nCO-OPTED (if any)\n|\n1\n|\nST – nil\nLT - upto Rs 3 lakh\nOT - upto  Rs 6 lakh\n|\nPurchase Officer\n(E1A)\n|\nAccount Officer\n(E1A)\n|\nEngineer\n(E1A)\n|\nEngineer\n(E1A)\n|\n2\n|\nST -  upto Rs 2 lakh\nLT - upto  Rs 10 lakh\nOT - upto  Rs 20 lakh\n|\nSr. Purchase Officer\n(E2)\n|\nAccount Officer\n(E1A)\n|\nSr. Engineer\n(E2)\n|\nSr. Engineer\n(E2)\n|\n3\n|\nST - upto Rs 5 lakh\nLT - upto Rs 30 lakh\nOT - upto  Rs 75 lakh\n|\nDy. Manager\n(E3)\n|\nSr. Account Officer\n(E2)\n|\nDy. Manager\n(E3)\n|\nDy. Manager\n(E3)\n|\n4\n|\nST -  upto Rs 10 lakh\nLT - upto  Rs 100 lakh\nOT - upto  Rs 175 lakh\n|\nManager\n(E4)\n|\nDy. Manager\n(E3)\n|\nManager\n(E4)\n|\nManager\n(E4)\n|\n5\n|\nST - upto Rs 20 lakh\nLT - upto Rs 125 lakh\nOT - upto  Rs 250 lakh\n|\nSr. Manager\n(E5)\n|\nManager\n(E4)\n|\nSr. Manager\n(E5)\n|\nSr. Manager\n(E5)\n|\n6\n|\nST - exceeding Rs 20 lakh\nLT - exceeding Rs 125 lakh\nOT -  exceeding Rs 250 lakh\n|\nD.G.M.\n(E6)\n|\nSr. Manager\n(E5)\n|\nD.G.M.\n(E6)\n|\nD.G.M.\n(E6)\nNotes:\na)        In case, executive of the level shown above is not available for any reason, an executive one level below can participate. For any further relaxation, due to the non-availability of the appropriate level, the committee can be constituted with the approval of the Unit Head.\nb)        Representative should not in any case be below the rank E1A grade.\nc)        These delegations will hold good in respect of sub-contracting jobs involving use of material by sub-contractor.\nd)        When the material is issued by BHEL, the powers detailed above will be exercised to the extent of 50% indicated against various cases.\ne)        OT/LT/ST shall mean Open/ Limited/ Single tender respectively.\n| Annexure-II |\nAnnexure-II\nDELEGATION OF POWERS (DoP)\nFigures in Rs. Lakhs\n|\nSL. NO.\n|\nAPPROVING AUTHORITY FOR\n|\nED\n&\nGGM /\nGM (I/c)\n- HOU\n|\nGGM /\nGM (I/c)\n&\nGM - HOU\n|\nGM (Others)\n|\nAGM - HOU\n|\nAGM OTHERS\n|\nSR. DGM/ DGM\n|\nSR. MGR.\n(E5)\n|\nMANAGER\n(E4)\n|\nDY. MGR.\n(E3)\n|\nSR ENGR. (E2)\n|\nENGR (E1A)\n|\n1.\n|\nQUANTITIES TO BE INDENTED\n(FOR EACH CASE)\n|\nFULL\n|\nFULL\n|\nFULL\n|\nFULL\n|\nFULL\n|\n1000\n|\n500\n|\n200\n|\n50\n|\n30\n|\n10\n|",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "2e7c4349367ebc571bc1b6225404c5c9b4e56295e3c0b82cb7577c9eb79206f6"
+  },
+  {
+   "clause_id": "1.1",
+   "title": "|",
+   "text": "AMENDMENT TO INDENT\n|\nFULL\n|\nFULL\n|\nFULL\n|\nFULL\n|\nFull powers for indents approved by lower authority\n|\n---\n|\n|\nNote: Against approved budget or otherwise if approved by CMD (Ref. Clause 29.2 of Purchase Policy). Powers to be exercised by executives of indenting departments. Every indent shall have an estimated price for the indented items.\n|\nNote: Following powers to be exercised  by the executives of purchasing department only.\n|\n2.\n|\nINVITING TENDERS (FOR EACH CASE)\n|",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "760f852e83522703f2460515e04590679d0978c9c8f32fb6eedac2fe37c0ff91"
+  },
+  {
+   "clause_id": "2.3.1",
+   "title": "|",
+   "text": "Purchases from Collaborators\n|\nFULL\n|\nFULL\n|\n1000\n|\n1000\n|\n500\n|\n250\n|\n150\n|\n100\n|\n50\n|\n20\n|\n5\n|",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "9b956e93e9fecc609d8706da972202ed0358e49f3be4f890115302c3c12ada6a"
+  },
+  {
+   "clause_id": "2.3.2",
+   "title": "|",
+   "text": "Others\n|\nFULL\n|\nFULL\n|\n500\n|\n500\n|\n200\n|\n75\n|\n20\n|\n10\n|\n5\n|\n2\n|\n---\n|\n3.\n|\nORDERING (FOR EACH CASE)\n|",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "585c101a0b77da6b91802981925e335c91560ae4d91e8729865b5189a6190934"
+  },
+  {
+   "clause_id": "0.5",
+   "title": "|",
+   "text": "",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "7ab47b713de7722ce1d8ed4214abee59d189d812bca59ef18cc1fda51831baa4"
+  },
+  {
+   "clause_id": "3.3.1",
+   "title": "|",
+   "text": "PURCHASES FROM COLLABORATORS\n|\nFULL\n|\n1000\n|\n500\n|\n500\n|\n250\n|\n150\n|\n100\n|\n50\n|\n20\n|\n5\n|\n1\n|\n3.3.1A\n|\nDevelopment Order *\n|\nFULL\n|\n100\n|\n100\n|\n100\n|\n75\n|\n20\n|\n10\n|\n5\n|\n2\n|\n---\n|\n---\n|",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "d7667a2487c438e19f37979413b074b643f26c9970df20b6ba367e9becf5bc98"
+  },
+  {
+   "clause_id": "3.3.2",
+   "title": "|",
+   "text": "OTHERS (other than 3.3.1 & 3.3.1A)\n|\nFULL\n|\n500\n|\n200\n|\n200\n|\n75\n|\n20\n|\n10\n|\n5\n|\n2\n|\n---\n|\n---\n|\n|\n*For development orders with contract value more than Rs 1 Crore, in-principle recommendations of the standing committee at Corporate office (comprising of members from Corporate Finance, SS&P and CTM) would also be required before approval of Unit Head.\n|\n4\n|\nAPPROVING AUTHORITY FOR PURCHASE AGAINST DGS&D RATE/ RUNNING CONTRACT.\n|\nFULL\n|\n500\n|\n200\n|\n200\n|\n75\n|\n20\n|\n10\n|\n5\n|\n2\n|\n---\n|\n---\n|\n5\n|\nINTER-UNIT PURCHASES AND PURCHASES FROM SUBSIDIARY /JOINT VENTURE COMPANIES (ITEMS IN THEIR MANUFACTURING RANGE)\n|",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "6a4ed506fc5242358ae97e5159c31d6347d021049fbf7b34e0de392a202e5bfd"
+  },
+  {
+   "clause_id": "0.30",
+   "title": "|",
+   "text": "",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "72f40de010140db177efaa6b28f9f444d49acb0170b65d8f6906b6c50aaf4d2b"
+  },
+  {
+   "clause_id": "0.20",
+   "title": "|",
+   "text": "---\n|",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "70adaaa96eb0564e12a32b3d5558ba0a6c7d0373ae8552924dc7ee7fb66f9b37"
+  },
+  {
+   "clause_id": "0.50",
+   "title": "|",
+   "text": "",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "4d1f77128aae9f3247076530f0fe7b847fe878407ff026c590b06d4b1aa7a755"
+  },
+  {
+   "clause_id": "0.10",
+   "title": "|",
+   "text": "",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "be97c75d4d3acbdd686ad4b493f0d5e9e2a33b2c0b9ffbd9a9fd6f566b9dafbe"
+  },
+  {
+   "clause_id": "0.05",
+   "title": "|",
+   "text": "",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "08bd6168c2201b728653cded7448946a1211f19325f08eb870d08750df8ec9f9"
+  },
+  {
+   "clause_id": "0.03",
+   "title": "|",
+   "text": "",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "8e0d79c3abdfc93ea52b2adc049205cce6ee67ad7f7dbdefd5ef9a05ad27d90e"
+  },
+  {
+   "clause_id": "0.02",
+   "title": "|",
+   "text": "---\n|\n---\nNOTES:\n1. Ordering approval includes approval of all commercial terms and conditions settled with the supplier. However:\n(a) Financial Concurrence is required for payment of advance including activity linked payment (drawing/ engg. documentation etc.) in stages.\n(b) Unsecured advance to foreign suppliers upto a maximum of US$ 20,000 (or equivalent) may be granted with financial concurrence of HOF and approval of Unit Head in exceptional circumstances which must be placed on record.\n(c) Approval of the Unit Head is required for waiver of Bank Guarantee towards advance to PSUs/ Govt. departments or towards safe custody and return of equipment after repairs etc./ material after processing/ conversion/ machining etc. Reasons/ circumstances warranting waiver of BG under exceptional circumstances shall be recorded and suitable coverage under insurance policy shall be ensured.\n(d) Unit Head is empowered to accord approval for interest bearing secured advance in case of R&D items which are non-repetitive and below a tender estimate value of Rs. 20 Lakhs. Such advance payments should not exceed the following limits:\n(i) 40% of contract value to a State or Central Government agency or PSUs\n(ii) 30% of contract value to private firms\nIn all other cases, Unit Head is empowered only upto 5% of PO value.\n(Note: Interest rate shall be the repo rate (on the date of release of advance) plus 4% which shall be indicated in the NIT. The interest rate shall be valid during the currency of the contract. Interest rate shall be communicated on an annual basis, by Corporate Finance by 1st of April every year)\n2. Where one purchase enquiry is split into more than one ordering proposal, each proposal shall carry the cumulative value of all the proposals and financial concurrence and approving authority shall be based on the cumulative value.\n3. For Price escalation claims above the limits in SI. 11 beyond 10% (or Rs 1 Cr/ 5 Cr as applicable) and upto 25% of the contract value, shall require concurrence of Director (Finance) and approval of CMD, provided such escalation claims are reimbursed by Customer on back to back basis.\n4. Sanction of extra items etc. as per Sl. 12 beyond 10% of order value (or Rs 1 Cr) shall require concurrence of Director (Finance) and approval of CMD.\n5. All cases of waiver of liquidated damages due from suppliers of more than Rs 5 lakh will require concurrence of Director (Finance) and approval of CMD. The proposal of Business Groups to be routed through business group chief.\n6. For purchases through Personal Enquiry abroad by overseas sites/ offices, including purchases for project completion items, the financial limits for ED/ GGMs/ GM-I shall be US $ 5,000 for purchases made abroad for foreign site/s against SI No. 16 of DoP. The Unit Heads may sub-delegate their powers to suitable levels of executives as appropriate for smooth operations at overseas sites/ offices and availability of officers at those locations.\n7. EDs/ GGMs/ GM-I/ GMs posted in Corporate Office will exercise the same powers as delegated to EDs/ GGMs/ GM-I/ GMs holding the charge of Units.\n8. All ex-gratia payments to suppliers with recorded reasons and rationale will require concurrence of Director (Finance) and approval of CMD. The proposal of Business Groups to be routed through Business Group Chief. Such ex-gratia payment can be allowed on back-to-back basis provided BHEL has received a similar payment from the customer.\n9. The delegation will hold good in respect of sub-contracting jobs involving use of sub-contractor's material. When the material is issued by BHEL, the powers detailed above will be exercised to the extent of 50% indicated against various cases.\n10. Approval taken from higher authority than DoP if required under specific provisions of the Purchase Policy, shall not be construed as exercising the DoP for Inviting Tenders/ Ordering etc.\n11. Wherever the price reasonability certified is more than 20% of the estimate, such cases would require approval of authority one step higher than the order approving authority, limited to Unit Head. Further, in such case the written communication of commensurate level (equivalent to the authority empowered for ordering) in PMG of the concerned Business Sector has to be taken on the need for the procurement (as per the project schedule) before ordering.\nIn cases where Unit Head is empowered to order as per DoP, the Unit Head may constitute a committee of GMs to examine cases wherever the price reasonability certified is more than 20% of the estimate, and then take a decision accordingly.\n12. The monthly reports of all cases of ordering at prices at 20 % more than estimate shall be submitted to Head/COC, Corporate Office.\n13. For project sites notified by PMG of Business Sector (based on the approval of Functional Director, or CMD in case of Units reporting directly to CMD) the DoP under Clause 16 of DoP (Purchase through Personal Enquiry) is enhanced to twice the existing powers.\n14. Any DoP which is beyond the powers delegated upto CMD would require approval of the Board.\nDeveloped by Siddharth Saini\nExported via Sahaj on 31/07/2026 13:30:52",
+   "section": "35.0",
+   "section_title": "EXPLANATION OF TERMS USED IN THE PURCHASE POLICY",
+   "sha256": "2bc1c56349e36dea6f20061b921ee32d9773b1a7850d55c51044c0173597371c"
+  }
+ ],
+ "corpus_sha256": "ab0d9559099ea11c80d7dc87e48df8c9db70fbff56c805e0533f84be39acea07"
+}

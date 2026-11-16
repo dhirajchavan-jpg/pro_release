@@ -1,0 +1,9 @@
+# Treat binary files as binary to prevent CRLF line ending corruption on Windows
+*.doc binary
+*.docx binary
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.zip binary

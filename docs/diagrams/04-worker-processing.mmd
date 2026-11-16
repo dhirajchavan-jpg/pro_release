@@ -1,0 +1,24 @@
+flowchart TD
+    A["HTTP start request"] --> B["Authenticate; enforce tenant/role<br/>Validate inputs, workflow gates and idempotency"]
+    B --> C["PostgreSQL records + durable Operation<br/>Original files in object storage"]
+    C --> D["Return accepted response to client"]
+    C --> E["Worker claims operation lease<br/>Loads pinned version and stored documents"]
+    E --> F{Operation stage}
+    F -->|Understanding| U1["Extract native text/tables/pages locally"]
+    U1 --> U2["OCR weak/scanned pages; reuse cached OCR"]
+    U2 --> U3["Reconstruct logical documents and structure<br/>Identify base RFP / amendments"]
+    U3 --> U4["Retrieve evidence for configured fields<br/>AI field understanding and grounding"]
+    U4 --> U5["Save field ledger, provenance, warnings and checkpoints"]
+    F -->|Intake| I1["Extract bidder text; OCR as needed"]
+    I1 --> I2["Classify documents and pages<br/>Reconstruct/regroup logical documents"]
+    I2 --> I3["Summaries, facts, routes and preview sources<br/>Await human approval"]
+    F -->|Evaluation| V1["Load frozen requirements and approved classification"]
+    V1 --> V2["Quarantine restricted commercial evidence<br/>Hydrate permitted pages; OCR where needed"]
+    V2 --> V3["Extract vendor profile; build semantic index"]
+    V3 --> V4["Scout and map evidence to each requirement<br/>Build packets and evidence ledger"]
+    V4 --> V5["Specialist findings and cross-document reconciliation<br/>Document verification and criterion validators"]
+    V5 --> V6["Criterion judging; decision rules<br/>Server validation and public report projection"]
+    U5 --> Z["Persist results, usage, artifacts and audit events<br/>Complete operation or record failure"]
+    I3 --> Z
+    V6 --> Z
+    Z --> P["Client polling reads stored status/results"]

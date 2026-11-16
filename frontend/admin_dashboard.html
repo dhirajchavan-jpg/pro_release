@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tenderabl - Bid Evaluation | Operations dashboard</title>
+  <link rel="stylesheet" href="/assets/admin-dashboard.css?v=20260928-bid-evaluation-percent">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/workbench">
+      <span class="mark" aria-hidden="true"></span>
+      <span><strong>Tenderabl - Bid Evaluation</strong><small>Operations dashboard</small></span>
+    </a>
+    <nav>
+      <a href="/workbench">Tender workspace</a>
+      <button id="refresh" type="button">Refresh</button>
+      <button class="quiet" id="logout" type="button">Sign out</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-head">
+      <div>
+        <span class="eyebrow">ADMINISTRATION</span>
+        <h1>Usage and audit</h1>
+      </div>
+      <div class="project-filter">
+        <label for="project">Tender</label>
+        <select id="project"><option value="">All tenders</option></select>
+        <small id="updated">Loading…</small>
+      </div>
+    </section>
+
+    <div class="message" id="message" role="alert" hidden></div>
+
+    <section class="metrics" aria-label="Usage summary">
+      <article><span>Budget used</span><strong id="spent">—</strong><small id="budget-used">—</small></article>
+      <article><span>Budget remaining</span><strong id="remaining">—</strong><small id="budget-limit">—</small></article>
+      <article><span>Tokens</span><strong id="tokens">—</strong><small id="token-split">—</small></article>
+      <article><span>Provider calls</span><strong id="calls">—</strong><small id="cache-hits">—</small></article>
+      <article><span>Failures</span><strong id="failures">—</strong><small id="retries">—</small></article>
+      <article><span>Audit chain</span><strong id="audit-status">—</strong><small id="audit-events">—</small></article>
+    </section>
+
+    <section class="grid">
+      <article class="panel activity-panel">
+        <div class="panel-head">
+          <div><span class="eyebrow">ACTIVITY</span><h2>What changed</h2></div>
+          <span class="count" id="activity-count">0 events</span>
+        </div>
+        <div class="empty" id="activity-empty">Select a tender to view its activity.</div>
+        <ol class="timeline" id="activity"></ol>
+      </article>
+
+      <aside class="side-stack">
+        <article class="panel">
+          <div class="panel-head"><div><span class="eyebrow">TENDERS</span><h2>Workspace</h2></div></div>
+          <div class="table-scroll short"><table>
+            <thead><tr><th>Tender</th><th>Stage</th><th>Bidders</th><th>Updated</th></tr></thead>
+            <tbody id="projects"></tbody>
+          </table></div>
+        </article>
+        <article class="panel">
+          <div class="panel-head"><div><span class="eyebrow">COMPUTE</span><h2>Usage by stage</h2></div></div>
+          <div class="table-scroll short"><table>
+            <thead><tr><th>Stage</th><th>Calls</th><th>Tokens / units</th><th>Budget share</th></tr></thead>
+            <tbody id="stages"></tbody>
+          </table></div>
+        </article>
+      </aside>
+    </section>
+
+    <section class="panel calls-panel">
+      <div class="panel-head">
+        <div><span class="eyebrow">PROVIDER LOG</span><h2>Recent calls</h2></div>
+        <span class="count" id="call-count">0 calls</span>
+      </div>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Time</th><th>Stage</th><th>Capability</th><th>Provider / model</th><th>Status</th><th>Tokens / units</th><th>Duration</th><th>Budget share</th></tr></thead>
+        <tbody id="recent-calls"></tbody>
+      </table></div>
+    </section>
+  </main>
+
+  <script src="/assets/admin-dashboard.js" defer></script>
+</body>
+</html>

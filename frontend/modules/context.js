@@ -1,0 +1,68 @@
+"use strict";
+
+const STAGES = [
+  "tender_uploaded",
+  "rfp_understood",
+  "contract_drafted",
+  "contract_frozen",
+  "bids_intaken",
+  "evaluated",
+  "report_generated",
+];
+
+const STEP_REQUIREMENTS = { 2: 1, 3: 1, 4: 2, 5: 3, 6: 4, 7: 5, 8: 5 };
+const PAGE_NAMES = ["tender", "ledger", "compliance", "contract", "bids", "evaluate", "results", "report"];
+
+export function createContext() {
+  return {
+    STAGES,
+    STEP_REQUIREMENTS,
+    PAGE_NAMES,
+    activePage: "tender",
+    lastUsageRoute: "",
+    projectId: null,
+    state: null,
+    draft: null,
+    activePolls: Object.create(null),
+    operationActivities: Object.create(null),
+    evaluationPollTimer: null,
+    POLL_INTERVAL_MS: 1500,
+    POLL_FAILURE_LIMIT: 5,
+    POLL_STALL_NOTICE_MS: 5 * 60 * 1000,
+    tenderDocuments: null,
+    activeDocumentFrame: null,
+    blockersRevealed: false,
+    draftDirty: false,
+    draftSaveInFlight: false,
+    changedCriterionIds: Object.create(null),
+    addedCriterionIds: Object.create(null),
+    sourceReviewDirty: false,
+    selectedCriterionId: null,
+    checklistEditMode: false,
+    activeClassification: null,
+    ledgerEntriesByKey: {},
+    freezeInFlight: false,
+    selectedSchemaJson: null,
+    defaultSchemaInfo: null,
+    reportData: {},
+    reportStatus: { complete: true, missing_vendors: [] },
+    reportAward: null,
+    resultsLoadedProject: null,
+    reportLoadedProject: null,
+    selectedResultVendor: null,
+    selectedResultFamily: "all",
+    selectedResultKind: "all",
+    selectedResultCheckKey: null,
+    resultSearch: "",
+    portfolioProjects: [],
+    portfolioResult: null,
+    portfolioProject: null,
+    manualReviewRequest: 0,
+    manualDocumentRequest: 0,
+    complianceData: null,
+    complianceReloadTimer: null,
+    complianceResolutionInFlight: Object.create(null),
+    complianceFilter: "audited",
+    API_BASE: document.documentElement.getAttribute("data-api-base") || "",
+  };
+}

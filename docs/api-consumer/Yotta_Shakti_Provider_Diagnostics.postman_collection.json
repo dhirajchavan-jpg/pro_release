@@ -1,0 +1,390 @@
+{
+  "info": {
+    "_postman_id": "yotta-shakti-provider-diagnostics-v1",
+    "name": "Yotta / Shakti AI Provider Diagnostics",
+    "description": "Direct provider diagnostics. Import this collection, set provider_token once in Collection variables, open the Postman Console, and run the collection. Set Postman Settings > General > Request timeout to 0 (unlimited) or at least 600000 ms. Every completed response logs a PROVIDER_DIAGNOSTIC object containing status, timing, selected trace headers, and a response-body sample. Timeouts appear directly in the Postman Console. Never export or send the collection after saving a real token into it; share only the console diagnostics with credentials removed.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{provider_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "if (!pm.collectionVariables.get('provider_token')) {",
+          "  console.warn('CONFIGURATION ERROR: set provider_token in Collection variables before sending requests.');",
+          "}"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "const body = pm.response.text();",
+          "const diagnostic = {",
+          "  request: pm.info.requestName,",
+          "  method: pm.request.method,",
+          "  url: pm.request.url.toString(),",
+          "  statusCode: pm.response.code,",
+          "  statusText: pm.response.status,",
+          "  responseTimeMs: pm.response.responseTime,",
+          "  responseBytes: body.length,",
+          "  headers: {",
+          "    contentType: pm.response.headers.get('content-type'),",
+          "    server: pm.response.headers.get('server'),",
+          "    requestId: pm.response.headers.get('x-request-id') || pm.response.headers.get('request-id'),",
+          "    correlationId: pm.response.headers.get('x-correlation-id'),",
+          "    traceparent: pm.response.headers.get('traceparent'),",
+          "    cfRay: pm.response.headers.get('cf-ray')",
+          "  },",
+          "  responseBodySample: body.slice(0, 5000)",
+          "};",
+          "pm.collectionVariables.set('last_diagnostic_json', JSON.stringify(diagnostic, null, 2));",
+          "console.log('PROVIDER_DIAGNOSTIC', diagnostic);",
+          "pm.test('Provider returned an HTTP response', function () {",
+          "  pm.expect(pm.response.code).to.be.above(0);",
+          "});"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "provider_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "primary_base_url",
+      "value": "https://http.bckj5kbfjl-proxy.shaktistudio.shakticloud.ai"
+    },
+    {
+      "key": "primary_deployment_id",
+      "value": "8040ede4-fb62-46c4-8a30-b471ff66a844"
+    },
+    {
+      "key": "primary_model",
+      "value": "qwen3-5-moe"
+    },
+    {
+      "key": "embedding_base_url",
+      "value": "https://http.yvjvj96q4h-proxy.shaktistudio.shakticloud.ai"
+    },
+    {
+      "key": "embedding_deployment_id",
+      "value": "442d51d6-bcb4-4475-97ab-ddfa966b8d6b"
+    },
+    {
+      "key": "embedding_model",
+      "value": "qwen3"
+    },
+    {
+      "key": "reranker_base_url",
+      "value": "https://http.zmyqsje6i0-proxy.shaktistudio.shakticloud.ai"
+    },
+    {
+      "key": "reranker_deployment_id",
+      "value": "89f9a277-566c-42f5-8ba4-4a6eae08b966"
+    },
+    {
+      "key": "reranker_model",
+      "value": "qwen3"
+    },
+    {
+      "key": "ocr_base_url",
+      "value": "https://http.eiva4icqli.shaktistudio.shakticloud.ai"
+    },
+    {
+      "key": "ocr_deployment_id",
+      "value": "13e65b3a-5212-493e-bf4d-9f483512abeb"
+    },
+    {
+      "key": "ocr_model",
+      "value": "PaddleOCR-VL-1.6-0.9B"
+    },
+    {
+      "key": "ocr_test_image_data_url",
+      "value": "data:image/png;base64,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"
+    },
+    {
+      "key": "last_diagnostic_json",
+      "value": ""
+    },
+    {
+      "key": "ocr_verified_test_image_data_url",
+      "value": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAABQAQAAAABASpEoAAABsElEQVR42u2WMW7bMBSGP1qEwwJGwW4e2ka5RYa6JnqSDj1EhwDhUMAec4QcJAVk2AfwDSoXGTwygIHSBhV1oCjLRocOmQJpIfj46b33v58CJGr+7xnQgz3Ygz34kmAtqVQlNBvxQchK7YWisk9mb1jthT2Ch4rdAXYxsDsABNbr7ZriJOMWs67hOQZcDeApfOnPSpeUBfa0IxfTWn8ixpM5pr+4nJXTsHGzjeee2c3S1lB3elwO3Q9VoJuAArAoI81ZaSlQ8tj2hQUUYFLbCbT80VkbqADQOK4JBtkBVVTimkgO8BVghT0mbZ1ZXAEsVP4Ye2RVzX0zrH9aqFMOi36Kr5yBw7iMmoHUiu0AXFLZNss4LknWs84eHnl3cVa64pMDmHrKmCPkfCx421XtsWCy5Nb7uHgD+4k9neMbF+AmBubJbTsHfnfBUOO9oTEsNAebKCltkTA56G+uvWafQ8oQSuC76YhRVLnlEmAhaxWPfsrJl9vl3V2ndE5uBOn25G1XuWztjeCYIh+0HujmK7GgQIpOxmHGeAQqzm/UejXWMBimnej/AHqwB3vwVYB/AYPHjdk0JCY4AAAAAElFTkSuQmCC"
+    }
+  ],
+  "item": [
+    {
+      "name": "1 - Primary LLM",
+      "item": [
+        {
+          "name": "Qwen3.5 397B - Chat completion",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "id", "value": "{{primary_deployment_id}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"{{primary_model}}\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"what is 2+2? Reply with only the number.\"\n    }\n  ],\n  \"max_tokens\": 1024,\n  \"stream\": false\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{primary_base_url}}/chat/completions",
+              "host": ["{{primary_base_url}}"],
+              "path": ["chat", "completions"]
+            },
+            "description": "Minimal provider-supplied OpenAI-compatible chat request. Verified after scale-from-zero warm-up; qwen3-5-moe returned the correct final answer."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('OpenAI-compatible chat response', function () {",
+                  "  const json = pm.response.json();",
+                  "  pm.expect(json.choices).to.be.an('array').that.is.not.empty;",
+                  "  pm.expect(json.choices[0].message.content).to.be.a('string').and.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Qwen3.5 397B - Streaming diagnostic",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "id", "value": "{{primary_deployment_id}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"{{primary_model}}\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"what is 2+2?\"\n    }\n  ],\n  \"max_tokens\": 1024,\n  \"stream\": true\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{primary_base_url}}/chat/completions",
+              "host": ["{{primary_base_url}}"],
+              "path": ["chat", "completions"]
+            },
+            "description": "Checks whether generation is running but non-stream output is buffered. Current observed failure: zero streamed bytes before timeout."
+          }
+        }
+      ]
+    },
+    {
+      "name": "2 - Embedding",
+      "item": [
+        {
+          "name": "Qwen3 Embedding - Native embeddings",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "id", "value": "{{embedding_deployment_id}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"{{embedding_model}}\",\n  \"input\": [\n    \"procurement document\"\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{embedding_base_url}}/embeddings",
+              "host": ["{{embedding_base_url}}"],
+              "path": ["embeddings"]
+            },
+            "description": "Required production contract. Verified on the re-uploaded deployment: HTTP 200, 4096 dimensions, and correct semantic similarity ordering."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Embedding vector returned', function () {",
+                  "  const json = pm.response.json();",
+                  "  pm.expect(json.data).to.be.an('array').that.is.not.empty;",
+                  "  pm.expect(json.data[0].embedding).to.be.an('array').that.is.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "3 - Reranker",
+      "item": [
+        {
+          "name": "Qwen3 Reranker - Native rerank",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "id", "value": "{{reranker_deployment_id}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"{{reranker_model}}\",\n  \"query\": \"valid PAN certificate\",\n  \"documents\": [\n    \"PAN certificate number ABCDE1234F\",\n    \"unrelated marketing brochure\"\n  ],\n  \"top_n\": 2\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{reranker_base_url}}/rerank",
+              "host": ["{{reranker_base_url}}"],
+              "path": ["rerank"]
+            },
+            "description": "Tests a native reranking contract. Current observed response: immediate nginx HTTP 403."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Ranked results with scores returned', function () {",
+                  "  const json = pm.response.json();",
+                  "  const results = json.results || json.data;",
+                  "  pm.expect(results).to.be.an('array').that.is.not.empty;",
+                  "  pm.expect(results[0]).to.have.any.keys('relevance_score', 'score');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Qwen3 Reranker - Provider chat route diagnostic",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "id", "value": "{{reranker_deployment_id}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"{{reranker_model}}\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Return JSON only. Rank these documents for the query 'valid PAN certificate': [0] PAN certificate number ABCDE1234F; [1] unrelated marketing brochure. Expected keys: results with index and relevance_score.\"\n    }\n  ],\n  \"max_tokens\": 1024,\n  \"stream\": false\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{reranker_base_url}}/chat/completions",
+              "host": ["{{reranker_base_url}}"],
+              "path": ["chat", "completions"]
+            },
+            "description": "Tests the chat route supplied by the provider. A chat response alone does not establish a usable reranker; inspect whether content contains deterministic ranked JSON and scores."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Chat response contains parseable ranked JSON', function () {",
+                  "  const json = pm.response.json();",
+                  "  const content = json.choices[0].message.content;",
+                  "  const ranked = JSON.parse(content.replace(/^```json\\s*|\\s*```$/g, ''));",
+                  "  pm.expect(ranked.results).to.be.an('array').that.is.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "4 - PaddleOCR",
+      "item": [
+        {
+          "name": "PaddleOCR - Model readiness",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "id", "value": "{{ocr_deployment_id}}" }
+            ],
+            "url": {
+              "raw": "{{ocr_base_url}}/v1/models",
+              "host": ["{{ocr_base_url}}"],
+              "path": ["v1", "models"]
+            },
+            "description": "Checks whether the OCR replica is serving. It may time out on the first scale-from-zero call; an immediate retry has returned HTTP 200."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Expected OCR model is listed', function () {",
+                  "  const json = pm.response.json();",
+                  "  pm.expect(json.data.map(model => model.id)).to.include(pm.collectionVariables.get('ocr_model'));",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PaddleOCR - Vision extraction",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "id", "value": "{{ocr_deployment_id}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"{{ocr_model}}\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"Extract all visible text exactly. Return plain text only.\"\n        },\n        {\n          \"type\": \"image_url\",\n          \"image_url\": {\n            \"url\": \"{{ocr_verified_test_image_data_url}}\"\n          }\n        }\n      ]\n    }\n  ],\n  \"max_tokens\": 512,\n  \"stream\": false\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{ocr_base_url}}/v1/chat/completions",
+              "host": ["{{ocr_base_url}}"],
+              "path": ["v1", "chat", "completions"]
+            },
+            "description": "Runs a real OCR request against an embedded PNG reading OCR TEST 12345. No local file or external image host is required."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('OCR extracted the expected text', function () {",
+                  "  const json = pm.response.json();",
+                  "  const content = json.choices[0].message.content;",
+                  "  pm.expect(content).to.match(/OCR\\s*TEST\\s*12345/i);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

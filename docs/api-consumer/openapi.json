@@ -1,0 +1,4165 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Procurement Pipeline Consumer API",
+    "version": "1.0.0",
+    "description": "Asynchronous tender understanding, bidder classification, and bid evaluation. Human approval endpoints are included because evaluation cannot legally start before the tender contract and bidder classification are approved."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8000",
+      "description": "Replace with the deployed API base URL"
+    }
+  ],
+  "security": [
+    {
+      "ApiToken": []
+    },
+    {
+      "BearerAuth": []
+    }
+  ],
+  "paths": {
+    "/v1/pipeline/bids/classify": {
+      "post": {
+        "tags": [
+          "pipeline"
+        ],
+        "summary": "Start Bid Classification",
+        "operationId": "start_bid_classification_v1_pipeline_bids_classify_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_start_bid_classification_v1_pipeline_bids_classify_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PipelineAccepted"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request Entity Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipeline/bids/evaluate": {
+      "post": {
+        "tags": [
+          "pipeline"
+        ],
+        "summary": "Start Bid Evaluation",
+        "operationId": "start_bid_evaluation_v1_pipeline_bids_evaluate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvaluationStart"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PipelineAccepted"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request Entity Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipeline/fixed-schema/bids": {
+      "post": {
+        "tags": [
+          "fixed-schema pipeline"
+        ],
+        "summary": "Create Classification",
+        "operationId": "create_classification_v1_pipeline_fixed_schema_bids_post",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_create_classification_v1_pipeline_fixed_schema_bids_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Create Classification V1 Pipeline Fixed Schema Bids Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipeline/fixed-schema/bids/evaluate": {
+      "post": {
+        "tags": [
+          "fixed-schema pipeline"
+        ],
+        "summary": "Create Evaluation",
+        "operationId": "create_evaluation_v1_pipeline_fixed_schema_bids_evaluate_post",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FixedEvaluationStart"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Create Evaluation V1 Pipeline Fixed Schema Bids Evaluate Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipeline/fixed-schema/jobs/{job_id}": {
+      "get": {
+        "tags": [
+          "fixed-schema pipeline"
+        ],
+        "summary": "Get Job",
+        "operationId": "get_job_v1_pipeline_fixed_schema_jobs__job_id__get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Job V1 Pipeline Fixed Schema Jobs  Job Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipeline/fixed-schema/projects/{project_id}/bids/{vendor_id}/classification": {
+      "get": {
+        "tags": [
+          "fixed-schema pipeline"
+        ],
+        "summary": "Get Classification",
+        "operationId": "get_classification_v1_pipeline_fixed_schema_projects__project_id__bids__vendor_id__classification_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "vendor_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Vendor Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Classification V1 Pipeline Fixed Schema Projects  Project Id  Bids  Vendor Id  Classification Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "fixed-schema pipeline"
+        ],
+        "summary": "Replace Classification",
+        "operationId": "replace_classification_v1_pipeline_fixed_schema_projects__project_id__bids__vendor_id__classification_put",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "vendor_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Vendor Id"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "If-Match"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FullClassificationReview"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Replace Classification V1 Pipeline Fixed Schema Projects  Project Id  Bids  Vendor Id  Classification Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipeline/fixed-schema/projects/{project_id}/bids/{vendor_id}/classification/approve": {
+      "post": {
+        "tags": [
+          "fixed-schema pipeline"
+        ],
+        "summary": "Approve Classification",
+        "operationId": "approve_classification_v1_pipeline_fixed_schema_projects__project_id__bids__vendor_id__classification_approve_post",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "vendor_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Vendor Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Approval"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Approve Classification V1 Pipeline Fixed Schema Projects  Project Id  Bids  Vendor Id  Classification Approve Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipeline/fixed-schema/projects/{project_id}/bids/{vendor_id}/evaluation": {
+      "get": {
+        "tags": [
+          "fixed-schema pipeline"
+        ],
+        "summary": "Get Evaluation",
+        "operationId": "get_evaluation_v1_pipeline_fixed_schema_projects__project_id__bids__vendor_id__evaluation_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "vendor_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Vendor Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Evaluation V1 Pipeline Fixed Schema Projects  Project Id  Bids  Vendor Id  Evaluation Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipeline/fixed-schema/projects/{project_id}/bids/{vendor_id}/evaluation/bhel": {
+      "get": {
+        "tags": [
+          "fixed-schema pipeline"
+        ],
+        "summary": "Get Bhel Evaluation",
+        "description": "Return the versioned BHEL view without changing the fixed v1 contract.",
+        "operationId": "get_bhel_evaluation_v1_pipeline_fixed_schema_projects__project_id__bids__vendor_id__evaluation_bhel_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "vendor_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Vendor Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Bhel Evaluation V1 Pipeline Fixed Schema Projects  Project Id  Bids  Vendor Id  Evaluation Bhel Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipeline/fixed-schema/tenders": {
+      "post": {
+        "tags": [
+          "fixed-schema pipeline"
+        ],
+        "summary": "Create Tender",
+        "operationId": "create_tender_v1_pipeline_fixed_schema_tenders_post",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_create_tender_v1_pipeline_fixed_schema_tenders_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Create Tender V1 Pipeline Fixed Schema Tenders Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipeline/fixed-schema/tenders/{project_id}": {
+      "get": {
+        "tags": [
+          "fixed-schema pipeline"
+        ],
+        "summary": "Get Tender",
+        "operationId": "get_tender_v1_pipeline_fixed_schema_tenders__project_id__get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Tender V1 Pipeline Fixed Schema Tenders  Project Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "fixed-schema pipeline"
+        ],
+        "summary": "Replace Tender",
+        "operationId": "replace_tender_v1_pipeline_fixed_schema_tenders__project_id__put",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "If-Match"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FullTenderReview"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Replace Tender V1 Pipeline Fixed Schema Tenders  Project Id  Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipeline/fixed-schema/tenders/{project_id}/approve": {
+      "post": {
+        "tags": [
+          "fixed-schema pipeline"
+        ],
+        "summary": "Approve Tender",
+        "operationId": "approve_tender_v1_pipeline_fixed_schema_tenders__project_id__approve_post",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Approval"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Approve Tender V1 Pipeline Fixed Schema Tenders  Project Id  Approve Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipeline/jobs/{job_id}": {
+      "get": {
+        "tags": [
+          "pipeline"
+        ],
+        "summary": "Pipeline Job",
+        "operationId": "pipeline_job_v1_pipeline_jobs__job_id__get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PipelineJob"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "415": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Unsupported Media Type"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/v1/pipeline/tenders/understand": {
+      "post": {
+        "tags": [
+          "pipeline"
+        ],
+        "summary": "Start Tender Understanding",
+        "operationId": "start_tender_understanding_v1_pipeline_tenders_understand_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_start_tender_understanding_v1_pipeline_tenders_understand_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PipelineAccepted"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request Entity Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/documents/{document_id}/content": {
+      "get": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Document Content",
+        "operationId": "document_content_v1_workbench_documents__document_id__content_get",
+        "parameters": [
+          {
+            "name": "document_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Document Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/documents/{document_id}/pages/{page_number}.png": {
+      "get": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Document Page Image",
+        "operationId": "document_page_image_v1_workbench_documents__document_id__pages__page_number__png_get",
+        "parameters": [
+          {
+            "name": "document_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Document Id"
+            }
+          },
+          {
+            "name": "page_number",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Page Number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/projects/{project_id}/bids/{vendor_key}/classification": {
+      "get": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Get Classification",
+        "operationId": "get_classification_v1_workbench_projects__project_id__bids__vendor_key__classification_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "vendor_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Vendor Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Classification V1 Workbench Projects  Project Id  Bids  Vendor Key  Classification Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/projects/{project_id}/bids/{vendor_key}/classification/approve": {
+      "post": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Approve Classification",
+        "operationId": "approve_classification_v1_workbench_projects__project_id__bids__vendor_key__classification_approve_post",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "vendor_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Vendor Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassificationApproval"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Approve Classification V1 Workbench Projects  Project Id  Bids  Vendor Key  Classification Approve Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/projects/{project_id}/bids/{vendor_key}/classification/correct": {
+      "post": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Correct Classification",
+        "operationId": "correct_classification_v1_workbench_projects__project_id__bids__vendor_key__classification_correct_post",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "vendor_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Vendor Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassificationCorrection"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Correct Classification V1 Workbench Projects  Project Id  Bids  Vendor Key  Classification Correct Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/projects/{project_id}/bids/{vendor_key}/review": {
+      "get": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Get Bid Review",
+        "operationId": "get_bid_review_v1_workbench_projects__project_id__bids__vendor_key__review_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "vendor_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Vendor Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Bid Review V1 Workbench Projects  Project Id  Bids  Vendor Key  Review Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/projects/{project_id}/bids/{vendor_key}/sources/{source_id}/content": {
+      "get": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Bid Source Content",
+        "operationId": "bid_source_content_v1_workbench_projects__project_id__bids__vendor_key__sources__source_id__content_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "vendor_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Vendor Key"
+            }
+          },
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Source Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/projects/{project_id}/bids/{vendor_key}/sources/{source_id}/pages/{page_number}.png": {
+      "get": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Bid Source Page Image",
+        "operationId": "bid_source_page_image_v1_workbench_projects__project_id__bids__vendor_key__sources__source_id__pages__page_number__png_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "vendor_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Vendor Key"
+            }
+          },
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Source Id"
+            }
+          },
+          {
+            "name": "page_number",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Page Number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/projects/{project_id}/contract/draft": {
+      "get": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Get Contract Draft",
+        "operationId": "get_contract_draft_v1_workbench_projects__project_id__contract_draft_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Contract Draft V1 Workbench Projects  Project Id  Contract Draft Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Create Contract Draft",
+        "operationId": "create_contract_draft_v1_workbench_projects__project_id__contract_draft_post",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Create Contract Draft V1 Workbench Projects  Project Id  Contract Draft Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/projects/{project_id}/contract/freeze": {
+      "post": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Freeze Contract",
+        "operationId": "freeze_contract_v1_workbench_projects__project_id__contract_freeze_post",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FreezeContract"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Freeze Contract V1 Workbench Projects  Project Id  Contract Freeze Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/projects/{project_id}/documents": {
+      "get": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Project Documents",
+        "operationId": "project_documents_v1_workbench_projects__project_id__documents_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Project Documents V1 Workbench Projects  Project Id  Documents Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/projects/{project_id}/ledger": {
+      "get": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Get Ledger",
+        "operationId": "get_ledger_v1_workbench_projects__project_id__ledger_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Ledger V1 Workbench Projects  Project Id  Ledger Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/projects/{project_id}/ledger/corrections": {
+      "post": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Correct Ledger",
+        "operationId": "correct_ledger_v1_workbench_projects__project_id__ledger_corrections_post",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LedgerCorrection"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Correct Ledger V1 Workbench Projects  Project Id  Ledger Corrections Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/projects/{project_id}/report": {
+      "get": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Project Report",
+        "operationId": "project_report_v1_workbench_projects__project_id__report_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Project Report V1 Workbench Projects  Project Id  Report Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/projects/{project_id}/report/excel": {
+      "get": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Project Report Excel",
+        "operationId": "project_report_excel_v1_workbench_projects__project_id__report_excel_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/projects/{project_id}/report/generate": {
+      "post": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Generate Project Report",
+        "operationId": "generate_project_report_v1_workbench_projects__project_id__report_generate_post",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Generate Project Report V1 Workbench Projects  Project Id  Report Generate Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/projects/{project_id}/report/markdown": {
+      "get": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Project Report Markdown",
+        "operationId": "project_report_markdown_v1_workbench_projects__project_id__report_markdown_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/projects/{project_id}/results": {
+      "get": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Project Results",
+        "operationId": "project_results_v1_workbench_projects__project_id__results_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Project Results V1 Workbench Projects  Project Id  Results Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workbench/projects/{project_id}/results/bhel": {
+      "get": {
+        "tags": [
+          "workbench"
+        ],
+        "summary": "Project Bhel Results",
+        "operationId": "project_bhel_results_v1_workbench_projects__project_id__results_bhel_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Project Bhel Results V1 Workbench Projects  Project Id  Results Bhel Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      },
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT or local API token"
+      }
+    },
+    "schemas": {
+      "Approval": {
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Revision"
+          },
+          "reviewed_by": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Reviewed By"
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 3,
+            "title": "Reason"
+          },
+          "continue_with_limitations": {
+            "type": "boolean",
+            "title": "Continue With Limitations",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_revision",
+          "reviewed_by",
+          "reason"
+        ],
+        "title": "Approval"
+      },
+      "BidClassificationResult": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "procurement-classification.v1",
+            "title": "Schema Version",
+            "default": "procurement-classification.v1"
+          },
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "bid_id": {
+            "type": "string",
+            "title": "Bid Id"
+          },
+          "vendor_id": {
+            "type": "string",
+            "title": "Vendor Id"
+          },
+          "vendor_name": {
+            "type": "string",
+            "title": "Vendor Name"
+          },
+          "review_status": {
+            "type": "string",
+            "enum": [
+              "review_required",
+              "approved"
+            ],
+            "title": "Review Status"
+          },
+          "document_types": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Document Types"
+          },
+          "documents": {
+            "items": {
+              "$ref": "#/components/schemas/PipelineDocument"
+            },
+            "type": "array",
+            "title": "Documents"
+          },
+          "logical_documents": {
+            "items": {
+              "$ref": "#/components/schemas/PipelineLogicalDocument"
+            },
+            "type": "array",
+            "title": "Logical Documents"
+          },
+          "physical_routes": {
+            "items": {
+              "$ref": "#/components/schemas/PipelinePhysicalRoute"
+            },
+            "type": "array",
+            "title": "Physical Routes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/PipelineLinks"
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_id",
+          "bid_id",
+          "vendor_id",
+          "vendor_name",
+          "review_status",
+          "document_types",
+          "documents",
+          "logical_documents",
+          "physical_routes",
+          "links"
+        ],
+        "title": "BidClassificationResult"
+      },
+      "BidEvaluationResult": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "procurement-pipeline-evaluation.v1",
+            "title": "Schema Version",
+            "default": "procurement-pipeline-evaluation.v1"
+          },
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "bid_id": {
+            "type": "string",
+            "title": "Bid Id"
+          },
+          "vendor_id": {
+            "type": "string",
+            "title": "Vendor Id"
+          },
+          "evaluation_id": {
+            "type": "string",
+            "title": "Evaluation Id"
+          },
+          "evaluation": {
+            "$ref": "#/components/schemas/PublicEvaluationResult"
+          },
+          "links": {
+            "$ref": "#/components/schemas/PipelineLinks"
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_id",
+          "bid_id",
+          "vendor_id",
+          "evaluation_id",
+          "evaluation",
+          "links"
+        ],
+        "title": "BidEvaluationResult"
+      },
+      "Body_create_classification_v1_pipeline_fixed_schema_bids_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          },
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "vendor_name": {
+            "type": "string",
+            "title": "Vendor Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file",
+          "project_id",
+          "vendor_name"
+        ],
+        "title": "Body_create_classification_v1_pipeline_fixed_schema_bids_post"
+      },
+      "Body_create_tender_v1_pipeline_fixed_schema_tenders_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          },
+          "project_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Key"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_create_tender_v1_pipeline_fixed_schema_tenders_post"
+      },
+      "Body_start_bid_classification_v1_pipeline_bids_classify_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          },
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "vendor_name": {
+            "type": "string",
+            "title": "Vendor Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file",
+          "project_id",
+          "vendor_name"
+        ],
+        "title": "Body_start_bid_classification_v1_pipeline_bids_classify_post"
+      },
+      "Body_start_tender_understanding_v1_pipeline_tenders_understand_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          },
+          "schema_json": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Schema Json"
+          },
+          "project_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Key"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_start_tender_understanding_v1_pipeline_tenders_understand_post"
+      },
+      "ClassificationApproval": {
+        "properties": {
+          "reviewed_by": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Reviewed By"
+          },
+          "reviewed_at": {
+            "type": "string",
+            "title": "Reviewed At"
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 3,
+            "title": "Reason",
+            "default": "Bidder document classification approved."
+          }
+        },
+        "type": "object",
+        "required": [
+          "reviewed_by",
+          "reviewed_at"
+        ],
+        "title": "ClassificationApproval"
+      },
+      "ClassificationCorrection": {
+        "properties": {
+          "logical_documents": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Logical Documents"
+          },
+          "physical_routes": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Physical Routes"
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 3,
+            "title": "Reason"
+          },
+          "reviewed_by": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Reviewed By"
+          },
+          "reviewed_at": {
+            "type": "string",
+            "title": "Reviewed At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "reason",
+          "reviewed_by",
+          "reviewed_at"
+        ],
+        "title": "ClassificationCorrection"
+      },
+      "ErrorBody": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "request_id": {
+            "type": "string",
+            "title": "Request Id"
+          },
+          "details": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "type": "object",
+            "title": "Details"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "message",
+          "request_id"
+        ],
+        "title": "ErrorBody"
+      },
+      "ErrorEnvelope": {
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorBody"
+          }
+        },
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "title": "ErrorEnvelope"
+      },
+      "EvaluationStart": {
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "maxLength": 36,
+            "minLength": 1,
+            "title": "Project Id"
+          },
+          "vendor_id": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Vendor Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_id",
+          "vendor_id"
+        ],
+        "title": "EvaluationStart"
+      },
+      "FixedEvaluationStart": {
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "maxLength": 36,
+            "minLength": 1,
+            "title": "Project Id"
+          },
+          "vendor_id": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Vendor Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "project_id",
+          "vendor_id"
+        ],
+        "title": "FixedEvaluationStart"
+      },
+      "FreezeContract": {
+        "properties": {
+          "draft": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Draft"
+          },
+          "reviewed_by": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Reviewed By"
+          },
+          "reviewed_at": {
+            "type": "string",
+            "title": "Reviewed At"
+          },
+          "continue_with_limitations": {
+            "type": "boolean",
+            "title": "Continue With Limitations",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "draft",
+          "reviewed_by",
+          "reviewed_at"
+        ],
+        "title": "FreezeContract"
+      },
+      "FullClassificationReview": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "procurement-fixed-classification-review.v1",
+            "title": "Schema Version"
+          },
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Revision"
+          },
+          "reviewed_by": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Reviewed By"
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 3,
+            "title": "Reason"
+          },
+          "logical_documents": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Logical Documents"
+          },
+          "physical_routes": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Physical Routes"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "schema_version",
+          "expected_revision",
+          "reviewed_by",
+          "reason",
+          "logical_documents",
+          "physical_routes"
+        ],
+        "title": "FullClassificationReview"
+      },
+      "FullTenderReview": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "procurement-fixed-tender-review.v1",
+            "title": "Schema Version"
+          },
+          "schema_id": {
+            "type": "string",
+            "const": "tender-agent-reviewed-condensed-v2",
+            "title": "Schema Id"
+          },
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Revision"
+          },
+          "reviewed_by": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Reviewed By"
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 3,
+            "title": "Reason"
+          },
+          "fields": {
+            "additionalProperties": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Fields"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "schema_version",
+          "schema_id",
+          "expected_revision",
+          "reviewed_by",
+          "reason",
+          "fields"
+        ],
+        "title": "FullTenderReview"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "JsonValue": {},
+      "LedgerCorrection": {
+        "properties": {
+          "field_key": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Field Key"
+          },
+          "status": {
+            "type": "string",
+            "pattern": "^(found|not_found|not_applicable|unresolved)$",
+            "title": "Status"
+          },
+          "value": {
+            "title": "Value"
+          },
+          "conditions": {
+            "items": {},
+            "type": "array",
+            "title": "Conditions"
+          },
+          "exceptions": {
+            "items": {},
+            "type": "array",
+            "title": "Exceptions"
+          },
+          "required_documents": {
+            "items": {},
+            "type": "array",
+            "title": "Required Documents"
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 10,
+            "title": "Reason"
+          },
+          "reviewed_by": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Reviewed By"
+          },
+          "reviewed_at": {
+            "type": "string",
+            "title": "Reviewed At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "field_key",
+          "status",
+          "reason",
+          "reviewed_by",
+          "reviewed_at"
+        ],
+        "title": "LedgerCorrection"
+      },
+      "PipelineAccepted": {
+        "properties": {
+          "api_version": {
+            "type": "string",
+            "const": "procurement-pipeline.v1",
+            "title": "Api Version",
+            "default": "procurement-pipeline.v1"
+          },
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "running",
+              "complete",
+              "failed"
+            ],
+            "title": "Status"
+          },
+          "job_url": {
+            "type": "string",
+            "title": "Job Url"
+          },
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "tender_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tender Id"
+          },
+          "tender_version_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tender Version Id"
+          },
+          "bid_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bid Id"
+          },
+          "vendor_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vendor Id"
+          },
+          "evaluation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evaluation Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "status",
+          "job_url",
+          "project_id"
+        ],
+        "title": "PipelineAccepted"
+      },
+      "PipelineDocument": {
+        "properties": {
+          "document_id": {
+            "type": "string",
+            "title": "Document Id"
+          },
+          "file_name": {
+            "type": "string",
+            "title": "File Name"
+          },
+          "content_type": {
+            "type": "string",
+            "title": "Content Type"
+          },
+          "page_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page Count"
+          },
+          "content_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Content Url"
+          },
+          "page_image_url_template": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page Image Url Template"
+          }
+        },
+        "type": "object",
+        "required": [
+          "document_id",
+          "file_name",
+          "content_type"
+        ],
+        "title": "PipelineDocument"
+      },
+      "PipelineEvidence": {
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "title": "Source Id",
+            "default": ""
+          },
+          "document_id": {
+            "type": "string",
+            "title": "Document Id",
+            "default": ""
+          },
+          "page_id": {
+            "type": "string",
+            "title": "Page Id",
+            "default": ""
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page"
+          },
+          "quote": {
+            "type": "string",
+            "title": "Quote",
+            "default": ""
+          },
+          "document_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Url"
+          },
+          "pdf_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pdf Url"
+          },
+          "page_image_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page Image Url"
+          },
+          "page_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page Url"
+          }
+        },
+        "type": "object",
+        "title": "PipelineEvidence"
+      },
+      "PipelineFieldSchema": {
+        "properties": {
+          "schema_id": {
+            "type": "string",
+            "title": "Schema Id"
+          },
+          "field_count": {
+            "type": "integer",
+            "title": "Field Count"
+          },
+          "section_count": {
+            "type": "integer",
+            "title": "Section Count"
+          },
+          "sections": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Sections"
+          }
+        },
+        "type": "object",
+        "required": [
+          "schema_id",
+          "field_count",
+          "section_count",
+          "sections"
+        ],
+        "title": "PipelineFieldSchema"
+      },
+      "PipelineJob": {
+        "properties": {
+          "api_version": {
+            "type": "string",
+            "const": "procurement-pipeline.v1",
+            "title": "Api Version",
+            "default": "procurement-pipeline.v1"
+          },
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "understanding",
+              "intake",
+              "evaluation"
+            ],
+            "title": "Stage"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "running",
+              "complete",
+              "failed"
+            ],
+            "title": "Status"
+          },
+          "result_type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "tender_understanding",
+                  "bid_classification",
+                  "bid_evaluation"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result Type"
+          },
+          "error_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Code"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "result": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TenderUnderstandingResult"
+              },
+              {
+                "$ref": "#/components/schemas/BidClassificationResult"
+              },
+              {
+                "$ref": "#/components/schemas/BidEvaluationResult"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "stage",
+          "status"
+        ],
+        "title": "PipelineJob"
+      },
+      "PipelineKeyFact": {
+        "properties": {
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "value": {
+            "type": "string",
+            "title": "Value"
+          }
+        },
+        "type": "object",
+        "required": [
+          "label",
+          "value"
+        ],
+        "title": "PipelineKeyFact"
+      },
+      "PipelineLedger": {
+        "properties": {
+          "ledger_status": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "needs_review"
+            ],
+            "title": "Ledger Status"
+          },
+          "editable": {
+            "type": "boolean",
+            "title": "Editable"
+          },
+          "tender_summary": {
+            "$ref": "#/components/schemas/PipelineTenderSummary"
+          },
+          "entries": {
+            "items": {
+              "$ref": "#/components/schemas/PipelineLedgerEntry"
+            },
+            "type": "array",
+            "title": "Entries"
+          },
+          "warnings": {
+            "items": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "type": "array",
+            "title": "Warnings"
+          }
+        },
+        "type": "object",
+        "required": [
+          "ledger_status",
+          "editable",
+          "tender_summary",
+          "entries"
+        ],
+        "title": "PipelineLedger"
+      },
+      "PipelineLedgerEntry": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "requirement_level": {
+            "type": "string",
+            "title": "Requirement Level"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/JsonValue"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "conditions": {
+            "items": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "type": "array",
+            "title": "Conditions"
+          },
+          "exceptions": {
+            "items": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "type": "array",
+            "title": "Exceptions"
+          },
+          "required_documents": {
+            "items": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "type": "array",
+            "title": "Required Documents"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/PipelineEvidence"
+            },
+            "type": "array",
+            "title": "Evidence"
+          },
+          "verified": {
+            "type": "boolean",
+            "title": "Verified"
+          },
+          "review_source": {
+            "type": "string",
+            "title": "Review Source"
+          },
+          "blocking_grounding_issues": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Blocking Grounding Issues"
+          },
+          "notes": {
+            "type": "string",
+            "title": "Notes",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "label",
+          "requirement_level",
+          "status",
+          "verified",
+          "review_source"
+        ],
+        "title": "PipelineLedgerEntry"
+      },
+      "PipelineLinks": {
+        "properties": {
+          "ledger": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ledger"
+          },
+          "contract_draft": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contract Draft"
+          },
+          "contract_freeze": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contract Freeze"
+          },
+          "classification": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Classification"
+          },
+          "classification_correct": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Classification Correct"
+          },
+          "classification_approve": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Classification Approve"
+          },
+          "evaluation_results": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evaluation Results"
+          },
+          "report": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Report"
+          }
+        },
+        "type": "object",
+        "title": "PipelineLinks"
+      },
+      "PipelineLogicalDocument": {
+        "properties": {
+          "logical_document_id": {
+            "type": "string",
+            "title": "Logical Document Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "document_type": {
+            "type": "string",
+            "title": "Document Type"
+          },
+          "source_document_id": {
+            "type": "string",
+            "title": "Source Document Id"
+          },
+          "start_page": {
+            "type": "integer",
+            "title": "Start Page"
+          },
+          "end_page": {
+            "type": "integer",
+            "title": "End Page"
+          },
+          "content_summary": {
+            "type": "string",
+            "title": "Content Summary"
+          },
+          "key_facts": {
+            "items": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "type": "array",
+            "title": "Key Facts"
+          },
+          "confidence": {
+            "type": "number",
+            "title": "Confidence"
+          }
+        },
+        "type": "object",
+        "required": [
+          "logical_document_id",
+          "title",
+          "document_type",
+          "source_document_id",
+          "start_page",
+          "end_page",
+          "content_summary",
+          "confidence"
+        ],
+        "title": "PipelineLogicalDocument"
+      },
+      "PipelinePhysicalRoute": {
+        "properties": {
+          "document_id": {
+            "type": "string",
+            "title": "Document Id"
+          },
+          "broad_route": {
+            "type": "string",
+            "title": "Broad Route"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "document_id",
+          "broad_route"
+        ],
+        "title": "PipelinePhysicalRoute"
+      },
+      "PipelineTenderSummary": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "key_facts": {
+            "items": {
+              "$ref": "#/components/schemas/PipelineKeyFact"
+            },
+            "type": "array",
+            "title": "Key Facts"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text",
+          "source"
+        ],
+        "title": "PipelineTenderSummary"
+      },
+      "PublicCriterionResult": {
+        "properties": {
+          "no": {
+            "type": "integer",
+            "title": "No"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "requirement": {
+            "type": "string",
+            "title": "Requirement"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "passed",
+              "failed",
+              "missing",
+              "needs_manual_review"
+            ],
+            "title": "Status"
+          },
+          "result": {
+            "type": "string",
+            "title": "Result"
+          },
+          "why": {
+            "type": "string",
+            "title": "Why"
+          },
+          "required_documents": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Required Documents"
+          },
+          "missing_documents": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing Documents"
+          },
+          "evidence_documents": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidence Documents"
+          }
+        },
+        "type": "object",
+        "required": [
+          "no",
+          "category",
+          "requirement",
+          "status",
+          "result",
+          "why"
+        ],
+        "title": "PublicCriterionResult"
+      },
+      "PublicEvaluationResult": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "procurement-evaluation.v3",
+            "title": "Schema Version",
+            "default": "procurement-evaluation.v3"
+          },
+          "bid_id": {
+            "type": "string",
+            "title": "Bid Id"
+          },
+          "final_decision": {
+            "type": "string",
+            "title": "Final Decision"
+          },
+          "recommendation": {
+            "type": "string",
+            "title": "Recommendation"
+          },
+          "qualifies": {
+            "type": "boolean",
+            "title": "Qualifies"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "next_action": {
+            "type": "string",
+            "title": "Next Action"
+          },
+          "tender": {
+            "$ref": "#/components/schemas/PublicTenderSummary"
+          },
+          "vendor": {
+            "$ref": "#/components/schemas/PublicVendorSummary"
+          },
+          "criteria_results": {
+            "items": {
+              "$ref": "#/components/schemas/PublicCriterionResult"
+            },
+            "type": "array",
+            "title": "Criteria Results"
+          },
+          "missing_documents": {
+            "items": {
+              "$ref": "#/components/schemas/PublicMissingDocument"
+            },
+            "type": "array",
+            "title": "Missing Documents"
+          },
+          "manual_review": {
+            "$ref": "#/components/schemas/PublicManualReview"
+          },
+          "financial_opening": {
+            "$ref": "#/components/schemas/PublicFinancialOpening"
+          },
+          "validation": {
+            "$ref": "#/components/schemas/PublicValidationSummary"
+          }
+        },
+        "type": "object",
+        "required": [
+          "bid_id",
+          "final_decision",
+          "recommendation",
+          "qualifies",
+          "summary",
+          "next_action",
+          "tender",
+          "vendor",
+          "criteria_results",
+          "manual_review",
+          "financial_opening"
+        ],
+        "title": "PublicEvaluationResult"
+      },
+      "PublicFinancialOpening": {
+        "properties": {
+          "allowed": {
+            "type": "boolean",
+            "title": "Allowed"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "allowed",
+          "reason"
+        ],
+        "title": "PublicFinancialOpening"
+      },
+      "PublicManualReview": {
+        "properties": {
+          "required": {
+            "type": "boolean",
+            "title": "Required"
+          },
+          "reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Reasons"
+          }
+        },
+        "type": "object",
+        "required": [
+          "required"
+        ],
+        "title": "PublicManualReview"
+      },
+      "PublicMissingDocument": {
+        "properties": {
+          "document_name": {
+            "type": "string",
+            "title": "Document Name"
+          },
+          "required_for": {
+            "type": "string",
+            "title": "Required For"
+          },
+          "impact": {
+            "type": "string",
+            "title": "Impact"
+          }
+        },
+        "type": "object",
+        "required": [
+          "document_name",
+          "required_for",
+          "impact"
+        ],
+        "title": "PublicMissingDocument"
+      },
+      "PublicTenderCriterion": {
+        "properties": {
+          "no": {
+            "type": "integer",
+            "title": "No"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "requirement": {
+            "type": "string",
+            "title": "Requirement"
+          },
+          "mandatory": {
+            "type": "boolean",
+            "title": "Mandatory"
+          },
+          "pass_condition": {
+            "type": "string",
+            "title": "Pass Condition",
+            "default": ""
+          },
+          "required_documents": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Required Documents"
+          }
+        },
+        "type": "object",
+        "required": [
+          "no",
+          "category",
+          "requirement",
+          "mandatory"
+        ],
+        "title": "PublicTenderCriterion"
+      },
+      "PublicTenderSummary": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "tender_number": {
+            "type": "string",
+            "title": "Tender Number",
+            "default": ""
+          },
+          "buyer": {
+            "type": "string",
+            "title": "Buyer"
+          },
+          "procurement_type": {
+            "type": "string",
+            "title": "Procurement Type"
+          },
+          "bid_system": {
+            "type": "string",
+            "title": "Bid System"
+          },
+          "scope": {
+            "type": "string",
+            "title": "Scope"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "mandatory_documents": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Mandatory Documents"
+          },
+          "criteria": {
+            "items": {
+              "$ref": "#/components/schemas/PublicTenderCriterion"
+            },
+            "type": "array",
+            "title": "Criteria"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "buyer",
+          "procurement_type",
+          "bid_system",
+          "scope",
+          "summary"
+        ],
+        "title": "PublicTenderSummary"
+      },
+      "PublicValidationSummary": {
+        "properties": {
+          "schema_valid": {
+            "type": "boolean",
+            "title": "Schema Valid",
+            "default": true
+          },
+          "strict_mandatory_fail_applied": {
+            "type": "boolean",
+            "title": "Strict Mandatory Fail Applied",
+            "default": true
+          },
+          "internal_audit_available": {
+            "type": "boolean",
+            "title": "Internal Audit Available",
+            "default": true
+          }
+        },
+        "type": "object",
+        "title": "PublicValidationSummary"
+      },
+      "PublicVendorSummary": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "identifiers": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Identifiers"
+          },
+          "submitted_documents": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Submitted Documents"
+          },
+          "missing_documents": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing Documents"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "PublicVendorSummary"
+      },
+      "TenderUnderstandingResult": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "procurement-understanding.v1",
+            "title": "Schema Version",
+            "default": "procurement-understanding.v1"
+          },
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "tender_id": {
+            "type": "string",
+            "title": "Tender Id"
+          },
+          "tender_version_id": {
+            "type": "string",
+            "title": "Tender Version Id"
+          },
+          "review_status": {
+            "type": "string",
+            "enum": [
+              "review_required",
+              "approved"
+            ],
+            "title": "Review Status"
+          },
+          "field_schema": {
+            "$ref": "#/components/schemas/PipelineFieldSchema"
+          },
+          "ledger": {
+            "$ref": "#/components/schemas/PipelineLedger"
+          },
+          "documents": {
+            "items": {
+              "$ref": "#/components/schemas/PipelineDocument"
+            },
+            "type": "array",
+            "title": "Documents"
+          },
+          "links": {
+            "$ref": "#/components/schemas/PipelineLinks"
+          }
+        },
+        "type": "object",
+        "required": [
+          "project_id",
+          "tender_id",
+          "tender_version_id",
+          "review_status",
+          "field_schema",
+          "ledger",
+          "documents",
+          "links"
+        ],
+        "title": "TenderUnderstandingResult"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
