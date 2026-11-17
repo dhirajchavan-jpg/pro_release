@@ -58,8 +58,8 @@ def _trial_control_errors() -> list[str]:
         errors.append("MAX_BIDDERS_PER_TENDER must be 10")
     if retention_days != 0:
         errors.append("RETENTION_DAYS must be 0 so trial data is retained indefinitely")
-    if os.getenv("AUTH_MODE", "").strip().lower() not in {"session", "api_token"}:
-        errors.append("AUTH_MODE must be session or api_token for local workspace authentication")
+    if os.getenv("AUTH_MODE", "").strip().lower() != "jwt":
+        errors.append("AUTH_MODE must be jwt for JWT authentication")
     if os.getenv("PROVIDER_USAGE_REQUIRED", "0").strip() != "1":
         errors.append("PROVIDER_USAGE_REQUIRED must be 1 so paid calls cannot bypass metering")
     decimal_values: dict[str, Decimal] = {}
@@ -110,8 +110,6 @@ def _public_access_errors() -> list[str]:
     errors: list[str] = []
     if parsed.scheme != "https":
         errors.append("PUBLIC_BASE_URL must use HTTPS for remote access")
-    if os.getenv("AUTH_COOKIE_SECURE", "0") != "1":
-        errors.append("AUTH_COOKIE_SECURE=1 is required for remote access")
     return errors
 
 
@@ -212,15 +210,10 @@ def main() -> None:
     if os.getenv("API_HOST", "127.0.0.1").strip() not in {"127.0.0.1", "::1", "localhost"} and os.getenv("ALLOW_REMOTE_API", "0") != "1":
         errors.append("API_HOST must be loopback unless ALLOW_REMOTE_API=1")
     auth_mode = os.getenv("AUTH_MODE", "").strip().lower()
-    if auth_mode == "jwt":
-        for name in ("AUTH_JWKS_URL", "AUTH_ISSUER", "AUTH_AUDIENCE"):
-            if _missing(name):
-                errors.append(f"{name} is required for AUTH_MODE=jwt")
-    elif auth_mode in {"session", "api_token"}:
-        if _missing("SESSION_SECRET_KEY"):
-            errors.append("SESSION_SECRET_KEY is required for AUTH_MODE=session")
-    else:
-        errors.append("AUTH_MODE must be session, api_token or jwt")
+    if auth_mode != "jwt":
+        errors.append("AUTH_MODE must be jwt")
+    elif len(os.getenv("JWT_SIGNING_KEY", "").strip().encode()) < 32:
+        errors.append("JWT_SIGNING_KEY must contain at least 32 random bytes for AUTH_MODE=jwt")
     provider = os.getenv("AI_PROVIDER", "gemini").strip().lower()
     if provider != "gemini" and (
         os.getenv("AI_REQUIRE_INDIA_REGION", "") != "1"

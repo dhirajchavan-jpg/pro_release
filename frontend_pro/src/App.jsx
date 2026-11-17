@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { ApiError } from "./api/client.js";
+import { ApiError, clearAccessToken, refreshAccessToken, storeAccessToken } from "./api/client.js";
 import { getAccount } from "./api/account.js";
 import AdminDashboard from "./admin/AdminDashboard.jsx";
 import AuthPage from "./auth/AuthPage.jsx";
@@ -60,7 +60,14 @@ export default function App() {
     } catch (error) {
       setAccount(null);
       if (error instanceof ApiError && [401, 403].includes(error.status)) {
-        if (route !== "register") navigate("login", true);
+        try {
+          const refreshed = await refreshAccessToken();
+          setAccount(refreshed);
+          if (["login", "register"].includes(route)) navigate("workspace", true);
+        } catch {
+          clearAccessToken();
+          if (route !== "register") navigate("login", true);
+        }
       } else setServiceError(error.message || "The workspace service is unavailable.");
     } finally { setLoading(false); }
   }, [navigate, route]);
@@ -80,6 +87,7 @@ export default function App() {
         <InvitePage
           token={token}
           onAuthenticated={(data) => {
+            storeAccessToken(data.access_token);
             setAccount(data);
             navigate("workspace", true);
           }}
@@ -92,6 +100,7 @@ export default function App() {
         mode={route === "register" ? "register" : "login"}
         serviceError={serviceError}
         onAuthenticated={(data) => {
+          storeAccessToken(data.access_token);
           setAccount(data);
           navigate("workspace", true);
         }}
@@ -116,7 +125,7 @@ export default function App() {
         ) : workflowRoute ? (
           <WorkflowPage account={account} projectId={workflowRoute[1] === "new" ? null : workflowRoute[1]} page={workflowRoute[2]} onBack={() => navigate("workspace")} onNavigate={(projectId, page) => navigate(`workflow|${projectId}|${page}`)} onProjectChange={replaceProject} />
         ) : (
-          <WorkspacePage account={account} onAccountChange={setAccount} onNewTender={() => navigate("workflow|new|tender")} onOpenProject={(project, page) => navigate(`workflow|${project.project_id}|${page}`)} onSignedOut={() => { setAccount(null); navigate("login", true); }} />
+          <WorkspacePage account={account} onAccountChange={setAccount} onNewTender={() => navigate("workflow|new|tender")} onOpenProject={(project, page) => navigate(`workflow|${project.project_id}|${page}`)} onSignedOut={() => { clearAccessToken(); setAccount(null); navigate("login", true); }} />
         )}
       </div>
       <AppFooter />

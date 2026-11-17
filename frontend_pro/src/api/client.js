@@ -1,5 +1,30 @@
 import { apiConfig } from "../config/api.js";
 
+const ACCESS_TOKEN_KEY = "tenderabl_access_token";
+
+export function storeAccessToken(token) {
+  if (token) sessionStorage.setItem(ACCESS_TOKEN_KEY, token);
+}
+
+export function clearAccessToken() {
+  sessionStorage.removeItem(ACCESS_TOKEN_KEY);
+}
+
+export async function refreshAccessToken() {
+  const response = await fetch(`${apiConfig.baseUrl}/workbench/account/refresh`, {
+    method: "POST",
+    credentials: "include",
+  });
+  const data = await readResponseBody(response);
+  if (!response.ok) throw new ApiError(errorMessage(data, response.status), { status: response.status, data });
+  storeAccessToken(data.access_token);
+  return data;
+}
+
+function accessToken() {
+  return sessionStorage.getItem(ACCESS_TOKEN_KEY) || "";
+}
+
 export class ApiError extends Error {
   constructor(message, { status = 0, data = null } = {}) {
     super(message);
@@ -36,6 +61,9 @@ export async function apiRequest(path, options = {}) {
   if (!isFormData && options.body != null && !headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
   }
+  if (!headers.has("Authorization") && accessToken()) {
+    headers.set("Authorization", `Bearer ${accessToken()}`);
+  }
 
   if (!["GET", "HEAD", "OPTIONS"].includes(method) && !headers.has("Idempotency-Key")) {
     headers.set("Idempotency-Key", window.crypto.randomUUID());
@@ -68,7 +96,9 @@ export async function apiRequest(path, options = {}) {
 }
 
 export async function downloadRequest(path) {
-  const response = await fetch(`${apiConfig.baseUrl}${path}`, { credentials: "include" });
+  const headers = new Headers();
+  if (accessToken()) headers.set("Authorization", `Bearer ${accessToken()}`);
+  const response = await fetch(`${apiConfig.baseUrl}${path}`, { headers });
   if (!response.ok) {
     let data = null;
     try { data = await readResponseBody(response); } catch { data = null; }

@@ -12,11 +12,11 @@ from pathlib import Path
 from procurement.platform.auth import hash_local_password
 
 
-_GENERATED = {"SESSION_SECRET_KEY"}
+_GENERATED = {"JWT_SIGNING_KEY"}
 
 
 def _value(key: str) -> str:
-    return secrets.token_hex(32) if key == "SESSION_SECRET_KEY" else secrets.token_urlsafe(32)
+    return secrets.token_hex(32) if key == "JWT_SIGNING_KEY" else secrets.token_urlsafe(32)
 
 
 def _first_free_port(preferred: int) -> int:
@@ -129,7 +129,7 @@ def main() -> None:
         generated.append(key)
     target.write_text("\n".join(output) + "\n", encoding="utf-8")
     print("Generated: " + (", ".join(generated) if generated else "nothing; existing local secrets retained"))
-    print("Still set manually: AI_PROVIDER/AI_API_KEY/AI_BASE_URL/models and AUTH_JWKS_URL/AUTH_ISSUER/AUTH_AUDIENCE.")
+    print("Still set manually: AI_PROVIDER/AI_API_KEY/AI_BASE_URL/models.")
 
 
 if __name__ == "__main__":

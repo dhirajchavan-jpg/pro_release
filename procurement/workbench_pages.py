@@ -13,13 +13,14 @@ from pydantic import BaseModel, Field
 
 from procurement.platform.auth import (
     Principal,
-    auth_mode,
-    create_api_key,
-    create_user_session,
+    create_access_token,
+    create_refresh_token,
+    decode_jwt,
     hash_local_password,
+    jwt_access_ttl_seconds,
+    jwt_principal_from_token,
     require_permission,
     require_role,
-    revoke_user_session,
     verify_local_password,
 )
 
@@ -81,12 +82,6 @@ class AcceptInviteRequest(BaseModel):
     phone: str = ""
 
 
-class CreateApiKeyRequest(BaseModel):
-    name: str = Field(min_length=1, max_length=255)
-    scopes: list[str] = Field(default_factory=list)
-    ttl_days: int | None = Field(default=None, ge=1, le=365)
-
-
 class CreateRoleRequest(BaseModel):
     name: str = Field(min_length=1, max_length=64, pattern=_ROLE_NAME)
     description: str = Field(default="", max_length=1000)
@@ -108,37 +103,57 @@ class WorkbenchUsage(BaseModel):
     )
 
 
-_BEARER_SESSION_SECURITY = {"security": [{"BearerSession": []}]}
+_BEARER_SESSION_SECURITY = {"security": [{"BearerAuth": []}]}
 
 
-def _session_auth_response(
+def _token_auth_response(
     *,
     tenant_id: str,
     user_id: str,
     email: str,
-    session_token: str,
+    access_token: str,
+    refresh_token: str,
     ttl_seconds: int,
     request: Request,
     status_code: int = 200,
 ) -> JSONResponse:
-    """Return the browser cookie and the same database-backed bearer token."""
+    """Return a JWT access token for browser and programmatic clients."""
     payload = _account_payload(tenant_id, user_id=user_id, email=email)
     payload.update({
-        "access_token": session_token,
+        "access_token": access_token,
         "token_type": "bearer",
         "expires_in": ttl_seconds,
     })
     response = JSONResponse(payload, status_code=status_code)
     response.set_cookie(
-        "procurement_session",
-        session_token,
+        "procurement_refresh",
+        refresh_token,
         httponly=True,
-        secure=request.url.scheme == "https" or os.getenv("AUTH_COOKIE_SECURE", "0") == "1",
+        secure=request.url.scheme == "https",
         samesite="strict",
-        max_age=ttl_seconds,
-        path="/",
+        max_age=int(os.getenv("JWT_REFRESH_TTL_SECONDS", "604800")),
+        path="/workbench/account",
     )
     return response
+
+
+def _create_refresh_token(session, user) -> str:
+    from procurement.domain.models import RefreshToken
+
+    token, token_id = create_refresh_token(
+        user.id,
+        user.tenant_id,
+        user.subject,
+        user.role,
+        user.token_version,
+    )
+    claims = decode_jwt(token, "refresh")
+    session.add(RefreshToken(
+        id=token_id,
+        user_id=user.id,
+        expires_at=datetime.fromtimestamp(claims["exp"], tz=timezone.utc),
+    ))
+    return token
 
 
 def _accessible_role(session, tenant_id: str, role_name: str):
@@ -537,8 +552,6 @@ def workbench_css() -> FileResponse:
     summary="Sign in and obtain a bearer token",
 )
 def workbench_login(body: LocalLogin, request: Request) -> Response:
-    if auth_mode() == "jwt":
-        raise HTTPException(status_code=409, detail="use the configured identity provider")
     username = (body.username or body.email).strip()
     if not username or not body.password:
         raise HTTPException(status_code=401, detail="invalid username or password")
@@ -567,23 +580,21 @@ def workbench_login(body: LocalLogin, request: Request) -> Response:
         user_id = user.id
         tenant_id = user.tenant_id
         user_email = user.email or username
+        user_subject = user.subject
+        user_role = user.role
+        user_token_version = user.token_version
+        refresh_token = _create_refresh_token(session, user)
 
-    ttl_seconds = max(300, int(os.getenv("AUTH_SESSION_TTL_SECONDS", "28800")))
-    ip_address = request.client.host if request.client else None
-    user_agent = request.headers.get("user-agent")
-
-    session_cookie = create_user_session(
-        user_id=user_id,
-        tenant_id=tenant_id,
-        ip_address=ip_address,
-        user_agent=user_agent,
-        ttl_seconds=ttl_seconds,
+    ttl_seconds = jwt_access_ttl_seconds()
+    access_token = create_access_token(
+        user_id, tenant_id, user_subject, user_role, user_token_version, ttl_seconds=ttl_seconds
     )
-    return _session_auth_response(
+    return _token_auth_response(
         tenant_id=tenant_id,
         user_id=user_id,
         email=user_email,
-        session_token=session_cookie,
+        access_token=access_token,
+        refresh_token=refresh_token,
         ttl_seconds=ttl_seconds,
         request=request,
     )
@@ -655,12 +666,78 @@ def workbench_account_update(body: LocalProfile, request: Request) -> dict:
 
 @router.post("/workbench/account/logout", tags=["Authentication"], openapi_extra=_BEARER_SESSION_SECURITY)
 def workbench_logout(request: Request) -> Response:
-    cookie = request.cookies.get("procurement_session", "")
-    if cookie:
-        revoke_user_session(cookie)
+    principal = request.state.principal
+    from sqlalchemy import update
+
+    from procurement.domain.models import RefreshToken, User
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    with session_scope(_sessions()) as session:
+        session.execute(update(User).where(User.id == principal.user_id).values(token_version=User.token_version + 1))
+        session.execute(
+            update(RefreshToken)
+            .where(RefreshToken.user_id == principal.user_id, RefreshToken.revoked_at.is_(None))
+            .values(revoked_at=datetime.now(timezone.utc))
+        )
     response = JSONResponse({"status": "logged_out"})
-    response.delete_cookie("procurement_session", path="/", samesite="strict")
+    response.delete_cookie("procurement_refresh", path="/workbench/account", samesite="strict")
     return response
+
+
+@router.post(
+    "/workbench/account/refresh",
+    tags=["Authentication"],
+    summary="Rotate refresh token and obtain a new access token",
+)
+def refresh_access_token(request: Request) -> Response:
+    raw_token = request.cookies.get("procurement_refresh", "")
+    if not raw_token:
+        raise HTTPException(status_code=401, detail="refresh token is required")
+    claims = decode_jwt(raw_token, "refresh")
+    principal = jwt_principal_from_token(raw_token, expected_type="refresh")
+
+    from sqlalchemy import select
+
+    from procurement.domain.models import RefreshToken, User
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    with session_scope(_sessions()) as session:
+        stored_token = session.scalar(
+            select(RefreshToken)
+            .where(RefreshToken.id == str(claims["jti"]))
+            .with_for_update()
+        )
+        user = session.get(User, principal.user_id)
+        if (
+            not stored_token
+            or stored_token.user_id != principal.user_id
+            or stored_token.revoked_at is not None
+            or not user
+        ):
+            raise HTTPException(status_code=401, detail="refresh token is revoked or unavailable")
+        stored_token.revoked_at = datetime.now(timezone.utc)
+        refresh_token = _create_refresh_token(session, user)
+        user_email = user.email or user.subject
+        access_token = create_access_token(
+            user.id,
+            user.tenant_id,
+            user.subject,
+            user.role,
+            user.token_version,
+            ttl_seconds=jwt_access_ttl_seconds(),
+        )
+
+    return _token_auth_response(
+        tenant_id=principal.tenant_id,
+        user_id=principal.user_id,
+        email=user_email,
+        access_token=access_token,
+        refresh_token=refresh_token,
+        ttl_seconds=jwt_access_ttl_seconds(),
+        request=request,
+    )
 
 
 @router.post(
@@ -670,9 +747,6 @@ def workbench_logout(request: Request) -> Response:
 )
 def workbench_register(body: RegistrationRequest, request: Request) -> Response:
     """Create the named workspace and its initial administrator."""
-    if auth_mode() == "jwt":
-        raise HTTPException(status_code=409, detail="use the configured identity provider")
-
     from sqlalchemy import func, select
 
     from procurement.domain.models import Role, Tenant, User
@@ -715,20 +789,18 @@ def workbench_register(body: RegistrationRequest, request: Request) -> Response:
         session.flush()
         user_id = user.id
         tenant_id = user.tenant_id
+        refresh_token = _create_refresh_token(session, user)
 
-    ttl_seconds = max(300, int(os.getenv("AUTH_SESSION_TTL_SECONDS", "28800")))
-    session_cookie = create_user_session(
-        user_id=user_id,
-        tenant_id=tenant_id,
-        ip_address=request.client.host if request.client else None,
-        user_agent=request.headers.get("user-agent"),
-        ttl_seconds=ttl_seconds,
+    ttl_seconds = jwt_access_ttl_seconds()
+    access_token = create_access_token(
+        user_id, tenant_id, f"user:{email}", "admin", 0, ttl_seconds=ttl_seconds
     )
-    return _session_auth_response(
+    return _token_auth_response(
         tenant_id=tenant_id,
         user_id=user_id,
         email=email,
-        session_token=session_cookie,
+        access_token=access_token,
+        refresh_token=refresh_token,
         ttl_seconds=ttl_seconds,
         request=request,
         status_code=201,
@@ -1022,72 +1094,6 @@ def update_workspace_user(user_id: str, body: UpdateUserRequest, request: Reques
         }
 
 
-@router.get("/workbench/account/keys", tags=["Workspace API keys"], openapi_extra=_BEARER_SESSION_SECURITY)
-def list_workspace_api_keys(request: Request) -> dict:
-    require_permission(request, "keys:manage")
-    principal = request.state.principal
-
-    from sqlalchemy import select
-
-    from procurement.domain.models import ApiKey
-    from procurement.platform.database import session_scope
-    from procurement.workbench_api import _sessions
-
-    with session_scope(_sessions()) as session:
-        keys = session.scalars(
-            select(ApiKey).where(ApiKey.tenant_id == principal.tenant_id).order_by(ApiKey.created_at.desc())
-        ).all()
-        return {
-            "keys": [
-                {
-                    "id": k.id,
-                    "name": k.name,
-                    "prefix": k.prefix,
-                    "scopes": k.scopes,
-                    "expires_at": k.expires_at.isoformat() if k.expires_at else None,
-                    "created_at": k.created_at.isoformat() if k.created_at else None,
-                }
-                for k in keys
-            ]
-        }
-
-
-@router.post("/workbench/account/keys", tags=["Workspace API keys"], openapi_extra=_BEARER_SESSION_SECURITY)
-def create_workspace_api_key(body: CreateApiKeyRequest, request: Request) -> dict:
-    require_permission(request, "keys:manage")
-    principal = request.state.principal
-
-    key_id, raw_key = create_api_key(
-        tenant_id=principal.tenant_id,
-        name=body.name,
-        scopes=body.scopes,
-        ttl_days=body.ttl_days,
-    )
-    return {
-        "id": key_id,
-        "name": body.name,
-        "api_key": raw_key,
-        "note": "Store this key safely; it will not be shown again.",
-    }
-
-
-@router.delete("/workbench/account/keys/{key_id}", tags=["Workspace API keys"], openapi_extra=_BEARER_SESSION_SECURITY)
-def delete_workspace_api_key(key_id: str, request: Request) -> dict:
-    require_permission(request, "keys:manage")
-    principal = request.state.principal
-
-    from procurement.domain.models import ApiKey
-    from procurement.platform.database import session_scope
-    from procurement.workbench_api import _sessions
-
-    with session_scope(_sessions()) as session:
-        key = session.get(ApiKey, key_id)
-        if not key or key.tenant_id != principal.tenant_id:
-            raise HTTPException(status_code=404, detail="API key not found")
-        session.delete(key)
-    return {"status": "deleted"}
-
-
 def _frontend_base_url(request: Request) -> str:
     from procurement.api_app import frontend_cors_origins
     origins = frontend_cors_origins()
@@ -1275,23 +1281,21 @@ def accept_workspace_invite(body: AcceptInviteRequest, request: Request) -> Resp
         user_id = new_user.id
         tenant_id = new_user.tenant_id
         user_email = new_user.email
+        user_subject = new_user.subject
+        user_role = new_user.role
+        user_token_version = new_user.token_version
+        refresh_token = _create_refresh_token(session, new_user)
 
-    ttl_seconds = max(300, int(os.getenv("AUTH_SESSION_TTL_SECONDS", "28800")))
-    ip_address = request.client.host if request.client else None
-    user_agent = request.headers.get("user-agent")
-
-    session_cookie = create_user_session(
-        user_id=user_id,
-        tenant_id=tenant_id,
-        ip_address=ip_address,
-        user_agent=user_agent,
-        ttl_seconds=ttl_seconds,
+    ttl_seconds = jwt_access_ttl_seconds()
+    access_token = create_access_token(
+        user_id, tenant_id, user_subject, user_role, user_token_version, ttl_seconds=ttl_seconds
     )
-    return _session_auth_response(
+    return _token_auth_response(
         tenant_id=tenant_id,
         user_id=user_id,
         email=user_email,
-        session_token=session_cookie,
+        access_token=access_token,
+        refresh_token=refresh_token,
         ttl_seconds=ttl_seconds,
         request=request,
     )

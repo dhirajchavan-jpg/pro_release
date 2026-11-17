@@ -6,10 +6,10 @@ from fastapi import HTTPException, Request
 
 from procurement.platform.auth import (
     Principal,
+    create_access_token,
+    decode_jwt,
     hash_local_password,
     verify_local_password,
-    sign_session_token,
-    verify_session_token,
     require_role,
     require_permission,
 )
@@ -25,31 +25,38 @@ class TestCleanAuth(unittest.TestCase):
         self.assertFalse(verify_local_password("WrongPassword!", encoded))
         self.assertFalse(verify_local_password(password, "invalid_hash_string"))
 
-    def test_session_token_signing_and_verification(self):
+    def test_jwt_access_token_uses_expected_claims(self):
         import os
-        old = os.environ.get("SESSION_SECRET_KEY")
-        os.environ["SESSION_SECRET_KEY"] = "test_secret_key_1234567890abcdef"
+        import jwt
+        old_values = {key: os.environ.get(key) for key in ("JWT_SIGNING_KEY", "JWT_ISSUER", "JWT_AUDIENCE")}
+        os.environ["JWT_SIGNING_KEY"] = "test_jwt_signing_key_1234567890abcdef"
+        os.environ["JWT_ISSUER"] = "test-issuer"
+        os.environ["JWT_AUDIENCE"] = "test-audience"
         try:
-            token = "test_opaque_token_string"
-            signed = sign_session_token(token)
-
-            self.assertTrue(signed.startswith(f"{token}."))
-
-            # Valid token
-            verified = verify_session_token(signed)
-            self.assertEqual(verified, token)
-
-            # Tampered token
-            tampered = signed[:-4] + "xxxx"
-            self.assertIsNone(verify_session_token(tampered))
-
-            # Malformed format
-            self.assertIsNone(verify_session_token("just_a_token_without_signature"))
+            token = create_access_token("user-1", "tenant-1", "user:test", "reviewer", 0, ttl_seconds=300)
+            claims = jwt.decode(
+                token,
+                os.environ["JWT_SIGNING_KEY"],
+                algorithms=["HS256"],
+                audience="test-audience",
+                issuer="test-issuer",
+            )
+            self.assertEqual(claims["sub"], "user:test")
+            self.assertEqual(claims["user_id"], "user-1")
+            self.assertEqual(claims["tenant_id"], "tenant-1")
+            self.assertEqual(claims["roles"], ["reviewer"])
+            self.assertEqual(claims["token_type"], "access")
+            self.assertEqual(claims["token_version"], 0)
+            with self.assertRaises(HTTPException):
+                decode_jwt(token[:-1] + ("a" if token[-1] != "a" else "b"), "access")
+            with self.assertRaises(HTTPException):
+                decode_jwt(token, "refresh")
         finally:
-            if old is not None:
-                os.environ["SESSION_SECRET_KEY"] = old
-            else:
-                os.environ.pop("SESSION_SECRET_KEY", None)
+            for key, value in old_values.items():
+                if value is not None:
+                    os.environ[key] = value
+                else:
+                    os.environ.pop(key, None)
 
     def test_require_role(self):
         req = MagicMock(spec=Request)

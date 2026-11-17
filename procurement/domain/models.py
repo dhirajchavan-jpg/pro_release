@@ -42,6 +42,7 @@ class User(Base):
     role: Mapped[str] = mapped_column(String(64), nullable=False, default="reviewer")
     role_id: Mapped[str | None] = mapped_column(ForeignKey("roles.id", ondelete="SET NULL"), index=True)
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    token_version: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 
 
@@ -72,31 +73,6 @@ class RolePermission(Base):
     permission_id: Mapped[str] = mapped_column(ForeignKey("permissions.id", ondelete="CASCADE"), primary_key=True)
 
 
-class UserSession(Base):
-    __tablename__ = "user_sessions"
-
-    id: Mapped[str] = mapped_column(String(64), primary_key=True)  # sha256(token)
-    user_id: Mapped[str] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
-    tenant_id: Mapped[str] = mapped_column(ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False, index=True)
-    user_agent: Mapped[str | None] = mapped_column(String(512))
-    ip_address: Mapped[str | None] = mapped_column(String(64))
-    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, index=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
-
-
-class ApiKey(Base):
-    __tablename__ = "api_keys"
-
-    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
-    tenant_id: Mapped[str] = mapped_column(ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False, index=True)
-    name: Mapped[str] = mapped_column(String(255), nullable=False)
-    prefix: Mapped[str] = mapped_column(String(16), nullable=False)
-    key_hash: Mapped[str] = mapped_column(String(64), unique=True, nullable=False, index=True)
-    scopes: Mapped[list] = mapped_column(JSON_DOCUMENT, nullable=False, default=list)
-    expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), index=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
-
-
 class WorkspaceInvite(Base):
     __tablename__ = "workspace_invites"
 
@@ -108,6 +84,16 @@ class WorkspaceInvite(Base):
     invited_by_id: Mapped[str | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"), index=True)
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, index=True)
     accepted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
+class RefreshToken(Base):
+    __tablename__ = "refresh_tokens"
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, index=True)
+    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 
 

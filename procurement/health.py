@@ -69,15 +69,7 @@ def ready() -> JSONResponse:
     except AIConfigurationError as exc:
         provider_error = str(exc)
     configured_auth_mode = os.getenv("AUTH_MODE", "session").strip().lower()
-    auth_secret = os.getenv("SESSION_SECRET_KEY")
-    auth_configured = (
-        configured_auth_mode in {"session", "api_token"} and bool(auth_secret)
-    ) or (
-        configured_auth_mode == "jwt"
-        and bool(os.getenv("AUTH_JWKS_URL", "").strip())
-        and bool(os.getenv("AUTH_ISSUER", "").strip())
-        and bool(os.getenv("AUTH_AUDIENCE", "").strip())
-    )
+    auth_configured = configured_auth_mode == "jwt" and bool(os.getenv("JWT_SIGNING_KEY", "").strip())
     checks = {
         "auth_configured": auth_configured,
         "ai_provider_configured": provider_error is None,

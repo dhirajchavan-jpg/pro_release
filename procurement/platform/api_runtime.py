@@ -32,6 +32,7 @@ WORKBENCH_PUBLIC_PATHS = {
     "/workbench/account/login",
     "/workbench/account/logout",
     "/workbench/account/register",
+    "/workbench/account/refresh",
     "/workbench/account/invites/verify",
     "/workbench/account/invites/accept",
     "/workbench/login",
@@ -55,7 +56,7 @@ async def guard_api(request: Request, call_next: Any) -> Any:
         or REACT_FRONTEND_PATH.match(request.url.path)
     ):
         public_paths = public_paths | {request.url.path}
-    return await guarded_request(
+    response = await guarded_request(
         request,
         call_next,
         public_paths=public_paths,
@@ -68,6 +69,14 @@ async def guard_api(request: Request, call_next: Any) -> Any:
         check_auth=check_api_auth,
         make_error_response=error_response,
     )
+    if REACT_FRONTEND_PATH.match(request.url.path):
+        response.headers.setdefault(
+            "Content-Security-Policy",
+            "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; "
+            "object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; "
+            "connect-src 'self'; frame-src 'self' https: blob:; worker-src 'self' blob:",
+        )
+    return response
 
 
 async def http_error_handler(request: Request, exc: HTTPException) -> JSONResponse:

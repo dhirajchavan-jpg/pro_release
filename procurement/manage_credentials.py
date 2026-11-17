@@ -13,7 +13,7 @@ import uuid
 
 from sqlalchemy import select
 
-from procurement.domain.models import Role, Tenant, User, UserSession
+from procurement.domain.models import Role, Tenant, User
 from procurement.platform.auth import hash_local_password
 from procurement.platform.database import make_session_factory
 from procurement.platform.env import load_local_env
@@ -34,7 +34,7 @@ def _atomic_write(path: Path, content: str) -> None:
             os.unlink(temporary)
 
 
-def ensure_session_secret(env_path: Path) -> str:
+def ensure_jwt_signing_key(env_path: Path) -> str:
     if not env_path.is_file():
         raise ValueError(".env was not found; run Setup.bat first")
 
@@ -45,11 +45,11 @@ def ensure_session_secret(env_path: Path) -> str:
         if sep:
             configured[k.strip()] = v.strip()
 
-    secret = configured.get("SESSION_SECRET_KEY", "")
-    session_secret_changed = not secret or "replace_" in secret.lower()
-    if session_secret_changed:
+    secret = configured.get("JWT_SIGNING_KEY", "")
+    signing_key_changed = not secret or "replace_" in secret.lower()
+    if signing_key_changed:
         secret = secrets.token_hex(32)
-        configured["SESSION_SECRET_KEY"] = secret
+        configured["JWT_SIGNING_KEY"] = secret
 
     # Remove legacy .env credentials if present. This must happen even when
     # the existing session secret does not need to be rotated.
@@ -57,12 +57,32 @@ def ensure_session_secret(env_path: Path) -> str:
         "PROCUREMENT_LOCAL_PASSWORD_HASH",
         "ALLOW_DIRECT_API_TOKEN_AUTH",
         "PROCUREMENT_API_TOKEN",
+        "SESSION_SECRET_KEY",
+        "AUTH_COOKIE_SECURE",
+        "AUTH_JWKS_URL",
+        "AUTH_ISSUER",
+        "AUTH_AUDIENCE",
+        "AUTH_TENANT_CLAIM",
+        "AUTH_ROLES_CLAIM",
+        "AUTH_SESSION_TTL_SECONDS",
     )
     removed_legacy_key = any(key in configured for key in obsolete_keys)
     for obsolete in obsolete_keys:
         configured.pop(obsolete, None)
 
-    if session_secret_changed or removed_legacy_key:
+    auth_mode_changed = configured.get("AUTH_MODE") != "jwt"
+    configured["AUTH_MODE"] = "jwt"
+    try:
+        access_ttl_changed = int(configured.get("JWT_ACCESS_TTL_SECONDS", "0")) > 900
+    except ValueError:
+        access_ttl_changed = True
+    access_ttl_changed = access_ttl_changed or not configured.get("JWT_ACCESS_TTL_SECONDS", "").strip()
+    if access_ttl_changed:
+        configured["JWT_ACCESS_TTL_SECONDS"] = "900"
+    refresh_ttl_changed = not configured.get("JWT_REFRESH_TTL_SECONDS", "").strip()
+    if refresh_ttl_changed:
+        configured["JWT_REFRESH_TTL_SECONDS"] = "604800"
+    if signing_key_changed or removed_legacy_key or auth_mode_changed or access_ttl_changed or refresh_ttl_changed:
         output: list[str] = []
         seen = set()
         for line in lines:
@@ -91,7 +111,7 @@ def set_admin_credentials(env_path: Path, username: str, password: str) -> None:
     if password.casefold() == username.casefold():
         raise ValueError("password must not match the username")
 
-    ensure_session_secret(env_path)
+    ensure_jwt_signing_key(env_path)
     load_local_env(env_path)
 
     factory = make_session_factory()
@@ -145,13 +165,6 @@ def set_admin_credentials(env_path: Path, username: str, password: str) -> None:
             user.role = "admin"
             user.role_id = admin_role.id
             user.is_active = True
-
-        # Invalidate any existing sessions for this user
-        existing_sessions = session.scalars(
-            select(UserSession).where(UserSession.user_id == user.id)
-        ).all()
-        for sess in existing_sessions:
-            session.delete(sess)
 
         audit(
             session,

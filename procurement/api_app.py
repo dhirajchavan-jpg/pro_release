@@ -65,15 +65,15 @@ def create_app() -> FastAPI:
             version="1.0.0",
             description=(
                 "Use **Authentication → Sign in and obtain a bearer token**, then click "
-                "**Authorize** and paste the returned `access_token`."
+                "**Authorize** and paste the returned JWT `access_token`."
             ),
             routes=app.routes,
         )
-        schema.setdefault("components", {}).setdefault("securitySchemes", {})["BearerSession"] = {
+        schema.setdefault("components", {}).setdefault("securitySchemes", {})["BearerAuth"] = {
             "type": "http",
             "scheme": "bearer",
-            "bearerFormat": "Database session token",
-            "description": "A bearer token returned by workspace sign-in, registration, or invitation acceptance.",
+            "bearerFormat": "JWT",
+            "description": "A JWT returned by workspace sign-in, registration, or invitation acceptance.",
         }
         app.openapi_schema = schema
         return app.openapi_schema

@@ -24,6 +24,7 @@ export const endpoints = Object.freeze({
   account: "/workbench/account",
   login: "/workbench/account/login",
   register: "/workbench/account/register",
+  refresh: "/workbench/account/refresh",
   logout: "/workbench/account/logout",
   users: "/workbench/account/users",
   user: (userId) => `/workbench/account/users/${encodeURIComponent(userId)}`,
