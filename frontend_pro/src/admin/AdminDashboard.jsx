@@ -4,6 +4,7 @@ import { getProjectActivity, getUsage, verifyAudit } from "../api/admin.js";
 import {
   listUsers,
   updateUser,
+  listRoles,
   listInvites,
   createInvite,
   deleteInvite,
@@ -36,14 +37,15 @@ const budgetShare = (value, budget) =>
     ? percentage((Number(value) / Number(budget.limit_inr)) * 100)
     : "—";
 
-const ROLES = [
-  { id: "admin", label: "Administrator", desc: "Full control over projects, users, and settings" },
-  { id: "procurement_officer", label: "Procurement Officer", desc: "Tender drafting, intake, and freeze" },
-  { id: "reviewer", label: "Technical Reviewer", desc: "Evaluate bidder technical criteria" },
-  { id: "commercial_officer", label: "Commercial Officer", desc: "Unseal envelopes, calculate L1 price" },
-  { id: "approver", label: "Approver", desc: "Final tender award sign-off and rejection" },
-  { id: "auditor", label: "Auditor", desc: "Read-only access to bids and audit trails" },
+const DEFAULT_ROLES = [
+  { name: "admin", label: "Administrator" },
+  { name: "procurement_officer", label: "Procurement Officer" },
+  { name: "reviewer", label: "Technical Reviewer" },
+  { name: "commercial_officer", label: "Commercial Officer" },
+  { name: "approver", label: "Approver" },
+  { name: "auditor", label: "Auditor" },
 ];
+const roleLabel = (role) => role?.label || words(role?.name);
 
 export default function AdminDashboard({ account, onBack }) {
   const [tab, setTab] = useState("team"); // "team" or "usage"
@@ -58,6 +60,7 @@ export default function AdminDashboard({ account, onBack }) {
 
   // Team & Invites state
   const [users, setUsers] = useState([]);
+  const [roles, setRoles] = useState(DEFAULT_ROLES);
   const [invites, setInvites] = useState([]);
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteRole, setInviteRole] = useState("reviewer");
@@ -95,8 +98,9 @@ export default function AdminDashboard({ account, onBack }) {
     setTeamLoading(true);
     setNotice("");
     try {
-      const [usersRes, invitesRes] = await Promise.all([listUsers(), listInvites()]);
+      const [usersRes, rolesRes, invitesRes] = await Promise.all([listUsers(), listRoles(), listInvites()]);
       setUsers(usersRes.users || []);
+      setRoles(rolesRes.roles || DEFAULT_ROLES);
       setInvites(invitesRes.invites || []);
     } catch (error) {
       setNotice(error.message || "Failed to load team data.");
@@ -280,9 +284,9 @@ export default function AdminDashboard({ account, onBack }) {
                     value={inviteRole}
                     onChange={(e) => setInviteRole(e.target.value)}
                   >
-                    {ROLES.map((r) => (
-                      <option key={r.id} value={r.id}>
-                        {r.label}
+                    {roles.map((r) => (
+                      <option key={r.id || r.name} value={r.name}>
+                        {roleLabel(r)}
                       </option>
                     ))}
                   </select>
@@ -355,9 +359,9 @@ export default function AdminDashboard({ account, onBack }) {
                           disabled={busy}
                           onChange={(e) => handleRoleChange(u.id, e.target.value)}
                         >
-                          {ROLES.map((r) => (
-                            <option key={r.id} value={r.id}>
-                              {r.label}
+                          {roles.map((r) => (
+                            <option key={r.id || r.name} value={r.name}>
+                              {roleLabel(r)}
                             </option>
                           ))}
                         </select>
@@ -424,7 +428,7 @@ export default function AdminDashboard({ account, onBack }) {
                         <strong>{inv.email}</strong>
                       </td>
                       <td>
-                        {ROLES.find((r) => r.id === inv.role)?.label || words(inv.role)}
+                        {roleLabel(roles.find((r) => r.name === inv.role) || { name: inv.role })}
                       </td>
                       <td>{date(inv.created_at)}</td>
                       <td>{date(inv.expires_at)}</td>

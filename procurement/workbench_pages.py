@@ -31,6 +31,7 @@ ALLOWED_STEPS = frozenset({"tender", "ledger", "compliance", "contract", "bids",
 router = APIRouter()
 _LOCAL_TENANT_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,35}$")
 _FRONTEND_MODULE_NAME = re.compile(r"^[a-z][a-z0-9-]*\.js$")
+_ROLE_NAME = r"^[A-Za-z0-9][A-Za-z0-9 _-]{0,63}$"
 
 
 class LocalLogin(BaseModel):
@@ -45,6 +46,7 @@ class LocalProfile(BaseModel):
 
 
 class RegistrationRequest(BaseModel):
+    workspace_name: str = Field(min_length=1, max_length=255)
     name: str = Field(min_length=1, max_length=255)
     email: str = Field(min_length=3, max_length=320)
     password: str = Field(min_length=8)
@@ -54,13 +56,13 @@ class RegistrationRequest(BaseModel):
 class CreateUserRequest(BaseModel):
     email: str = Field(min_length=3, max_length=320)
     name: str = Field(default="Team member", min_length=1, max_length=255)
-    role: str = Field(default="reviewer", pattern="^(admin|procurement_officer|reviewer|commercial_officer|approver|auditor)$")
+    role: str = Field(default="reviewer", pattern=_ROLE_NAME)
     password: str = Field(min_length=8)
     phone: str = ""
 
 
 class UpdateUserRequest(BaseModel):
-    role: str | None = Field(default=None, pattern="^(admin|procurement_officer|reviewer|commercial_officer|approver|auditor)$")
+    role: str | None = Field(default=None, pattern=_ROLE_NAME)
     is_active: bool | None = None
     display_name: str | None = None
     phone: str | None = None
@@ -68,7 +70,7 @@ class UpdateUserRequest(BaseModel):
 
 class CreateInviteRequest(BaseModel):
     email: str = Field(min_length=3, max_length=320)
-    role: str = Field(default="reviewer", pattern="^(admin|procurement_officer|reviewer|commercial_officer|approver|auditor)$")
+    role: str = Field(default="reviewer", pattern=_ROLE_NAME)
     ttl_days: int = Field(default=7, ge=1, le=30)
 
 
@@ -83,6 +85,18 @@ class CreateApiKeyRequest(BaseModel):
     name: str = Field(min_length=1, max_length=255)
     scopes: list[str] = Field(default_factory=list)
     ttl_days: int | None = Field(default=None, ge=1, le=365)
+
+
+class CreateRoleRequest(BaseModel):
+    name: str = Field(min_length=1, max_length=64, pattern=_ROLE_NAME)
+    description: str = Field(default="", max_length=1000)
+    permission_slugs: list[str] = Field(default_factory=list)
+
+
+class UpdateRoleRequest(BaseModel):
+    name: str | None = Field(default=None, min_length=1, max_length=64, pattern=_ROLE_NAME)
+    description: str | None = Field(default=None, max_length=1000)
+    permission_slugs: list[str] | None = None
 
 
 class WorkbenchUsage(BaseModel):
@@ -125,6 +139,52 @@ def _session_auth_response(
         path="/",
     )
     return response
+
+
+def _accessible_role(session, tenant_id: str, role_name: str):
+    from sqlalchemy import or_, select
+
+    from procurement.domain.models import Role
+
+    return session.scalar(
+        select(Role).where(
+            Role.name == role_name.strip(),
+            or_(Role.is_system == True, Role.tenant_id == tenant_id),
+        )
+    )
+
+
+def _role_payload(role, permission_slugs: list[str]) -> dict:
+    return {
+        "id": role.id,
+        "name": role.name,
+        "description": role.description or "",
+        "is_system": role.is_system,
+        "permissions": sorted(permission_slugs),
+        "created_at": role.created_at.isoformat() if role.created_at else None,
+    }
+
+
+def _role_payloads(session, tenant_id: str) -> list[dict]:
+    from sqlalchemy import or_, select
+
+    from procurement.domain.models import Permission, Role, RolePermission
+
+    roles = session.scalars(
+        select(Role)
+        .where(or_(Role.is_system == True, Role.tenant_id == tenant_id))
+        .order_by(Role.is_system.desc(), Role.name)
+    ).all()
+    permission_map: dict[str, list[str]] = {role.id: [] for role in roles}
+    if permission_map:
+        rows = session.execute(
+            select(RolePermission.role_id, Permission.slug)
+            .join(Permission, Permission.id == RolePermission.permission_id)
+            .where(RolePermission.role_id.in_(permission_map))
+        )
+        for role_id, slug in rows:
+            permission_map[role_id].append(slug)
+    return [_role_payload(role, permission_map[role.id]) for role in roles]
 
 
 def _portfolio_decision_summary(evaluation: dict, reviews: dict[str, dict]) -> dict:
@@ -609,7 +669,7 @@ def workbench_logout(request: Request) -> Response:
     summary="Create the first workspace administrator",
 )
 def workbench_register(body: RegistrationRequest, request: Request) -> Response:
-    """Create the initial workspace administrator when no accounts exist."""
+    """Create the named workspace and its initial administrator."""
     if auth_mode() == "jwt":
         raise HTTPException(status_code=409, detail="use the configured identity provider")
 
@@ -620,6 +680,9 @@ def workbench_register(body: RegistrationRequest, request: Request) -> Response:
     from procurement.workbench_api import _sessions
 
     email = body.email.strip().lower()
+    workspace_name = body.workspace_name.strip()
+    if not workspace_name:
+        raise HTTPException(status_code=422, detail="workspace name is required")
     with session_scope(_sessions()) as session:
         # This application uses PostgreSQL; serialize bootstrap registrations so
         # concurrent first requests cannot create multiple administrators.
@@ -627,11 +690,9 @@ def workbench_register(body: RegistrationRequest, request: Request) -> Response:
         if session.scalar(select(User.id).limit(1)):
             raise HTTPException(status_code=403, detail="registration is available only for the first workspace administrator")
 
-        tenant = session.scalar(select(Tenant).order_by(Tenant.created_at).limit(1))
-        if tenant is None:
-            tenant = Tenant(name="Procurement Workspace")
-            session.add(tenant)
-            session.flush()
+        tenant = Tenant(name=workspace_name)
+        session.add(tenant)
+        session.flush()
 
         role = session.scalar(select(Role).where(Role.name == "admin").limit(1))
         if role is None:
@@ -674,9 +735,158 @@ def workbench_register(body: RegistrationRequest, request: Request) -> Response:
     )
 
 
+@router.get("/workbench/account/permissions", tags=["Workspace roles"], openapi_extra=_BEARER_SESSION_SECURITY)
+def list_workspace_permissions(request: Request) -> dict:
+    require_permission(request, "roles:manage")
+
+    from sqlalchemy import select
+
+    from procurement.domain.models import Permission
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    with session_scope(_sessions()) as session:
+        permissions = session.scalars(select(Permission).order_by(Permission.category, Permission.slug)).all()
+        return {
+            "permissions": [
+                {"slug": permission.slug, "category": permission.category, "description": permission.description or ""}
+                for permission in permissions
+            ]
+        }
+
+
+@router.get("/workbench/account/roles", tags=["Workspace roles"], openapi_extra=_BEARER_SESSION_SECURITY)
+def list_workspace_roles(request: Request) -> dict:
+    require_permission(request, "roles:manage")
+    principal = request.state.principal
+
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    with session_scope(_sessions()) as session:
+        return {"roles": _role_payloads(session, principal.tenant_id)}
+
+
+@router.post("/workbench/account/roles", tags=["Workspace roles"], openapi_extra=_BEARER_SESSION_SECURITY, status_code=201)
+def create_workspace_role(body: CreateRoleRequest, request: Request) -> dict:
+    require_permission(request, "roles:manage")
+    principal = request.state.principal
+
+    from sqlalchemy import or_, select
+
+    from procurement.domain.models import Permission, Role, RolePermission
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    name = body.name.strip()
+    requested_permissions = set(body.permission_slugs)
+    with session_scope(_sessions()) as session:
+        existing = session.scalar(
+            select(Role.id).where(Role.name == name, or_(Role.is_system == True, Role.tenant_id == principal.tenant_id))
+        )
+        if existing:
+            raise HTTPException(status_code=409, detail="a system or workspace role with this name already exists")
+        permissions = session.scalars(select(Permission).where(Permission.slug.in_(requested_permissions or [""]))).all()
+        permission_by_slug = {permission.slug: permission for permission in permissions}
+        unknown = requested_permissions - permission_by_slug.keys()
+        if unknown:
+            raise HTTPException(status_code=422, detail=f"unknown permissions: {', '.join(sorted(unknown))}")
+
+        role = Role(
+            tenant_id=principal.tenant_id,
+            name=name,
+            description=body.description.strip() or None,
+            is_system=False,
+        )
+        session.add(role)
+        session.flush()
+        for permission in permission_by_slug.values():
+            session.add(RolePermission(role_id=role.id, permission_id=permission.id))
+        return {"role": _role_payload(role, list(permission_by_slug))}
+
+
+@router.patch("/workbench/account/roles/{role_id}", tags=["Workspace roles"], openapi_extra=_BEARER_SESSION_SECURITY)
+def update_workspace_role(role_id: str, body: UpdateRoleRequest, request: Request) -> dict:
+    require_permission(request, "roles:manage")
+    principal = request.state.principal
+
+    from sqlalchemy import select
+
+    from procurement.domain.models import Permission, Role, RolePermission
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    with session_scope(_sessions()) as session:
+        role = session.get(Role, role_id)
+        if not role or role.tenant_id != principal.tenant_id:
+            raise HTTPException(status_code=404, detail="custom role not found")
+        if role.is_system:
+            raise HTTPException(status_code=403, detail="system roles cannot be changed")
+
+        if body.name is not None:
+            name = body.name.strip()
+            duplicate = _accessible_role(session, principal.tenant_id, name)
+            if duplicate and duplicate.id != role.id:
+                raise HTTPException(status_code=409, detail="a system or workspace role with this name already exists")
+            role.name = name
+        if body.description is not None:
+            role.description = body.description.strip() or None
+        if body.permission_slugs is not None:
+            requested_permissions = set(body.permission_slugs)
+            permissions = session.scalars(select(Permission).where(Permission.slug.in_(requested_permissions or [""]))).all()
+            permission_by_slug = {permission.slug: permission for permission in permissions}
+            unknown = requested_permissions - permission_by_slug.keys()
+            if unknown:
+                raise HTTPException(status_code=422, detail=f"unknown permissions: {', '.join(sorted(unknown))}")
+            mappings = session.scalars(select(RolePermission).where(RolePermission.role_id == role.id)).all()
+            for mapping in mappings:
+                session.delete(mapping)
+            for permission in permission_by_slug.values():
+                session.add(RolePermission(role_id=role.id, permission_id=permission.id))
+            permission_slugs = list(permission_by_slug)
+        else:
+            permission_slugs = session.scalars(
+                select(Permission.slug)
+                .join(RolePermission, RolePermission.permission_id == Permission.id)
+                .where(RolePermission.role_id == role.id)
+            ).all()
+        return {"role": _role_payload(role, permission_slugs)}
+
+
+@router.delete("/workbench/account/roles/{role_id}", tags=["Workspace roles"], openapi_extra=_BEARER_SESSION_SECURITY)
+def delete_workspace_role(role_id: str, request: Request) -> dict:
+    require_permission(request, "roles:manage")
+    principal = request.state.principal
+
+    from sqlalchemy import select
+
+    from procurement.domain.models import Role, User, WorkspaceInvite
+    from procurement.platform.database import session_scope
+    from procurement.workbench_api import _sessions
+
+    with session_scope(_sessions()) as session:
+        role = session.get(Role, role_id)
+        if not role or role.tenant_id != principal.tenant_id:
+            raise HTTPException(status_code=404, detail="custom role not found")
+        if role.is_system:
+            raise HTTPException(status_code=403, detail="system roles cannot be deleted")
+        if session.scalar(select(User.id).where(User.tenant_id == principal.tenant_id, User.role_id == role.id).limit(1)):
+            raise HTTPException(status_code=409, detail="reassign users before deleting this role")
+        if session.scalar(
+            select(WorkspaceInvite.id).where(
+                WorkspaceInvite.tenant_id == principal.tenant_id,
+                WorkspaceInvite.role == role.name,
+                WorkspaceInvite.accepted_at.is_(None),
+            ).limit(1)
+        ):
+            raise HTTPException(status_code=409, detail="revoke pending invitations before deleting this role")
+        session.delete(role)
+    return {"status": "deleted"}
+
+
 @router.get("/workbench/account/users", tags=["Workspace users"], openapi_extra=_BEARER_SESSION_SECURITY)
 def list_workspace_users(request: Request) -> dict:
-    require_role(request, "admin")
+    require_permission(request, "users:manage")
     principal = request.state.principal
 
     from sqlalchemy import select
@@ -707,12 +917,12 @@ def list_workspace_users(request: Request) -> dict:
 
 @router.post("/workbench/account/users", tags=["Workspace users"], openapi_extra=_BEARER_SESSION_SECURITY)
 def create_workspace_user(body: CreateUserRequest, request: Request) -> dict:
-    require_role(request, "admin")
+    require_permission(request, "users:manage")
     principal = request.state.principal
 
     from sqlalchemy import select
 
-    from procurement.domain.models import Role, User
+    from procurement.domain.models import User
     from procurement.platform.database import session_scope
     from procurement.workbench_api import _sessions
 
@@ -724,7 +934,9 @@ def create_workspace_user(body: CreateUserRequest, request: Request) -> dict:
         if existing:
             raise HTTPException(status_code=409, detail="user with this email already exists")
 
-        role = session.scalar(select(Role).where(Role.name == body.role))
+        role = _accessible_role(session, principal.tenant_id, body.role)
+        if not role:
+            raise HTTPException(status_code=422, detail="role is not available in this workspace")
         new_user = User(
             tenant_id=principal.tenant_id,
             subject=f"user:{email}",
@@ -732,8 +944,8 @@ def create_workspace_user(body: CreateUserRequest, request: Request) -> dict:
             password_hash=hash_local_password(body.password),
             display_name=body.name.strip(),
             phone=body.phone.strip(),
-            role=body.role,
-            role_id=role.id if role else None,
+            role=role.name,
+            role_id=role.id,
             is_active=True,
         )
         session.add(new_user)
@@ -751,12 +963,12 @@ def create_workspace_user(body: CreateUserRequest, request: Request) -> dict:
 
 @router.patch("/workbench/account/users/{user_id}", tags=["Workspace users"], openapi_extra=_BEARER_SESSION_SECURITY)
 def update_workspace_user(user_id: str, body: UpdateUserRequest, request: Request) -> dict:
-    require_role(request, "admin")
+    require_permission(request, "users:manage")
     principal = request.state.principal
 
-    from sqlalchemy import select
+    from sqlalchemy import func, select
 
-    from procurement.domain.models import Role, User
+    from procurement.domain.models import User
     from procurement.platform.database import session_scope
     from procurement.workbench_api import _sessions
 
@@ -766,10 +978,32 @@ def update_workspace_user(user_id: str, body: UpdateUserRequest, request: Reques
             raise HTTPException(status_code=404, detail="user not found")
 
         if body.role:
-            role = session.scalar(select(Role).where(Role.name == body.role))
-            target.role = body.role
-            target.role_id = role.id if role else None
+            role = _accessible_role(session, principal.tenant_id, body.role)
+            if not role:
+                raise HTTPException(status_code=422, detail="role is not available in this workspace")
+            if target.role == "admin" and role.name != "admin":
+                active_admins = session.scalar(
+                    select(func.count()).select_from(User).where(
+                        User.tenant_id == principal.tenant_id,
+                        User.role == "admin",
+                        User.is_active == True,
+                    )
+                )
+                if active_admins <= 1:
+                    raise HTTPException(status_code=409, detail="assign another active administrator before changing this role")
+            target.role = role.name
+            target.role_id = role.id
         if body.is_active is not None:
+            if target.role == "admin" and target.is_active and not body.is_active:
+                active_admins = session.scalar(
+                    select(func.count()).select_from(User).where(
+                        User.tenant_id == principal.tenant_id,
+                        User.role == "admin",
+                        User.is_active == True,
+                    )
+                )
+                if active_admins <= 1:
+                    raise HTTPException(status_code=409, detail="assign another active administrator before deactivating this user")
             target.is_active = body.is_active
         if body.display_name is not None:
             target.display_name = body.display_name.strip()
@@ -790,7 +1024,7 @@ def update_workspace_user(user_id: str, body: UpdateUserRequest, request: Reques
 
 @router.get("/workbench/account/keys", tags=["Workspace API keys"], openapi_extra=_BEARER_SESSION_SECURITY)
 def list_workspace_api_keys(request: Request) -> dict:
-    require_role(request, "admin")
+    require_permission(request, "keys:manage")
     principal = request.state.principal
 
     from sqlalchemy import select
@@ -820,7 +1054,7 @@ def list_workspace_api_keys(request: Request) -> dict:
 
 @router.post("/workbench/account/keys", tags=["Workspace API keys"], openapi_extra=_BEARER_SESSION_SECURITY)
 def create_workspace_api_key(body: CreateApiKeyRequest, request: Request) -> dict:
-    require_role(request, "admin")
+    require_permission(request, "keys:manage")
     principal = request.state.principal
 
     key_id, raw_key = create_api_key(
@@ -839,7 +1073,7 @@ def create_workspace_api_key(body: CreateApiKeyRequest, request: Request) -> dic
 
 @router.delete("/workbench/account/keys/{key_id}", tags=["Workspace API keys"], openapi_extra=_BEARER_SESSION_SECURITY)
 def delete_workspace_api_key(key_id: str, request: Request) -> dict:
-    require_role(request, "admin")
+    require_permission(request, "keys:manage")
     principal = request.state.principal
 
     from procurement.domain.models import ApiKey
@@ -864,7 +1098,7 @@ def _frontend_base_url(request: Request) -> str:
 
 @router.get("/workbench/account/invites", tags=["Workspace invitations"], openapi_extra=_BEARER_SESSION_SECURITY)
 def list_workspace_invites(request: Request) -> dict:
-    require_role(request, "admin")
+    require_permission(request, "users:manage")
     principal = request.state.principal
 
     from sqlalchemy import select
@@ -895,7 +1129,7 @@ def list_workspace_invites(request: Request) -> dict:
 
 @router.post("/workbench/account/invites", tags=["Workspace invitations"], openapi_extra=_BEARER_SESSION_SECURITY)
 def create_workspace_invite(body: CreateInviteRequest, request: Request) -> dict:
-    require_role(request, "admin")
+    require_permission(request, "users:manage")
     principal = request.state.principal
 
     from sqlalchemy import select
@@ -910,6 +1144,9 @@ def create_workspace_invite(body: CreateInviteRequest, request: Request) -> dict
         )
         if existing_user:
             raise HTTPException(status_code=409, detail="user with this email already belongs to this workspace")
+        role = _accessible_role(session, principal.tenant_id, body.role)
+        if not role:
+            raise HTTPException(status_code=422, detail="role is not available in this workspace")
 
         raw_token = secrets.token_urlsafe(32)
         token_hash = hashlib.sha256(raw_token.encode()).hexdigest()
@@ -918,7 +1155,7 @@ def create_workspace_invite(body: CreateInviteRequest, request: Request) -> dict
         invite = WorkspaceInvite(
             tenant_id=principal.tenant_id,
             email=email,
-            role=body.role,
+            role=role.name,
             token_hash=token_hash,
             invited_by_id=principal.user_id,
             expires_at=expires_at,
@@ -941,7 +1178,7 @@ def create_workspace_invite(body: CreateInviteRequest, request: Request) -> dict
 
 @router.delete("/workbench/account/invites/{invite_id}", tags=["Workspace invitations"], openapi_extra=_BEARER_SESSION_SECURITY)
 def delete_workspace_invite(invite_id: str, request: Request) -> dict:
-    require_role(request, "admin")
+    require_permission(request, "users:manage")
     principal = request.state.principal
 
     from procurement.domain.models import WorkspaceInvite
@@ -994,7 +1231,7 @@ def verify_workspace_invite(token: str = Query(...)) -> dict:
 @router.post("/workbench/account/invites/accept", tags=["Workspace invitations"], summary="Accept an invitation and obtain a bearer token")
 def accept_workspace_invite(body: AcceptInviteRequest, request: Request) -> Response:
     from sqlalchemy import select
-    from procurement.domain.models import Role, User, WorkspaceInvite
+    from procurement.domain.models import User, WorkspaceInvite
     from procurement.platform.database import session_scope
     from procurement.workbench_api import _sessions
 
@@ -1017,7 +1254,9 @@ def accept_workspace_invite(body: AcceptInviteRequest, request: Request) -> Resp
         if existing:
             raise HTTPException(status_code=409, detail="an account with this email already exists")
 
-        role = session.scalar(select(Role).where(Role.name == invite.role))
+        role = _accessible_role(session, invite.tenant_id, invite.role)
+        if not role:
+            raise HTTPException(status_code=410, detail="the invitation's role is no longer available")
         new_user = User(
             tenant_id=invite.tenant_id,
             subject=f"user:{clean_email}",
@@ -1025,8 +1264,8 @@ def accept_workspace_invite(body: AcceptInviteRequest, request: Request) -> Resp
             password_hash=hash_local_password(body.password),
             display_name=body.name.strip(),
             phone=body.phone.strip(),
-            role=invite.role,
-            role_id=role.id if role else None,
+            role=role.name,
+            role_id=role.id,
             is_active=True,
         )
         session.add(new_user)

@@ -7,6 +7,7 @@ import Notice from "../components/Notice.jsx";
 
 export default function AuthPage({ mode, serviceError, onAuthenticated, onNavigate }) {
   const [form, setForm] = useState({
+    workspaceName: "",
     name: "",
     email: "",
     phone: "",
@@ -28,6 +29,7 @@ export default function AuthPage({ mode, serviceError, onAuthenticated, onNaviga
     try {
       const data = isRegister
         ? await register({
+            workspace_name: form.workspaceName.trim(),
             name: form.name.trim(),
             email: form.email.trim(),
             phone: form.phone.trim(),
@@ -62,10 +64,13 @@ export default function AuthPage({ mode, serviceError, onAuthenticated, onNaviga
         <div className="w-full max-w-110">
           <Notice kind="error">{message}</Notice>
           <form className="mt-4 rounded-[10px] border border-[var(--color-line)] bg-white p-7 shadow-[var(--shadow-card)]" onSubmit={submit}>
-            <h2 className="text-xl font-semibold">{isRegister ? "Create account" : "Sign in"}</h2>
+            <h2 className="text-xl font-semibold">{isRegister ? "Create your workspace" : "Sign in"}</h2>
             <div className="mt-5 grid gap-4">
               {isRegister ? (
                 <>
+                  <FormField id="register-workspace-name" label="Workspace name">
+                    <input id="register-workspace-name" name="workspaceName" value={form.workspaceName} onChange={update} autoComplete="organization" placeholder="e.g. Acme Procurement" required autoFocus />
+                  </FormField>
                   <FormField id="register-name" label="Name">
                     <input id="register-name" name="name" value={form.name} onChange={update} autoComplete="name" required />
                   </FormField>

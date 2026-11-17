@@ -39,6 +39,7 @@ WORKBENCH_PUBLIC_PATHS = {
 }
 WORKBENCH_UI_PATH = re.compile(r"^/workbench/ui/[^/]+/[^/]+$")
 WORKBENCH_MODULE_PATH = re.compile(r"^/assets/(?:current/)?modules/[a-z][a-z0-9-]*\.js$")
+REACT_FRONTEND_PATH = re.compile(r"^/app(?:/.*)?$")
 
 
 async def guard_api(request: Request, call_next: Any) -> Any:
@@ -47,8 +48,12 @@ async def guard_api(request: Request, call_next: Any) -> Any:
     if request.method == "OPTIONS":
         return await call_next(request)
 
-    public_paths = {"/", "/health", "/ready"} | WORKBENCH_PUBLIC_PATHS
-    if WORKBENCH_UI_PATH.match(request.url.path) or WORKBENCH_MODULE_PATH.match(request.url.path):
+    public_paths = {"/", "/docs", "/openapi.json", "/redoc", "/favicon.ico", "/health", "/ready"} | WORKBENCH_PUBLIC_PATHS
+    if (
+        WORKBENCH_UI_PATH.match(request.url.path)
+        or WORKBENCH_MODULE_PATH.match(request.url.path)
+        or REACT_FRONTEND_PATH.match(request.url.path)
+    ):
         public_paths = public_paths | {request.url.path}
     return await guarded_request(
         request,

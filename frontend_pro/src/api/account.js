@@ -11,6 +11,12 @@ export const listUsers = () => api.get(endpoints.users);
 export const createUser = (data) => api.post(endpoints.users, data);
 export const updateUser = (userId, data) => api.patch(endpoints.user(userId), data);
 
+export const listPermissions = () => api.get(endpoints.permissions);
+export const listRoles = () => api.get(endpoints.roles);
+export const createRole = (data) => api.post(endpoints.roles, data);
+export const updateRole = (roleId, data) => api.patch(endpoints.role(roleId), data);
+export const deleteRole = (roleId) => api.delete(endpoints.role(roleId));
+
 export const listInvites = () => api.get(endpoints.invites);
 export const createInvite = (data) => api.post(endpoints.invites, data);
 export const deleteInvite = (inviteId) => api.delete(endpoints.invite(inviteId));
