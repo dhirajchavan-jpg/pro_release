@@ -57,6 +57,7 @@ export async function apiRequest(path, options = {}) {
   const isFormData = options.body instanceof FormData;
   const headers = new Headers(options.headers);
   const method = String(options.method || "GET").toUpperCase();
+  const authRetry = options._authRetry === true;
 
   if (!isFormData && options.body != null && !headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
@@ -78,6 +79,21 @@ export async function apiRequest(path, options = {}) {
       signal: options.signal || controller.signal,
     });
     const data = await readResponseBody(response);
+
+    // Access tokens are intentionally short-lived. Recover once from an
+    // expired token before surfacing a misleading failure on mutating flows
+    // such as tender and policy uploads. Never refresh the auth endpoints
+    // themselves, and never retry more than once.
+    if (response.status === 401 && !authRetry && !path.includes("/account/login") && !path.includes("/account/refresh")) {
+      try {
+        await refreshAccessToken();
+        const retryHeaders = new Headers(options.headers);
+        retryHeaders.set("Authorization", `Bearer ${accessToken()}`);
+        return await apiRequest(path, { ...options, headers: retryHeaders, _authRetry: true });
+      } catch {
+        clearAccessToken();
+      }
+    }
 
     if (!response.ok) {
       const message = errorMessage(data, response.status);

@@ -192,6 +192,11 @@ def _compliance_view(data: dict[str, Any]) -> dict[str, Any]:
         "coverage": coverage,
         "open": _open_count(compliance),
         "completed_at": compliance.get("completed_at"),
+        "policy_document": {
+            key: _policy_audit(data).get(key)
+            for key in ("document_id", "file_name", "sha256", "status")
+            if _policy_audit(data).get(key) is not None
+        },
     }
 
 

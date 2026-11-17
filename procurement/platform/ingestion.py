@@ -109,7 +109,10 @@ def validate_zip_members(
             allowed_suffixes is not None
             and Path(member.filename).suffix.lower() not in allowed_suffixes
         ):
-            raise IngestionValidationError(415, "archive contains an unsupported document type")
+            raise IngestionValidationError(
+                415,
+                f"archive contains an unsupported document type: {member.filename}",
+            )
         total_size += member.file_size
     if total_size > maximum_total_bytes:
         raise IngestionValidationError(413, "archive expands beyond configured maximum")

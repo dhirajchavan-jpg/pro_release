@@ -53,10 +53,19 @@ export default function App() {
   const loadSession = useCallback(async () => {
     setLoading(true);
     setServiceError("");
+
+    // Authentication pages are public. Do not probe the protected account
+    // endpoint (or rotate a refresh cookie) while the user is signing in or
+    // bootstrapping a workspace; a missing refresh cookie is expected there.
+    if (["login", "register"].includes(route)) {
+      setAccount(null);
+      setLoading(false);
+      return;
+    }
+
     try {
       const data = await getAccount();
       setAccount(data);
-      if (["login", "register"].includes(route)) navigate("workspace", true);
     } catch (error) {
       setAccount(null);
       if (error instanceof ApiError && [401, 403].includes(error.status)) {

@@ -161,6 +161,7 @@ async def _store_document(
     tender_version_id: str | None = None,
     bid_id: str | None,
     allowed_suffixes: set[str] | frozenset[str] | None = None,
+    source_kind: str = "upload",
 ) -> Document:
     filename = _safe_filename(upload.filename or "upload.bin")
     suffix = os.path.splitext(filename)[1].lower()
@@ -252,7 +253,7 @@ async def _store_document(
             file_name=filename,
             content_type=content_type,
             size_bytes=total,
-            source_kind="upload",
+            source_kind=source_kind,
             extraction_status="stored",
         )
         session.add(document)

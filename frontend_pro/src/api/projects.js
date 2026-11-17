@@ -1,13 +1,14 @@
 import { api } from "./client.js";
 import { endpoints } from "../config/api.js";
 
-export function createProject({ file, projectKey, title, policyAudit, schemaJson }) {
+export function createProject({ file, policyFile, projectKey, title, policyAudit, schemaJson }) {
   const body = new FormData();
   body.append("file", file);
   if (projectKey) body.append("project_key", projectKey);
   if (title) body.append("title", title);
   if (schemaJson) body.append("schema_json", schemaJson);
   body.append("policy_audit", String(policyAudit));
+  if (policyFile) body.append("policy_file", policyFile);
   return api.post(endpoints.projects, body);
 }
 

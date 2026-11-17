@@ -35,6 +35,7 @@ def frontend_cors_origins() -> list[str]:
 def create_app() -> FastAPI:
     app = FastAPI(title="Procurement Evaluation API")
     app.add_middleware(GZipMiddleware, minimum_size=1024, compresslevel=5)
+    install_api_runtime(app)
     allowed_origins = frontend_cors_origins()
     if allowed_origins:
         app.add_middleware(
@@ -45,7 +46,6 @@ def create_app() -> FastAPI:
             allow_headers=["*"],
         )
     app.on_event("startup")(startup_housekeeping)
-    install_api_runtime(app)
     for router in (
         health_router,
         legacy_router,

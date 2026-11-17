@@ -13,6 +13,7 @@ from typing import Any
 from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile, status
 from fastapi.responses import FileResponse
 from sqlalchemy import select
+from sqlalchemy.orm.attributes import flag_modified
 from starlette.background import BackgroundTask
 
 from procurement.api import _actor_user_id, _hash, _owned, _sessions, _store_document, _upload_sha256
@@ -38,6 +39,7 @@ async def create_project(
     title: str | None = Form(None),
     field_schema_json: str | None = Form(None, alias="schema_json"),
     policy_audit: str | None = Form(None),
+    policy_file: UploadFile | None = File(None),
     file: UploadFile = File(...),
 ) -> dict[str, Any]:
     principal = require_role(request, "admin", "procurement_officer")
@@ -92,9 +94,24 @@ async def create_project(
             tender_version_id=version.id,
             bid_id=None,
         )
+        policy_document = None
+        if policy_file is not None and policy_file.filename:
+            policy_document = await _store_document(
+                session, policy_file, tenant_id=principal.tenant_id, actor_id=actor_id,
+                tender_id=tender.id, tender_version_id=version.id, bid_id=None,
+                allowed_suffixes={".pdf", ".doc", ".docx", ".json", ".txt"},
+                source_kind="compliance_policy",
+            )
+            version.understanding_json["policy_audit"] = {
+                **dict(version.understanding_json.get("policy_audit") or {}),
+                "enabled": True, "document_id": policy_document.id,
+                "status": "needs_review", "file_name": policy_document.file_name,
+                "sha256": policy_document.sha256,
+            }
+            flag_modified(version, "understanding_json")
         project = WorkbenchProject(id=new_id(), tenant_id=principal.tenant_id, tender_id=tender.id, tender_version_id=version.id, project_key=key, title=(title or "").strip() or None, stage="tender_uploaded")
         session.add(project)
-        audit(session, tenant_id=principal.tenant_id, actor_user_id=actor_id, event_type="workbench.project.created", entity_type="workbench_project", entity_id=project.id, reason=None, before=None, after={"tender_id": tender.id, "document_id": document.id})
+        audit(session, tenant_id=principal.tenant_id, actor_user_id=actor_id, event_type="workbench.project.created", entity_type="workbench_project", entity_id=project.id, reason=None, before=None, after={"tender_id": tender.id, "document_id": document.id, "policy_document_id": policy_document.id if policy_document else None})
         session.flush()
         result = _state(session, project)
         result["field_schema"] = _schema_projection(schema)

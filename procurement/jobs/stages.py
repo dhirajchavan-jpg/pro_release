@@ -40,6 +40,7 @@ def run_understanding_operation(
                 runtime.select(runtime.Document).where(
                     runtime.Document.tender_version_id == pinned_version_id,
                     runtime.Document.tenant_id == project.tenant_id,
+                runtime.Document.source_kind == "upload",
                 ).order_by(runtime.Document.created_at, runtime.Document.id)
             )
         )
